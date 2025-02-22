@@ -1,0 +1,265 @@
+
+.com-page-body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+  }
+  
+  .com-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #000;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+  }
+  
+  .com-container {
+    display: flex;
+    font-family: Arial, sans-serif;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+  
+   
+  .sidebar {
+    width: 350px;
+    background-color: #c8a2c8;
+    color: white;
+    padding: 20px;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .sidebar-title {
+    font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 60px; 
+  }
+
+  .divider {
+    width: 100%;
+    border-top: 1px solid #806c6c;
+    margin: 20px 0;
+  }
+  
+  .sidebar-nav ul,
+  .resources ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .sidebar-nav ul li,
+  .resources ul li {
+    margin: 10px 0;
+    display: flex;
+    align-items: center; 
+    gap: 10px; 
+    margin: 10px 0;
+  }
+  .sidebar-nav ul li a,
+  .resources ul li a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+  }
+  
+  .sidebar-nav ul li a:hover,
+  .resources ul li a:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .sidebar-icon {
+    width: 20px;  
+    height: 20px;
+    margin-right: 10px;
+  }
+  
+  .sidebar-nav ul li a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 10px;
+  }
+
+  .dropdown-icon {
+    width: 15px;  
+    height: 15px;
+    margin-left: 10px; 
+    vertical-align: middle;
+    order: 3;  
+  }
+  
+  .sidebar-nav ul li a:hover .dropdown-icon {
+    transform: rotate(180deg); 
+  }
+
+  
+  .main-content {
+    flex-grow: 1;
+    padding: 20px;
+  }
+  
+  .top-section {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap; 
+    margin-bottom: 20px;
+  }
+  
+  .card {
+    flex: 1;
+    min-width: 200px;
+    min-height: 250px; 
+    background: white;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+  }
+
+  .card img {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+  }
+  
+  /* .main-content {
+    width: 100%; 
+    padding: 10px;
+    background-color: #f9f9f9;
+  }
+  
+  .top-section {
+    display: flex;
+    justify-content: space-bet;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .card {
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    width: 30%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card img {
+    width: 100%;
+    height: 100px;
+    border-radius: 10px;
+    object-fit: cover;
+  } */
+  
+  .posts {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+  }
+  
+  .post {
+    background: white;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .post h4 {
+    margin: 0;
+    font-size: 14px;
+  }
+  
+  .post-actions {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+  }
+  
+  .post-actions span {
+    font-size: 12px;
+  }
+  
+  .post-actions button {
+    background: #c8a2c8;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .image-placeholder {
+    background: lightgray;
+    height: 150px;
+    margin-top: 10px;
+    border-radius: 10px;
+  }
+
+  
+  .right-sidebar {
+    flex-grow: 1; 
+    margin-top: 20px;
+    width: 30px;
+  }
+  
+  
+  .card1 {
+    flex: 1;
+    min-width: 200px;
+    min-height: 250px; 
+    background: white;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+   
+  }
+  
+  .card1 img {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+  }
+  
+  .popular-communities {
+    background: white;
+    margin-top: 20px; 
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .popular-communities h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .popular-communities ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .popular-communities ul li {
+    padding: 5px 0;
+  }
+  
+  .popular-communities ul li a {
+    text-decoration: none;
+    color: #c8a2c8;
+    font-weight: bold;
+  }
