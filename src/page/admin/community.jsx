@@ -6,8 +6,14 @@ import {
 } from "../../../utils/helpers";
 import MUIDataTable from "mui-datatables";
 import AxiosInstance from "../../../utils/AxiosInstance";
-import { Button, CircularProgress } from "@mui/material";
-import dayjs from "dayjs";
+import {
+  Button,
+  CircularProgress,
+  IconButton,
+  Menu,
+  MenuItem,
+} from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import { saveAs } from "file-saver";
@@ -26,7 +32,6 @@ const spaces = () => {
       await AxiosInstance.get("/spaces").then((response) => {
         if (response.status === 200) {
           setSpaces(response.data.data);
-          console.log(response.data.data);
         }
       });
     } catch (error) {
@@ -248,6 +253,8 @@ const spaces = () => {
       name: "profile.url",
       label: "Profile",
       options: {
+        print: false,
+        download: false,
         customBodyRender: (value, tableMeta) => {
           const communityName = tableMeta.rowData[1]; // Assuming "name" is the second column
           const firstLetter = communityName
@@ -375,74 +382,6 @@ const spaces = () => {
             </div>
             <MUIDataTable data={spaces} columns={columns} options={options} />
           </>
-          // <TableContainer component={Paper}>
-          //   <Table>
-          //     <TableHead>
-          //       <TableRow>
-          //         <TableCell></TableCell>
-          //         <TableCell>
-          //           <strong>Name</strong>
-          //         </TableCell>
-          //         <TableCell>
-          //           <strong>Description</strong>
-          //         </TableCell>
-          //         <TableCell>
-          //           <strong>Image</strong>
-          //         </TableCell>
-          //         <TableCell>
-          //           <strong>Created At</strong>
-          //         </TableCell>
-          //         <TableCell>
-          //           <strong>Updated At</strong>
-          //         </TableCell>
-          //         <TableCell>
-          //           <strong>Actions</strong>
-          //         </TableCell>
-          //       </TableRow>
-          //     </TableHead>
-          //     <TableBody>
-          //       {spaces.length > 0 ? (
-          //         spaces.map((space, index) => (
-          //           <TableRow key={space._id}>
-          //             <TableCell>{index + 1}</TableCell>
-          //             <TableCell>{space.name}</TableCell>
-          //             <TableCell>{space.description}</TableCell>
-          //             <TableCell>
-          //               <img
-          //                 src={space.image.url}
-          //                 alt={space.name}
-          //                 style={{ width: "100px", height: "auto" }}
-          //                 className="rounded-xl"
-          //               />
-          //             </TableCell>
-          //             <TableCell>
-          //               {dayjs(space.createdAt).format("MMMM DD YYYY")}
-          //             </TableCell>
-          //             <TableCell>
-          //               {dayjs(space.updatedAt).format("MMMM DD YYYY")}
-          //             </TableCell>
-          //             <TableCell>
-          //               <Button
-          //                 variant="contained"
-          //                 color="primary"
-          //                 size="small"
-          //                 onClick={() => console.log(`View ${space.name}`)}
-          //               >
-          //                 View
-          //               </Button>
-          //             </TableCell>
-          //           </TableRow>
-          //         ))
-          //       ) : (
-          //         <TableRow>
-          //           <TableCell colSpan={7} align="center">
-          //             No spaces found
-          //           </TableCell>
-          //         </TableRow>
-          //       )}
-          //     </TableBody>
-          //   </Table>
-          // </TableContainer>
         )}
       </div>
     </div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import MUIDataTable from "mui-datatables";
 import { CircularProgress, Button, Box } from "@mui/material";
-import { notifyError } from "../../../utils/helpers";
+import { formatDate, notifyError } from "../../../utils/helpers";
 import AxiosInstance from "../../../utils/AxiosInstance";
 import ContactModal from "../../components/admin/modals/Contact.modal";
 import { Link } from "react-router-dom";
@@ -9,7 +9,7 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import { saveAs } from "file-saver";
 import ExcelJS from "exceljs";
-
+import "./datatable.css";
 const Contacts = () => {
   const [contacts, setContacts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -55,16 +55,41 @@ const Contacts = () => {
     const headerImage = "/logo/tupLogo.png";
 
     // Fetch and convert image to base64
-    const imgData = await fetch(headerImage)
-      .then((res) => res.blob())
-      .then((blob) => URL.createObjectURL(blob));
+    const response = await fetch(headerImage);
+    if (!response.ok) throw new Error("Failed to load image");
 
+    const blob = await response.blob();
+    const imgData = URL.createObjectURL(blob);
+
+    // Add logo
     doc.addImage(imgData, "PNG", 20, 10, 170, 30);
+    URL.revokeObjectURL(imgData); // Free up memory
+
+    // Add centered heading
+    doc.setFontSize(16);
+    doc.setFont("helvetica", "bold");
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const title = "List of Communities";
+    const textWidth = doc.getTextWidth(title);
+    const textX = (pageWidth - textWidth) / 2;
+    doc.text(title, textX, 45);
 
     // Move table down after the image
     doc.autoTable({
       startY: 50, // Start below the image
-      head: [["No.", "Name", "Email", "Phone", "Subject", "Message", "Status"]],
+      head: [
+        [
+          "No.",
+          "Name",
+          "Email",
+          "Phone",
+          "Subject",
+          "Message",
+          "Status",
+          "Date Sent",
+          "Updated At",
+        ],
+      ],
       body: contacts.map((contact, index) => [
         index + 1,
         contact.name,
@@ -73,6 +98,8 @@ const Contacts = () => {
         contact.subject,
         contact.message,
         contact.status.charAt(0).toUpperCase() + contact.status.slice(1),
+        formatDate(contact.createdAt),
+        formatDate(contact.updatedAt),
       ]),
     });
 
@@ -104,7 +131,17 @@ const Contacts = () => {
       ["Electrical and Allied Department"],
       ["Manila Technician Institute Computer Society"],
       [""],
-      ["No.", "Name", "Email", "Phone", "Subject", "Message", "Status"],
+      [
+        "No.",
+        "Name",
+        "Email",
+        "Phone",
+        "Subject",
+        "Message",
+        "Status",
+        "Date Sent",
+        "Updated At",
+      ],
     ];
 
     header.forEach((row, index) => {
@@ -122,6 +159,8 @@ const Contacts = () => {
         contact.subject,
         contact.message,
         contact.status.charAt(0).toUpperCase() + contact.status.slice(1),
+        formatDate(contact.createdAt),
+        formatDate(contact.updatedAt),
       ]);
     });
 
@@ -161,6 +200,20 @@ const Contacts = () => {
       options: {
         customBodyRender: (value) =>
           value.charAt(0).toUpperCase() + value.slice(1),
+      },
+    },
+    {
+      name: "createdAt",
+      label: "Date Sent",
+      options: {
+        customBodyRender: (value) => formatDate(value),
+      },
+    },
+    {
+      name: "updatedAt",
+      label: "Updated At",
+      options: {
+        customBodyRender: (value) => formatDate(value),
       },
     },
     {
@@ -285,7 +338,21 @@ const Contacts = () => {
               </Button>
             </div>
 
-            <MUIDataTable data={contacts} columns={columns} options={options} />
+            <div className="print-container">
+              <div className="print-only">
+                <img
+                  src="/logo/tupLogo.png"
+                  alt="Logo"
+                  className="print-logo"
+                />
+              </div>
+
+              <MUIDataTable
+                data={contacts}
+                columns={columns}
+                options={options}
+              />
+            </div>
           </>
         )}
       </div>

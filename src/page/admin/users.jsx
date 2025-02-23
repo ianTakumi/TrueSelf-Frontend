@@ -63,7 +63,7 @@ const Users = () => {
           "Name",
           "Date of Birth",
           "Gender Identity",
-          "Pronouns",
+
           "Email",
           "Phone",
           "Status",
@@ -75,7 +75,7 @@ const Users = () => {
         user.name,
         formatDate(user.dob),
         user.genderIdentity,
-        user.pronouns,
+
         user.email,
         user.phoneNumber,
         user.status.charAt(0).toUpperCase() + user.status.slice(1),
@@ -151,7 +151,9 @@ const Users = () => {
       { width: 15 },
       { width: 20 },
       { width: 40 },
-      { width: 10 },
+      { width: 40 },
+      { width: 40 },
+      { width: 40 },
     ];
 
     const buffer = await workbook.xlsx.writeBuffer();
@@ -171,14 +173,14 @@ const Users = () => {
     {
       name: "dob",
       label: "Date of Birth",
-      optionss: {
+      options: {
         customBodyRender: (value) => formatDate(value),
       },
     },
     { name: "genderIdentity", label: "Gender Identity" },
-    { name: "pronouns", label: "Pronouns" },
+
     { name: "email", label: "Email" },
-    { name: "phone", label: "Phone" },
+    { name: "phoneNumber", label: "Phone" },
     {
       name: "status",
       label: "Status",

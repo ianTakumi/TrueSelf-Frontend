@@ -1,0 +1,42 @@
+/* Hide by default */
+.print-only {
+  display: none;
+}
+
+@media print {
+  .print-only {
+    display: block !important;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  @page {
+    size: landscape;
+    margin: 10mm;
+  }
+
+  body {
+    zoom: 90%;
+  }
+
+  /* Hide unwanted DataTable elements */
+  .MuiTablePagination-root,
+  .MuiToolbar-root,
+  .MuiTableSortLabel-root,
+  .MuiTableFooter-root {
+    display: none !important;
+  }
+
+  /* DataTable styling */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    padding: 4px;
+    font-size: 12px;
+    word-wrap: break-word;
+  }
+}

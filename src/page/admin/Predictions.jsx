@@ -10,6 +10,7 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import { saveAs } from "file-saver";
 import ExcelJS from "exceljs";
+import "./datatable.css";
 
 const Predictions = () => {
   const [predictions, setPredictions] = useState([]);

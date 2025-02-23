@@ -182,9 +182,9 @@ const Sidebar = ({ isMinimized }) => {
         <Link to="/admin/communities">
           <li
             className="mt-3 py-2 px-8 text-gray-400 cursor-pointer flex items-center w-full transition-colors duration-300 ease-in-out relative"
-            onMouseOver={() => setHovered("users")}
+            onMouseOver={() => setHovered("communities")}
             onMouseOut={() => setHovered(null)}
-            onClick={() => handleItemClick("users")}
+            onClick={() => handleItemClick("communities")}
             style={{
               backgroundColor:
                 hovered === "communities" || selected === "communities"
