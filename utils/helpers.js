@@ -253,6 +253,18 @@ export const formatDate = (dateString) => {
   return new Date(dateString).toLocaleDateString(undefined, options);
 };
 
+export const formatDateTime = (dateString) => {
+  const options = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true, // Enables 12-hour format with AM/PM
+  };
+  return new Date(dateString).toLocaleString(undefined, options);
+};
+
 export const getAge = (dob) => {
   const birthDate = new Date(dob);
   const today = new Date();

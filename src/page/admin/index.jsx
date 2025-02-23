@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Map from "../../components/admin/Map";
+// import Map from "../../components/admin/Map";
 import AxiosInstance from "../../../utils/AxiosInstance";
 import { getUser, notifySuccess } from "../../../utils/helpers";
 import AnxietyBarChart from "../../components/admin/charts/AnxietyBarChart";
@@ -89,9 +89,11 @@ const index = () => {
             <h4 className="text-3xl font-bold text-gray-900 bg-white inline-block px-4 py-1 rounded-lg shadow">
               {spaceCount}
             </h4>
-            <button className="mt-4 px-4 py-2 bg-white text-[#5D69BE] font-semibold rounded-lg hover:bg-[#FFD700] transition-colors">
-              Explore Spaces
-            </button>
+            <Link to={"/admin/communities"}>
+              <button className="mt-4 px-4 py-2 bg-white text-[#5D69BE] font-semibold rounded-lg hover:bg-[#FFD700] transition-colors">
+                Explore Spaces
+              </button>
+            </Link>
           </div>
 
           {/* AI Prediction Test Card */}
@@ -131,11 +133,6 @@ const index = () => {
             <ContactEngagementChart />
           </div>
         </div>
-      </div>
-
-      {/* Map container */}
-      <div className="mt-8">
-        <Map />
       </div>
     </div>
   );

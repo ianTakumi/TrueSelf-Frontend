@@ -103,8 +103,8 @@ const Contacts = () => {
       ["TECHNOLOGICAL OF THE UNIVERSITY OF THE PHILIPPINES - TAGUIG"],
       ["Electrical and Allied Department"],
       ["Manila Technician Institute Computer Society"],
-      [""], // Empty row for spacing
-      ["No.", "Name", "Email", "Phone", "Subject", "Message", "Status"], // Column headers
+      [""],
+      ["No.", "Name", "Email", "Phone", "Subject", "Message", "Status"],
     ];
 
     header.forEach((row, index) => {

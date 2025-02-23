@@ -25,12 +25,14 @@ import DiaryEditor from "./page/Diary";
 import UserLayout from "./components/user/Layout";
 import ResetPassword from "./page/resetPassword";
 import ResetPasswordRequest from "./page/resetPasswordRequest";
+import CommunityLayout from "./components/user/community/layout";
+
 import AdminLayout from "./components/admin/Layout";
 import AdminIndex from "./page/admin/index";
 import AdminEmail from "./page/admin/email";
 import AdminContact from "./page/admin/contacts";
 import AdminProfile from "./page/admin/profile";
-import AdminSpaces from "./page/admin/spaces";
+import AdminCommunity from "./page/admin/community";
 import AdminUsers from "./page/admin/users";
 import AdminPredictions from "./page/admin/Predictions";
 import { ToastContainer } from "react-toastify";
@@ -45,7 +47,10 @@ const App = () => {
           path="/mood"
           element={<ProtectedRoute element={<MoodIndex />} />}
         />
-        <Route path="/community" element={<ComPage />} />
+        <Route path="/community" element={<CommunityLayout />}>
+          <Route index element={<ComPage />} />
+        </Route>
+
         <Route index element={<Home />} />
         <Route path="/" element={<UserLayout />}>
           <Route path="/terms-of-service" element={<TermsOfService />} />
@@ -99,7 +104,7 @@ const App = () => {
           <Route path="email" element={<AdminEmail />} />
           <Route path="contacts" element={<AdminContact />} />
           <Route path="profile" element={<AdminProfile />} />
-          <Route path="spaces" element={<AdminSpaces />} />
+          <Route path="communities" element={<AdminCommunity />} />
           <Route path="users" element={<AdminUsers />} />
           <Route path="predictions" element={<AdminPredictions />} />
         </Route>
