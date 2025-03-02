@@ -55,6 +55,13 @@ const Users = () => {
 
     doc.addImage(imgData, "PNG", 20, 10, 170, 30);
 
+    doc.setFontSize(16); // Set font size
+    doc.setFont("helvetica", "bold"); // Set font style
+    doc.text("User List", doc.internal.pageSize.width / 2, 45, {
+      align: "center",
+    });
+
+    // Generate the table
     doc.autoTable({
       startY: 50,
       head: [
@@ -63,19 +70,17 @@ const Users = () => {
           "Name",
           "Date of Birth",
           "Gender Identity",
-
           "Email",
           "Phone",
           "Status",
           "Registered At",
         ],
       ],
-      body: users.slice((user, index) => [
+      body: users.map((user, index) => [
         index + 1,
         user.name,
         formatDate(user.dob),
         user.genderIdentity,
-
         user.email,
         user.phoneNumber,
         user.status.charAt(0).toUpperCase() + user.status.slice(1),
@@ -236,7 +241,7 @@ const Users = () => {
           <Link to="/admin">
             <span className="text-blue-500 hover:underline">Home</span> /
           </Link>
-          <span className="text-gray-500"> Contacts</span>
+          <span className="text-gray-500"> Users</span>
         </p>
       </div>
 

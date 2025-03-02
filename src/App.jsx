@@ -26,7 +26,7 @@ import UserLayout from "./components/user/Layout";
 import ResetPassword from "./page/resetPassword";
 import ResetPasswordRequest from "./page/resetPasswordRequest";
 import CommunityLayout from "./components/user/community/layout";
-
+import Result from "./page/Result";
 import AdminLayout from "./components/admin/Layout";
 import AdminIndex from "./page/admin/index";
 import AdminEmail from "./page/admin/email";
@@ -58,7 +58,7 @@ const App = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/author" element={<Authors />} />
           <Route path="/about" element={<Aboutus />} />
-
+          <Route path="/result" element={<Result />} />
           <Route
             path="/mood-dashboard"
             element={<ProtectedRoute element={<MoodDashboard />} />}

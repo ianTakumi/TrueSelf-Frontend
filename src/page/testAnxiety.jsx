@@ -3,12 +3,9 @@ import { useForm, Controller } from "react-hook-form";
 import Select from "react-select";
 import Axios from "axios";
 import AxiosAIInstance from "../../utils/AxiosAIInstance";
-import { getUser, getAge } from "../../utils/helpers";
+import { getUser, getAge, extractNumber } from "../../utils/helpers";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-
-const API_KEY = "sk_dabe98ee69c6a553fcc199c5d15da7f934d16aaaee201cc0";
-const VOICE_ID = "Xb7hH8MSUJpSbSDYk0k2";
 
 const jobOptions = [
   { value: "student", label: "Student" },
@@ -57,47 +54,49 @@ const translations = {
       },
       {
         key: "caffeineIntake",
-        label: "4. What is your daily caffeine intake (milligram)?",
+        label: "4. How much caffeine in milligrams do you consume daily?",
         type: "number",
       },
       {
         key: "alcoholIntake",
-        label: "5. How many alcoholic drinks do you consume per week?",
+        label:
+          "5. How many alcoholic drinks do you consume per week (in bottles or glasses)? ",
         type: "number",
       },
       {
         key: "heartRateAnxiety",
         label:
-          "6. Typical heart rate during anxiety attack? (beats per minute)",
+          "6. What is your typical heart rate during an anxiety attack, in beats per minute (BPM)?",
         type: "number",
       },
       {
         key: "breathingRate",
         label:
-          "7. Breathing rate during anxiety attack? (Breaths per Minute - BPM)",
+          "7. What is your typical breathing rate during an anxiety attack, in breaths per minute?",
         type: "number",
       },
       {
         key: "sweatingSeverity",
         label:
-          "8. On a scale of 1 to 5, how severe is sweating during an anxiety attack? (Subjective scale)",
+          "8. On a scale of 1 to 5, how severe is your sweating during an anxiety attack? (1 = no sweating, 5 = extreme sweating)",
         type: "select",
         options: scale1to5Options,
       },
       {
         key: "therapySessions",
-        label: "9. Therapy sessions per month? (Sessions/Month)",
+        label:
+          "9. How many therapy sessions do you attend per month for anxiety?",
         type: "number",
       },
       {
         key: "smoking",
-        label: "10. Do you currently smoke? (Yes or No)",
+        label: "10. Do you currently have a smoking habit?",
         type: "select",
         options: yesNoOptions,
       },
       {
         key: "familyAnxiety",
-        label: "11. Family history of anxiety disorders? (Yes or No)",
+        label: "11. Do you have a family history of anxiety disorders?",
         type: "select",
         options: yesNoOptions,
       },
@@ -109,27 +108,28 @@ const translations = {
       },
       {
         key: "medication",
-        label: "13. Are you taking any medication for anxiety?",
+        label: "13. Are you currently taking any medication for anxiety?",
         type: "select",
         options: yesNoOptions,
       },
       {
         key: "lifeEvents",
-        label: "14. Have you experienced any major life events recently?",
+        label:
+          "14. Have you recently experienced any major life events that may have impacted your well-being?",
         type: "select",
         options: yesNoOptions,
       },
       {
         key: "dietQuality",
         label:
-          "15. On a scale of 1 to 10, how would you rate your overall diet?",
+          "15. On a scale of 1 to 10, how would you rate the overall quality of your diet? (1 = very unhealthy, 10 = very healthy)",
         type: "select",
         options: scale1to10Options,
       },
       {
         key: "stressLevel",
         label:
-          "16. On a scale of 1 to 10, how would you rate your current stress level?",
+          "16. On a scale of 1 to 10, how would you rate your current stress level? (1 = very low, 10 = extremely high)",
         type: "select",
         options: scale1to10Options,
       },
@@ -149,7 +149,7 @@ const translations = {
     seekHelp: "If anxiety persists, consider seeking professional help.",
     gotIt: "Got it!",
   },
-  tl: {
+  tg: {
     questions: [
       {
         key: "jobRole",
@@ -181,37 +181,37 @@ const translations = {
       {
         key: "heartRateAnxiety",
         label:
-          "6. Karaniwang tibok ng puso sa panahon ng atake ng pagkabalisa? (beats per minute)",
+          "6. Gaano kabilis ang tibok ng puso mo kapag nakakaramdam ka ng matinding pagkabalisa? (BPM)",
         type: "number",
       },
       {
         key: "breathingRate",
         label:
-          "7. Bilis ng paghinga sa panahon ng atake ng pagkabalisa? (Hinga bawat Minuto - BPM)",
+          "7. Gaano kabilis ang iyong paghinga ng makaramdam ng matinding pagkabalisa(Hinga bawat minuto)",
         type: "number",
       },
       {
         key: "sweatingSeverity",
         label:
-          "8. Sa isang sukat na 1 hanggang 5, gaano kalala ang pagpapawis sa panahon ng atake ng pagkabalisa? (Subjective scale)",
+          "8. Gaano kalala ang pagpapawis mo kapag may matinding pagkabalisa? Sagutin sa sukat na 1 (pinakamagaan) hanggang 5 (pinakamatindi)",
         type: "select",
         options: scale1to5Options,
       },
       {
         key: "therapySessions",
-        label: "9. Mga sesyon ng therapy bawat buwan? (Sessions/Buwan)",
+        label:
+          "9. Ilang therapy session para sa pagkabalisa ang tinatake mo bawat buwan?",
         type: "number",
       },
       {
         key: "smoking",
-        label: "10. Ikaw ba ay naninigarilyo? (Oo o Hindi)",
+        label: "10. ikaw ba ay naninigarilyo? ",
         type: "select",
         options: yesNoOptions,
       },
       {
         key: "familyAnxiety",
-        label:
-          "11. Mayroon bang kasaysayan ng pagkabalisa sa pamilya? (Oo o Hindi)",
+        label: "11. Mayroon bang kasaysayan ng pagkabalisa sa iyong pamilya?",
         type: "select",
         options: yesNoOptions,
       },
@@ -238,14 +238,14 @@ const translations = {
       {
         key: "dietQuality",
         label:
-          "15. Sa isang sukat na 1 hanggang 10, paano mo irarate ang iyong diyeta?",
+          "15. Sa sukat na 1 hanggang 10, gaano ka-nutritious at balanced ang iyong pagkain? (1 - Puro junk food, 10 - Masustansya at balanse)",
         type: "select",
         options: scale1to10Options,
       },
       {
         key: "stressLevel",
         label:
-          "16. Sa isang sukat na 1 hanggang 10, paano mo irarate ang iyong kasalukuyang antas ng stress?",
+          "16. Gaano kataas ang iyong stress ngayon sa sukat na 1 hanggang 10? (1 - Walang stress, 10 - Matinding stress)",
         type: "select",
         options: scale1to10Options,
       },
@@ -293,29 +293,14 @@ const TestAnxiety = () => {
   const speakQuestion = async (text) => {
     try {
       if (audioRef.current) {
-        audioRef.current.pause(); // Stop previous audio
-        audioRef.current.currentTime = 0; // Reset playback position
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
       }
-
-      const response = await Axios.post(
-        `https://api.elevenlabs.io/v1/text-to-speech/${VOICE_ID}`,
-        {
-          text,
-          voice_settings: { stability: 0.5, similarity_boost: 0.5 },
-        },
-        {
-          headers: {
-            "xi-api-key": API_KEY,
-            "Content-Type": "application/json",
-          },
-          responseType: "arraybuffer",
-        }
-      );
-
-      const audioBlob = new Blob([response.data], { type: "audio/mpeg" });
-      const audioURL = URL.createObjectURL(audioBlob);
+      extractNumber;
+      const languageFolder = language === "tg" ? "tg" : "en";
+      const audioURL = `/voices/${languageFolder}/${extractNumber(text)}.mp3`;
       const audio = new Audio(audioURL);
-      audioRef.current = audio; // Store new audio in ref
+      audioRef.current = audio;
 
       const playAudio = () => {
         audio.play();
@@ -352,8 +337,6 @@ const TestAnxiety = () => {
     if (currentQuestionIndex < translations[language].questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
-      console.log(answers);
-
       let occupationEncoding = {
         Occupation_Engineer: 0,
         Occupation_Other: 0,
@@ -395,7 +378,6 @@ const TestAnxiety = () => {
         ...occupationEncoding,
       };
 
-      console.log(cleanedData);
       submitData(cleanedData);
     }
   };
@@ -431,7 +413,7 @@ const TestAnxiety = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-gray-100 to-white p-6">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-b  p-6">
       <form
         onSubmit={handleSubmit(handleNext)}
         className="bg-white shadow-2xl rounded-2xl p-10 w-full max-w-xl transition-all duration-300 hover:shadow-lg"
@@ -450,7 +432,7 @@ const TestAnxiety = () => {
           <Select
             options={[
               { value: "en", label: "English" },
-              { value: "tl", label: "Tagalog" },
+              { value: "tg", label: "Tagalog" },
             ]}
             onChange={(selected) => setLanguage(selected.value)}
             defaultValue={{ value: "en", label: "English" }}

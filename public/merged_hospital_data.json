@@ -5,10 +5,10 @@
       "Contact Number": ["(043) 706-2365", "0917-571-4597"],
       "Email": "Not available",
       "Coordinates": {
-        "Latitude": 14.4506,
-        "Longitude": 121.0485
-      },
-      "Source": "mentalhealthph.org"
+        "Latitude": 14.462155333000158,
+
+        "Longitude": 121.00742564417887
+      }
     }
   },
   "Pasay City": {
@@ -49,7 +49,6 @@
         "Latitude": 14.5919,
         "Longitude": 121.0646
       },
-      "Source": "breakyourstigma.com",
       "Specialties": ["Psychiatry"]
     },
     "Ma. Ghia Nabong": {
@@ -60,7 +59,6 @@
         "Latitude": 14.5895,
         "Longitude": 121.0614
       },
-      "Source": "breakyourstigma.com",
       "Specialties": ["Psychiatry"]
     }
   },
@@ -73,7 +71,6 @@
         "Latitude": 14.6238,
         "Longitude": 121.0336
       },
-      "Source": "mentalhealthph.org",
       "Specialties": ["General Medicine"]
     },
     "Adoracion L. Tanega, M.D.": {
@@ -84,7 +81,6 @@
         "Latitude": 14.6413,
         "Longitude": 121.0373
       },
-      "Source": "breakyourstigma.com",
       "Specialties": ["Child Psychiatry"]
     },
     "Agnes Bueno, M.D.": {
@@ -95,7 +91,6 @@
         "Latitude": 14.6181,
         "Longitude": 121.0004
       },
-      "Source": "breakyourstigma.com",
       "Specialties": ["Psychology"]
     }
   },
@@ -108,7 +103,6 @@
         "Latitude": 14.6042,
         "Longitude": 121.0289
       },
-      "Source": "owwamember.com",
       "Specialties": [
         "General Medicine",
         "Surgery",

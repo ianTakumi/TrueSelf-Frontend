@@ -28,6 +28,7 @@ import AxiosInstance from "../../utils/AxiosInstance";
 import Swal from "sweetalert2";
 import { Edit, Delete, TableChart, ViewModule } from "@mui/icons-material";
 import JournalModal from "../components/user/modals/JournalModal";
+import JournalStreak from "../components/user/JournalStreak";
 
 const images = [
   "/page/journal/1.jpg",
@@ -120,9 +121,10 @@ const Diary = () => {
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Delete",
-      cancelButtonText: "Cancel",
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
+      confirmButtonColor: "#ff7eb6",
+      cancelButtonColor: "#6c8ae4",
+      background: "#f7f7f9",
+      color: "#333",
     });
 
     if (result.isConfirmed) {
@@ -171,9 +173,9 @@ const Diary = () => {
     });
   };
 
-  const handleOpenModal = (journalEntry) => {
+  const handleOpenModal = (journalEntry = null) => {
     setIsModalOpen(true);
-    setIsEditing(true);
+    setIsEditing(!!journalEntry);
     setSelectedJournalEntry(journalEntry);
   };
 
@@ -197,12 +199,13 @@ const Diary = () => {
         <Box position="fixed" top="0" left="0" right="0" bottom="" zIndex="50">
           <JournalModal
             journal={selectedJournalEntry}
-            onClose={onclose}
+            onClose={handleCloseModal}
             fetchJournals={getAllJournalEntry}
+            isEditing={isEditing}
           />
         </Box>
       )}
-
+      <div></div>
       <div className="flex flex-col md:flex-row items-center justify-center gap-12 my-10">
         <div className="relative">
           <img
@@ -226,9 +229,11 @@ const Diary = () => {
 
         <div className="text-center mt-8 px-6">
           {quote ? (
-            <div className="bg-gray-100 p-5 rounded-lg shadow-lg">
-              <p className="text-xl font-semibold">"{quote.content}"</p>
-              <p className="mt-2 text-gray-600">- {quote.author}</p>
+            <div className="bg-gradient-to-r from-pink-200 via-yellow-200 to-blue-200 p-5 rounded-lg shadow-lg">
+              <p className="text-xl font-semibold text-gray-800">
+                "{quote.content}"
+              </p>
+              <p className="mt-2 text-gray-700">- {quote.author}</p>
             </div>
           ) : (
             <p className="text-gray-500">Loading quote...</p>
@@ -242,37 +247,9 @@ const Diary = () => {
         </div>
       </div>
 
-      {/* Create journal */}
-      <div className="mt-8 p-6 bg-white rounded-lg shadow-lg">
-        <form onSubmit={handleSubmit(onSubmit)} className="mt-8 p-6  ">
-          <h2 className="text-2xl font-bold mb-4">Journal Entry</h2>
-
-          {/* Title Input */}
-          <input
-            {...register("title", { required: "Title is required" })}
-            type="text"
-            placeholder="Enter journal title"
-            className="w-full p-2 border border-gray-300 rounded mb-4"
-          />
-
-          {/* Rich Text Editor */}
-          <ReactQuill
-            theme="snow"
-            value={journalEntry}
-            onChange={handleJournalChange}
-            modules={modules}
-          />
-
-          {/* Submit Button */}
-          <button
-            type="submit"
-            className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          >
-            Save Entry
-          </button>
-        </form>
+      <div className="my-20">
+        <JournalStreak />
       </div>
-
       {/* List of journals */}
       <div className="my-5 p-6">
         <div className="flex justify-between items-center mb-4">
@@ -293,7 +270,10 @@ const Diary = () => {
             </ToggleButton>
           </ToggleButtonGroup>
         </div>
-        <button className="border-2 my-5 border-[#C8A2C8] text-[#C8A2C8] px-4 py-2 rounded-lg hover:bg-[#C8A2C8] hover:text-white transition">
+        <button
+          onClick={() => handleOpenModal()}
+          className="border-2 my-5 border-[#C8A2C8] text-[#C8A2C8] px-4 py-2 rounded-lg hover:bg-[#C8A2C8] hover:text-white transition"
+        >
           Add Entry
         </button>
 
@@ -384,7 +364,10 @@ const Diary = () => {
             )}
           </>
         ) : (
-          <p className="text-gray-500">No journal entries available.</p>
+          <div className="flex flex-col justify-center items-center">
+            <img src="/svg/journal/note.svg" width={300} height={300} alt="" />
+            <p className="text-gray-500">No journal entries available.</p>
+          </div>
         )}
       </div>
       <Modal open={open} onClose={() => setOpen(false)}>

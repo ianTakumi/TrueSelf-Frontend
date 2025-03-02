@@ -231,7 +231,15 @@ const MoodDashboard = () => {
               )}
             </>
           ) : (
-            <p className="text-gray-500">No mood entries available.</p>
+            <div className="flex flex-col items-center justify-center">
+              <img
+                src="/svg/moodDashboard/tots.svg"
+                height={300}
+                width={300}
+                alt=""
+              />
+              <p className="text-gray-500">No mood entries available.</p>
+            </div>
           )}
         </div>
       </div>

@@ -32,33 +32,47 @@ const MoodPieChart = () => {
 
   return (
     <>
-      <ResponsiveContainer width="100%" height={300}>
-        <PieChart>
-          <Pie
-            data={moodPercentage.map(({ mood, percentage }) => ({
-              name: mood,
-              value: percentage,
-            }))}
-            cx="50%"
-            cy="50%"
-            innerRadius={50}
-            outerRadius={100}
-            paddingAngle={5}
-            dataKey="value"
-            label={({ name, percent }) =>
-              `${name} ${(percent * 100).toFixed(0)}%`
-            }
-          >
-            {moodPercentage.map(({ mood }, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={moodColors[mood] || "#add8e6"}
-              />
-            ))}
-          </Pie>
-          <Legend />
-        </PieChart>
-      </ResponsiveContainer>
+      {moodPercentage.every(({ percentage }) => percentage === 0) ? (
+        <div className="flex flex-col items-center justify-center gap-5">
+          <img
+            src={"/svg/moodDashboard/noMood.svg"}
+            height={400}
+            width={400}
+            alt=""
+          />
+          <p className="text-center text-gray-500 mt-2 ">
+            No mood data available
+          </p>
+        </div>
+      ) : (
+        <ResponsiveContainer width="100%" height={300}>
+          <PieChart>
+            <Pie
+              data={moodPercentage.map(({ mood, percentage }) => ({
+                name: mood,
+                value: percentage,
+              }))}
+              cx="50%"
+              cy="50%"
+              innerRadius={50}
+              outerRadius={100}
+              paddingAngle={5}
+              dataKey="value"
+              label={({ name, percent }) =>
+                `${name} ${(percent * 100).toFixed(0)}%`
+              }
+            >
+              {moodPercentage.map(({ mood }, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={moodColors[mood] || "#add8e6"}
+                />
+              ))}
+            </Pie>
+            <Legend />
+          </PieChart>
+        </ResponsiveContainer>
+      )}
     </>
   );
 };

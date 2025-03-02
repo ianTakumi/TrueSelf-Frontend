@@ -1,22 +1,41 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { CircularProgress } from "@mui/material";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+import osm_providers from "../../utils/osm/osm_providers";
+import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
+import { renderToStaticMarkup } from "react-dom/server";
 
 const Recommend = () => {
-  const [coordinates, setCoordinates] = useState(null);
+  const [coordinates, setCoordinates] = useState({
+    lat: 14.5995,
+    lng: 120.9842,
+  });
+  const ZOOM_LEVEL = 9;
+  const mapRef = useRef(null);
   const [error, setError] = useState(null);
   const [hospitals, setHospitals] = useState([]);
-  const [visibleHospitals, setVisibleHospitals] = useState(3);
+  const [visibleHospitals, setVisibleHospitals] = useState(4);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          const userCoordinates = {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          };
-          setCoordinates(userCoordinates);
+          console.log(
+            "User coordinates:",
+            position.coords.latitude,
+            position.coords.longitude
+          );
+          const userCoordinates = [
+            position.coords.latitude,
+            position.coords.longitude,
+          ];
+          setCoordinates({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
           fetchHospitals(userCoordinates);
         },
         (err) => {
@@ -39,8 +58,8 @@ const Recommend = () => {
       Object.entries(data).forEach(([city, hospitals]) => {
         Object.entries(hospitals).forEach(([name, details]) => {
           const distance = getDistance(
-            userCoordinates.latitude,
-            userCoordinates.longitude,
+            userCoordinates[0],
+            userCoordinates[1],
             details.Coordinates.Latitude,
             details.Coordinates.Longitude
           );
@@ -50,6 +69,7 @@ const Recommend = () => {
 
       hospitalList.sort((a, b) => a.distance - b.distance);
       setHospitals(hospitalList);
+      console.log(hospitalList);
     } catch (error) {
       console.error("Error fetching hospital data:", error);
       setError("Failed to load hospital data.");
@@ -73,57 +93,132 @@ const Recommend = () => {
     return (R * c).toFixed(2);
   };
 
+  const hospitalIconHTML = renderToStaticMarkup(
+    <LocalHospitalIcon style={{ color: "red", fontSize: "24px" }} />
+  );
+
+  const hospitalIcon = new L.divIcon({
+    className: "hospital-marker",
+    html: hospitalIconHTML,
+    iconSize: [24, 24],
+    iconAnchor: [12, 12],
+  });
+
+  const zoomToHospital = (lat, lng) => {
+    if (mapRef.current) {
+      mapRef.current.setView([lat, lng], 15, { animate: true });
+    }
+  };
+
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="flex w-full max-w-5xl p-10 bg-white rounded-lg shadow-lg">
-        <div className="flex justify-center items-center flex-shrink-0">
-          <img
-            src="/page/doctor.png"
-            alt="Doctor Illustration"
-            className="w-40 h-40"
-          />
-        </div>
-        <div className="ml-6 flex-grow">
-          <h2 className="text-xl font-bold mb-4">Recommended Hospitals</h2>
-          {loading ? (
-            <div className="flex justify-center items-center">
-              <CircularProgress color="secondary" />
-            </div>
-          ) : (
-            <>
+    <div className="relative h-screen w-full">
+      <MapContainer
+        center={coordinates}
+        zoom={ZOOM_LEVEL}
+        ref={mapRef}
+        style={{ height: "600px", width: "70%" }}
+      >
+        <TileLayer
+          url={osm_providers.maptiler.url}
+          attribution={osm_providers.maptiler.attribution}
+        />
+        {/* 🔴 Marker for User Location */}
+        <Marker position={coordinates}>
+          <Popup>📍 You are here!</Popup>
+        </Marker>
+
+        {/* 🏥 Markers for Hospitals */}
+        {hospitals.map((hospital, index) => (
+          <Marker
+            key={index}
+            position={[
+              hospital.Coordinates.Latitude,
+              hospital.Coordinates.Longitude,
+            ]}
+            icon={hospitalIcon}
+          >
+            <Popup>
+              <strong>{hospital.name}</strong>
+              <br />
+              {hospital.Address}
+              <br />
+              📍 {hospital.distance} km away
+              <br />
+              <div className="flex justify-between items-center mt-1">
+                <a
+                  href={`https://maps.app.goo.gl/7HXhKcdGSrg5GQRt9`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:underline"
+                >
+                  View on Google Maps
+                </a>
+                <a href="#" className="text-blue-500 hover:underline ml-4">
+                  View details
+                </a>
+              </div>
+            </Popup>
+          </Marker>
+        ))}
+      </MapContainer>
+      <div className="absolute top-4 right-0 bg-white ml-5 p-5 rounded-2xl shadow-lg max-w-md max-h-[600px] overflow-y-auto border border-gray-200">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+          🏥 Recommended Hospitals
+        </h2>
+
+        {loading ? (
+          <div className="flex justify-center py-5">
+            <CircularProgress color="secondary" />
+          </div>
+        ) : (
+          <>
+            <div className="divide-y divide-gray-300">
               {hospitals.slice(0, visibleHospitals).map((hospital, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between border-b pb-3 mb-3 transition duration-300 ease-in-out transform hover:bg-gray-100 hover:shadow-lg p-3 rounded-lg"
+                  className="py-4 hover:bg-gray-100 px-3 rounded-lg transition"
+                  onClick={() =>
+                    zoomToHospital(
+                      hospital.Coordinates.Latitude,
+                      hospital.Coordinates.Longitude
+                    )
+                  }
                 >
-                  <div>
-                    <p className="font-semibold text-lg">{hospital.name}</p>
-                    <p className="text-gray-500 text-sm">
-                      {hospital.Address} • {hospital.distance} km away
-                    </p>
-                    <a
-                      href={`https://www.google.com/maps/search/?api=1&query=${hospital.Coordinates.Latitude},${hospital.Coordinates.Longitude}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-500 hover:underline"
-                    >
-                      View on Google Maps
-                    </a>
-                  </div>
+                  <p className="text-lg font-medium text-gray-900">
+                    {hospital.name}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    {hospital.Address} •{" "}
+                    <span className="font-semibold">
+                      {hospital.distance} km away
+                    </span>
+                  </p>
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                      `${hospital.name}`
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block mt-1 text-blue-500 hover:text-blue-700 hover:underline transition"
+                  >
+                    View on Google Maps →
+                  </a>
                 </div>
               ))}
-              {visibleHospitals < hospitals.length && (
-                <p
-                  className="font-bold text-black mt-4 cursor-pointer"
-                  onClick={() => setVisibleHospitals(visibleHospitals + 3)}
-                >
-                  See more
-                </p>
-              )}
-              {error && <p className="text-red-500 mt-2">Error: {error}</p>}
-            </>
-          )}
-        </div>
+            </div>
+
+            {visibleHospitals < hospitals.length && (
+              <button
+                className="w-full mt-4 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
+                onClick={() => setVisibleHospitals(visibleHospitals + 3)}
+              >
+                See more hospitals
+              </button>
+            )}
+          </>
+        )}
+
+        {error && <p className="text-red-500 mt-2 text-center">{error}</p>}
       </div>
     </div>
   );

@@ -1,6 +1,168 @@
 import { toast } from "react-toastify";
 
 export const randomRange = (min, max) => Math.random() * (max - min) + min;
+export const extractNumber = (text) => {
+  const match = text.match(/^(\d+)\./); // Hanapin ang number sa simula ng text
+  return match ? match[1] : null; // Kung may nahanap, ibalik ang number; kung wala, return null
+};
+
+[
+  {
+    quote:
+      "The only limit to our realization of tomorrow is our doubts of today.",
+    author: "Franklin D. Roosevelt",
+  },
+  {
+    quote: "Do what you can, with what you have, where you are.",
+    author: "Theodore Roosevelt",
+  },
+  {
+    quote:
+      "Success is not final, failure is not fatal: it is the courage to continue that counts.",
+    author: "Winston Churchill",
+  },
+  {
+    quote: "Life is what happens when you're busy making other plans.",
+    author: "John Lennon",
+  },
+  {
+    quote: "The way to get started is to quit talking and begin doing.",
+    author: "Walt Disney",
+  },
+  {
+    quote: "You must be the change you wish to see in the world.",
+    author: "Mahatma Gandhi",
+  },
+  {
+    quote: "In the middle of every difficulty lies opportunity.",
+    author: "Albert Einstein",
+  },
+  { quote: "Happiness depends upon ourselves.", author: "Aristotle" },
+  {
+    quote: "It does not matter how slowly you go as long as you do not stop.",
+    author: "Confucius",
+  },
+  {
+    quote: "Do what you love and you'll never work a day in your life.",
+    author: "Marc Anthony",
+  },
+  {
+    quote: "Opportunities don't happen. You create them.",
+    author: "Chris Grosser",
+  },
+  {
+    quote:
+      "Your time is limited, so don't waste it living someone else's life.",
+    author: "Steve Jobs",
+  },
+  {
+    quote: "The only way to do great work is to love what you do.",
+    author: "Steve Jobs",
+  },
+  {
+    quote:
+      "If you set your goals ridiculously high and it's a failure, you will fail above everyone else's success.",
+    author: "James Cameron",
+  },
+  {
+    quote: "Don't watch the clock; do what it does. Keep going.",
+    author: "Sam Levenson",
+  },
+  {
+    quote:
+      "Keep your face always toward the sunshine—and shadows will fall behind you.",
+    author: "Walt Whitman",
+  },
+  { quote: "Everything you can imagine is real.", author: "Pablo Picasso" },
+  {
+    quote:
+      "Do what you feel in your heart to be right—for you'll be criticized anyway.",
+    author: "Eleanor Roosevelt",
+  },
+  {
+    quote: "Believe you can and you're halfway there.",
+    author: "Theodore Roosevelt",
+  },
+  {
+    quote: "It always seems impossible until it's done.",
+    author: "Nelson Mandela",
+  },
+  {
+    quote: "Start where you are. Use what you have. Do what you can.",
+    author: "Arthur Ashe",
+  },
+  {
+    quote: "You miss 100% of the shots you don't take.",
+    author: "Wayne Gretzky",
+  },
+  {
+    quote:
+      "What lies behind us and what lies before us are tiny matters compared to what lies within us.",
+    author: "Ralph Waldo Emerson",
+  },
+  {
+    quote: "I find that the harder I work, the more luck I seem to have.",
+    author: "Thomas Jefferson",
+  },
+  {
+    quote:
+      "Don't be pushed around by the fears in your mind. Be led by the dreams in your heart.",
+    author: "Roy T. Bennett",
+  },
+  {
+    quote: "Nothing is impossible, the word itself says ‘I’m possible’!",
+    author: "Audrey Hepburn",
+  },
+  {
+    quote: "Do what you can with all you have, wherever you are.",
+    author: "Theodore Roosevelt",
+  },
+  {
+    quote: "Act as if what you do makes a difference. It does.",
+    author: "William James",
+  },
+  {
+    quote: "Be yourself; everyone else is already taken.",
+    author: "Oscar Wilde",
+  },
+  {
+    quote:
+      "You have power over your mind – not outside events. Realize this, and you will find strength.",
+    author: "Marcus Aurelius",
+  },
+  {
+    quote: "Don't let yesterday take up too much of today.",
+    author: "Will Rogers",
+  },
+  {
+    quote: "I have not failed. I've just found 10,000 ways that won't work.",
+    author: "Thomas Edison",
+  },
+  {
+    quote: "Change your thoughts and you change your world.",
+    author: "Norman Vincent Peale",
+  },
+  { quote: "Either you run the day or the day runs you.", author: "Jim Rohn" },
+  { quote: "If you can dream it, you can do it.", author: "Walt Disney" },
+  {
+    quote:
+      "Perfection is not attainable, but if we chase perfection we can catch excellence.",
+    author: "Vince Lombardi",
+  },
+  {
+    quote: "Quality means doing it right when no one is looking.",
+    author: "Henry Ford",
+  },
+  {
+    quote: "I attribute my success to this: I never gave or took any excuse.",
+    author: "Florence Nightingale",
+  },
+  {
+    quote:
+      "Limitations live only in our minds. But if we use our imaginations, our possibilities become limitless.",
+    author: "Jamie Paolinetti",
+  },
+];
 
 export const songs = [
   { title: "400HZ", src: "/music/400HZ.mp3" },

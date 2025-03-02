@@ -38,10 +38,10 @@ const MoodLineChart = () => {
         });
 
         setMoodPerMonth(formattedData);
+      } else {
       }
     } catch (error) {
       console.error(error);
-      notifyError("Failed to fetch mood data");
     }
   };
 
@@ -51,23 +51,35 @@ const MoodLineChart = () => {
 
   return (
     <>
-      <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={moodPerMonth}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="month" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          {Object.keys(moodColors).map((mood) => (
-            <Line
-              key={mood}
-              type="monotone"
-              dataKey={mood}
-              stroke={moodColors[mood]}
-            />
-          ))}
-        </LineChart>
-      </ResponsiveContainer>
+      {moodPerMonth.length === 0 ? (
+        <div className="flex items-center justify-center flex-col gap-0">
+          <img
+            src={"/svg/moodDashboard/noDataCalendar.svg"}
+            height={300}
+            width={300}
+            alt=""
+          />
+          <p className="text-center text-gray-500">No monthly data available</p>
+        </div>
+      ) : (
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={moodPerMonth}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="month" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            {Object.keys(moodColors).map((mood) => (
+              <Line
+                key={mood}
+                type="monotone"
+                dataKey={mood}
+                stroke={moodColors[mood]}
+              />
+            ))}
+          </LineChart>
+        </ResponsiveContainer>
+      )}
     </>
   );
 };
