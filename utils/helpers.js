@@ -164,6 +164,98 @@ export const extractNumber = (text) => {
   },
 ];
 
+export const affirmations = [
+  {
+    id: 1,
+    title: "Overall Health Affirmations",
+    description:
+      "A powerful collection of affirmations designed to promote physical, mental, and emotional well-being, reinforcing a healthy and balanced lifestyle.",
+    url: "https://youtu.be/lLMVefQKyaE?si=eq59oIe04BSzIqjc",
+    image:
+      "/affirmations/a-powerful-collection-of-affirmations-designed-to.png",
+  },
+  {
+    id: 2,
+    title: "Trauma Healing Affirmations",
+    description:
+      "A soothing set of affirmations aimed at fostering emotional resilience, healing past wounds, and promoting inner peace.",
+    url: "https://youtu.be/9H5Bre278BU?si=LWZTlcyiuyG4Lkqh",
+    image:
+      "/affirmations/a-soothing-set-of-affirmations-aimed-at-fostering.png",
+  },
+  {
+    id: 3,
+    title: "Confidence, Success, and Wealth Affirmations",
+    description:
+      "Motivational affirmations to boost self-confidence, attract success, and cultivate a mindset of abundance and financial prosperity.",
+    url: "https://youtu.be/GvAl2Q5Oj8k?si=m2iwmamJiPBZbhlj",
+    image:
+      "/affirmations/motivational-affirmations-to-boost-self-confidence.png",
+  },
+  {
+    id: 4,
+    title: "Happiness and Blissful Life Affirmations",
+    description:
+      "A series of uplifting affirmations to invite joy, gratitude, and fulfillment into daily life, enhancing overall happiness.",
+    url: "https://youtu.be/eMkNUWDylUY?si=mUnj9h4PBkFiVqJM",
+    image: "/affirmations/a-series-of-uplifting-affirmations-to-invite-joy.png",
+  },
+  {
+    id: 5,
+    title: "Positive Thinking 'I AM' Affirmations",
+    description:
+      "Empowering 'I AM' statements designed to reshape thoughts, encourage self-belief, and cultivate a strong, positive mindset.",
+    url: "https://youtu.be/14G0pl1-IRQ?si=C5i4EZFXdr1wo8MM",
+    image:
+      "/affirmations/empowering--i-am--statements-designed-to-reshape-t.png",
+  },
+  {
+    id: 6,
+    title: "Abundance Affirmations",
+    description:
+      "A set of affirmations to attract prosperity, financial success, and a life filled with unlimited possibilities and opportunities.",
+    url: "https://youtu.be/HmjrC-A5l7o?si=1aPid1T2ZiWUZBKJ",
+    image:
+      "/affirmations/a-set-of-affirmations-to-attract-prosperity--finan.png",
+  },
+  {
+    id: 7,
+    title: "Self Love Affirmations",
+    description:
+      "Affirmations that nurture self-acceptance, compassion, and appreciation, fostering a deep sense of love and respect for oneself.",
+    url: "https://youtu.be/_eU3nHz_e34?si=w_1Hole-erO2C0x1",
+    image:
+      "/affirmations/affirmations-that-nurture-self-acceptance--compass.png",
+  },
+  {
+    id: 8,
+    title: "Self Worth, Value, and Respect Affirmations",
+    description:
+      "Encouraging affirmations to reinforce personal worth, set healthy boundaries, and inspire self-respect and dignity.",
+    url: "https://youtu.be/e35HHbd25ho?si=rCI9n2xDD-gckuWh",
+    image:
+      "/affirmations/encouraging-affirmations-to-reinforce-personal-wor.png",
+  },
+  {
+    id: 9,
+    title: "Self Concept Affirmations",
+    description:
+      "Affirmations crafted to help reshape self-identity, enhance self-esteem, and align personal beliefs with confidence and success.",
+    url: "https://youtu.be/-wKJB-bSpL4?si=TZ8Qa1LwJgZe10kz",
+    image:
+      "/affirmations/affirmations-crafted-to-help-reshape-self-identity.png",
+  },
+  {
+    id: 10,
+    title: "Mental Clarity Affirmations",
+    description:
+      "Focused affirmations to improve concentration, clear mental fog, and promote a sharp, peaceful, and organized mind.",
+    url: "https://youtu.be/U1bl5QslMLk?si=zoYw-HuKfueS9aSN",
+    image:
+      "/affirmations/focused-affirmations-to-improve-concentration--cle.png",
+  },
+];
+
 export const songs = [
   { title: "400HZ", src: "/music/400HZ.mp3" },
   { title: "432HZ", src: "/music/432HZMeditation.mp3" },

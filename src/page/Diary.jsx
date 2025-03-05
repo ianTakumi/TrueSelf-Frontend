@@ -29,6 +29,7 @@ import Swal from "sweetalert2";
 import { Edit, Delete, TableChart, ViewModule } from "@mui/icons-material";
 import JournalModal from "../components/user/modals/JournalModal";
 import JournalStreak from "../components/user/JournalStreak";
+import Affirmations from "../components/user/Affirmations";
 
 const images = [
   "/page/journal/1.jpg",
@@ -194,7 +195,6 @@ const Diary = () => {
           in a safe space.
         </p>
       </div>
-
       {isModalOpen && (
         <Box position="fixed" top="0" left="0" right="0" bottom="" zIndex="50">
           <JournalModal
@@ -205,7 +205,7 @@ const Diary = () => {
           />
         </Box>
       )}
-      <div></div>
+
       <div className="flex flex-col md:flex-row items-center justify-center gap-12 my-10">
         <div className="relative">
           <img
@@ -246,10 +246,14 @@ const Diary = () => {
           <Clock className="mt-4  p-2 rounded-lg" value={time} />
         </div>
       </div>
-
       <div className="my-20">
         <JournalStreak />
       </div>
+
+      <div className="my-10">
+        <Affirmations />
+      </div>
+
       {/* List of journals */}
       <div className="my-5 p-6">
         <div className="flex justify-between items-center mb-4">

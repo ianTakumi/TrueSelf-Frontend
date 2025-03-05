@@ -19,6 +19,8 @@ import { Edit, Delete, TableChart, ViewModule } from "@mui/icons-material";
 import Swal from "sweetalert2";
 import MoodModal from "../components/user/modals/MoodModal";
 import Playlist from "../components/user/Playlist";
+import Affirmations from "../components/user/Affirmations";
+
 const MoodDashboard = () => {
   const user = getUser();
   const userId = user._id;
@@ -135,6 +137,9 @@ const MoodDashboard = () => {
         </div>
       </div>
 
+      <div className="my-10">
+        <Affirmations />
+      </div>
       <div className="mt-10">
         <div className="flex justify-between items-center mb-4">
           <h2 className="font-serif font-semibold text-lg md:text-xl">

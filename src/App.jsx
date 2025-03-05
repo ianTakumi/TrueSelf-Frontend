@@ -20,6 +20,8 @@ import CrisisSupport from "./page/CrisisSupport";
 import TermsOfService from "./page/termsOfService";
 import PrivacyPolicy from "./page/privacyPolicy";
 import Authors from "./page/Authors";
+import Healthcare from "./page/articles/Healthcare";
+import MentalHealth from "./page/articles/MentalHealth";
 import Siri from "./page/siri";
 import DiaryEditor from "./page/Diary";
 import UserLayout from "./components/user/Layout";
@@ -53,6 +55,8 @@ const App = () => {
 
         <Route index element={<Home />} />
         <Route path="/" element={<UserLayout />}>
+          <Route path="/article/healthcare" element={<Healthcare />} />
+          <Route path="/article/mental-health" element={<MentalHealth />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/contact" element={<Contact />} />
