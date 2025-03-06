@@ -20,13 +20,45 @@ import { saveAs } from "file-saver";
 import ExcelJS from "exceljs";
 import CommunityModal from "../../components/admin/modals/CommunityModal";
 
+const ExpandableDescription = ({
+  text,
+  rowIndex,
+  expandedRow,
+  setExpandedRow,
+}) => {
+  const maxLength = 100;
+  const isExpanded = expandedRow === rowIndex; // Check if this row is expanded
+
+  if (!text) return "N/A";
+
+  return (
+    <div>
+      {isExpanded ? text : `${text.substring(0, maxLength)}...`}
+      {text.length > maxLength && (
+        <button
+          onClick={() => setExpandedRow(isExpanded ? null : rowIndex)} // Toggle
+          style={{
+            color: "blue",
+            border: "none",
+            background: "none",
+            cursor: "pointer",
+            marginLeft: 5,
+          }}
+        >
+          {isExpanded ? " View Less" : " View More"}
+        </button>
+      )}
+    </div>
+  );
+};
+
 const spaces = () => {
   const [spaces, setSpaces] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [communityToEdit, setCommunityToEdit] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [expandedRow, setExpandedRow] = useState(null);
   const fetchSpaces = async () => {
     try {
       await AxiosInstance.get("/spaces").then((response) => {
@@ -212,9 +244,20 @@ const spaces = () => {
     {
       name: "description",
       label: "Description",
+      options: {
+        customBodyRender: (value, tableMeta) => (
+          <ExpandableDescription
+            text={value}
+            rowIndex={tableMeta.rowIndex}
+            expandedRow={expandedRow}
+            setExpandedRow={setExpandedRow}
+          />
+        ),
+      },
     },
+
     {
-      name: "createdBy", // Use the parent object name
+      name: "createdBy",
       label: "Created By",
       options: {
         customBodyRender: (value) => value?.name || "N/A",
@@ -250,20 +293,22 @@ const spaces = () => {
       },
     },
     {
-      name: "profile.url",
+      name: "profile",
       label: "Profile",
       options: {
         print: false,
         download: false,
-        customBodyRender: (value, tableMeta) => {
-          const communityName = tableMeta.rowData[1]; // Assuming "name" is the second column
+        customBodyRender: (profile, tableMeta) => {
+          if (!profile || typeof profile !== "object") return null;
+
+          const communityName = tableMeta.rowData[1];
           const firstLetter = communityName
             ? communityName.charAt(0).toUpperCase()
             : "?";
 
-          return value ? (
+          return profile.url ? (
             <img
-              src={value}
+              src={profile.url}
               alt="Profile"
               style={{ width: "50px", height: "50px", borderRadius: "50%" }}
             />
@@ -295,14 +340,14 @@ const spaces = () => {
     setIsModalOpen(true);
     if (community) {
       setIsEditing(true);
-      setSpaceToEdit(community);
+      setCommunityToEdit(community);
     }
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
     setIsEditing(false);
-    setSpaceToEdit(null);
+    setCommunityToEdit(null);
   };
 
   const options = {

@@ -22,6 +22,11 @@ import PrivacyPolicy from "./page/privacyPolicy";
 import Authors from "./page/Authors";
 import Healthcare from "./page/articles/Healthcare";
 import MentalHealth from "./page/articles/MentalHealth";
+import DomesticAbuse from "./page/articles/DomesticAbuse";
+import SexualHealth from "./page/articles/SexualHealth";
+import SupportSystem from "./page/articles/SupportSystem";
+import SelfCare from "./page/articles/SelfCare";
+import Communities from "./page/Communities";
 import Siri from "./page/siri";
 import DiaryEditor from "./page/Diary";
 import UserLayout from "./components/user/Layout";
@@ -39,6 +44,7 @@ import AdminUsers from "./page/admin/users";
 import AdminPredictions from "./page/admin/Predictions";
 import { ToastContainer } from "react-toastify";
 import "./index.css";
+import SingleCommunity from "./page/SingleCommunity";
 
 const App = () => {
   return (
@@ -51,12 +57,18 @@ const App = () => {
         />
         <Route path="/community" element={<CommunityLayout />}>
           <Route index element={<ComPage />} />
+          <Route path="communities" element={<Communities />} />
+          <Route path=":id" element={<SingleCommunity />} />
         </Route>
 
         <Route index element={<Home />} />
         <Route path="/" element={<UserLayout />}>
           <Route path="/article/healthcare" element={<Healthcare />} />
           <Route path="/article/mental-health" element={<MentalHealth />} />
+          <Route path="/article/domestic-abuse" element={<DomesticAbuse />} />
+          <Route path="/article/support-system" element={<SupportSystem />} />
+          <Route path="/article/self-care" element={<SelfCare />} />
+          <Route path="/article/sexual-health" element={<SexualHealth />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/contact" element={<Contact />} />

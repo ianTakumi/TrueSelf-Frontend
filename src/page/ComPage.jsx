@@ -1,7 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import AxiosInstance from "../../utils/AxiosInstance";
 
 const ComPage = () => {
+  const [topCommunities, setTopCommunities] = useState([]);
+
+  const fetchTopCommunities = async () => {
+    try {
+      const res = await AxiosInstance.get("/community/top");
+      setTopCommunities(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTopCommunities();
+  }, []);
+
   return (
     <div className="com-container flex flex-wrap justify-between items-start font-sans bg-gray-100">
       {/* Main Content */}

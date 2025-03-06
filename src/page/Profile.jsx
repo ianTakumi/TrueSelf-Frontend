@@ -192,10 +192,6 @@ const Profile = () => {
           <div className="card-header">
             <h2 className="card-title">{user.name}</h2>
             <p className="card-subtitle">{user.pronouns}</p>
-            <span className="user-status">
-              {user.role.charAt(0).toUpperCase() + user.role.slice(1)} -{" "}
-              {user.status}
-            </span>
           </div>
 
           <div className="card-info">
