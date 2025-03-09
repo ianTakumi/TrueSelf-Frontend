@@ -2,7 +2,7 @@ import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import AxiosInstance from "../../utils/AxiosInstance";
 import { notifyError, notifySuccess } from "../../utils/helpers";
-import { motion } from "framer-motion"; // Import Framer Motion
+import { motion } from "framer-motion";
 
 const Contact = () => {
   const {
@@ -98,16 +98,25 @@ const Contact = () => {
             <Controller
               name="email"
               control={control}
-              rules={{ required: "Email is required" }}
-              render={({ field }) => (
+              rules={{
+                required: "Email is required",
+                pattern: {
+                  value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                  message: "Invalid email address",
+                },
+              }}
+              render={({ field, fieldState: { error } }) => (
                 <input
                   {...field}
                   type="email"
                   placeholder="Your Email"
-                  className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#D1B1D3]"
+                  className={`p-2 border ${
+                    error ? "border-red-500" : "border-gray-300"
+                  } rounded-md focus:outline-none focus:ring-1 focus:ring-[#D1B1D3]`}
                 />
               )}
             />
+
             {errors.email && (
               <p className="text-red-500 text-left ml-2">
                 {errors.email.message}
@@ -125,17 +134,31 @@ const Contact = () => {
             <Controller
               name="phoneNumber"
               control={control}
-              rules={{ required: "Phone number is required" }}
-              render={({ field }) => (
+              rules={{
+                required: "Phone number is required",
+                pattern: {
+                  value: /^09\d{9}$/,
+                  message:
+                    "Invalid phone number format. Must be 11 digits and start with 09.",
+                },
+              }}
+              render={({ field, fieldState: { error } }) => (
                 <input
                   {...field}
                   type="text"
                   placeholder="Your Phone Number"
-                  className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#D1B1D3]"
+                  className={`p-2 border ${
+                    error ? "border-red-500" : "border-gray-300"
+                  } rounded-md focus:outline-none focus:ring-2 focus:ring-[#D1B1D3]`}
                   maxLength={11}
+                  inputMode="numeric" // Opens number keypad on mobile
+                  onInput={(e) =>
+                    (e.target.value = e.target.value.replace(/\D/g, ""))
+                  } // Prevents non-numeric input
                 />
               )}
             />
+
             {errors.phoneNumber && (
               <p className="text-red-500 text-left ml-2">
                 {errors.phoneNumber.message}
@@ -159,6 +182,7 @@ const Contact = () => {
                   {...field}
                   type="text"
                   placeholder="Subject"
+                  maxLength={255}
                   className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#D1B1D3]"
                 />
               )}

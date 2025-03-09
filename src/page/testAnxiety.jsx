@@ -333,7 +333,7 @@ const TestAnxiety = () => {
       [currentQuestion.key]: data[currentQuestion.key],
     });
     setValue(currentQuestion.key, "");
-
+    console.log(answers);
     if (currentQuestionIndex < translations[language].questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
@@ -345,7 +345,7 @@ const TestAnxiety = () => {
         Occupation_Unemployed: 0,
       };
 
-      const selectedOccupation = data.jobRole.value;
+      const selectedOccupation = answers.jobRole.value;
       if (selectedOccupation) {
         const formattedOccupation = `Occupation_${
           selectedOccupation.charAt(0).toUpperCase() +
@@ -384,11 +384,11 @@ const TestAnxiety = () => {
 
   const submitData = async (data) => {
     const userId = user._id;
+
     await AxiosAIInstance.post(`/predict/${userId}`, data).then((response) => {
-      console.log(response.data);
       const severity = Math.round(response.data.predicted_severity);
       if (severity > 5) {
-        navigate("/recommend");
+        navigate("/Result");
       } else {
         Swal.fire({
           title: translations[language].manageMildAnxiety,

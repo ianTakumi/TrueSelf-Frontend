@@ -19,7 +19,7 @@ const Communities = () => {
   const fetchCommunities = async () => {
     try {
       const res = await AxiosInstance.get("/spaces");
-      setCommunities(res.data.data); // Accessing 'data' array from API response
+      setCommunities(res.data.data);
     } catch (error) {
       setError("Failed to fetch communities. Please try again.");
       console.error(error);
@@ -79,8 +79,11 @@ const Communities = () => {
               >
                 <CardMedia
                   component="img"
-                  height="180"
-                  image={community.banner.url}
+                  sx={{
+                    height: 250, // Parehong height para sa lahat ng images
+                    objectFit: "cover", // Para hindi ma-distort ang images
+                  }}
+                  image={community.profile.url}
                   alt={community.name}
                 />
                 <CardContent>
@@ -97,7 +100,10 @@ const Communities = () => {
                       : community.description}
                   </Typography>
                   <Typography variant="caption" color="text.secondary">
-                    Created by: {community.createdBy.name}
+                    Created by:{" "}
+                    {community.createdBy.name === "Ian Calica"
+                      ? "Trueself Administrator"
+                      : community.createdBy.name}
                   </Typography>
                 </CardContent>
               </Card>

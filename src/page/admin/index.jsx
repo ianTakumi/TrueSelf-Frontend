@@ -4,7 +4,7 @@ import AxiosInstance from "../../../utils/AxiosInstance";
 import { getUser, notifySuccess } from "../../../utils/helpers";
 import AnxietyBarChart from "../../components/admin/charts/AnxietyBarChart";
 import ContactEngagementChart from "../../components/admin/charts/ContactsLineChart";
-
+import StackBarChart from "../../components/admin/charts/StackBarChart";
 import { AccountCircle } from "@mui/icons-material";
 import PeopleIcon from "@mui/icons-material/People";
 import EventIcon from "@mui/icons-material/Event";
@@ -133,6 +133,12 @@ const index = () => {
             <ContactEngagementChart />
           </div>
         </div>
+      </div>
+      <div className="flex-1 bg-white rounded-lg shadow-lg p-6">
+        <h3 className="text-2xl font-semibold text-gray-800 mb-4">
+          Users Mood Distribution per Week
+        </h3>
+        <StackBarChart />
       </div>
     </div>
   );

@@ -22,25 +22,35 @@ const ComPage = () => {
     <div className="com-container flex flex-wrap justify-between items-start font-sans bg-gray-100">
       {/* Main Content */}
       <main className="main-content flex-grow p-5">
-        <div className="top-section flex gap-2.5 flex-wrap mb-5">
-          <div className="flex-1 min-w-[200px] min-h-[250px] bg-white rounded-lg p-2.5 text-center flex flex-col justify-between relative">
+        <div className="top-section grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 mb-5">
+          {/* Card 1 */}
+          <div className="bg-white rounded-lg overflow-hidden shadow-md p-2.5 text-center flex flex-col justify-between">
             <img
-              src="/page/community/1.png"
+              src="https://res.cloudinary.com/dco6n59if/image/upload/v1741173720/spaces/dydclsietbv6bfe35zpe.jpg"
               alt="Community"
-              className="rounded-lg w-full h-full object-cover"
+              className="rounded-lg h-[200px] object-cover w-full"
             />
-            <p className="absolute bottom-5 left-4 text-black text-lg font-bold  px-2 py-1 rounded-lg">
-              Be yourself
-            </p>
+            <p className="text-sm font-medium mt-2">Who we are</p>
           </div>
 
-          <div className=" flex-1 min-w-[200px] min-h-[250px] bg-white rounded-lg p-2.5 text-center flex flex-col justify-between">
+          {/* Card 2 */}
+          <div className="bg-white rounded-lg overflow-hidden shadow-md p-2.5 text-center flex flex-col justify-between">
             <img
-              src="/page/community/2.png"
+              src="https://res.cloudinary.com/dco6n59if/image/upload/v1741174870/spaces/po4qtiz9pec5y4xodkcb.jpg"
               alt="Community"
-              className="rounded-lg"
+              className="rounded-lg h-[200px] object-cover w-full"
             />
-            <p>Lorem ipsum dolor sit amet...</p>
+            <p className="text-sm font-medium mt-2">Connections Corner</p>
+          </div>
+
+          {/* Card 3 */}
+          <div className="bg-white rounded-lg overflow-hidden shadow-md p-2.5 text-center flex flex-col justify-between">
+            <img
+              src="https://res.cloudinary.com/dco6n59if/image/upload/v1741193803/spaces/hapa5e2mv41yo89frymw.jpg"
+              alt="Community"
+              className="rounded-lg h-[200px] object-cover w-full"
+            />
+            <p className="text-sm font-medium mt-2">Spectrum Voices</p>
           </div>
         </div>
 
@@ -74,15 +84,6 @@ const ComPage = () => {
       </main>
 
       <div className="right-sidebar flex-grow mt-5 w-7.5">
-        <div className="card1 flex-1 min-w-[200px] min-h-[250px] bg-white rounded-lg p-2.5 text-center flex">
-          <img
-            src="/page/community/3.png"
-            alt="Community"
-            className="rounded-lg"
-          />
-          <p>Lorem ipsum dolor sit amet...</p>
-        </div>
-
         <div className="popular-communities bg-white mt-5 p-5 rounded-lg shadow-md">
           <h3 className="text-lg mb-2.5">Popular Communities</h3>
           <ul className="list-none p-0">

@@ -1,5 +1,71 @@
 import { toast } from "react-toastify";
 
+export const getRecommendations = (data) => {
+  const recommendations = [];
+
+  // Sleep Hours
+  if (data.sleepHours < 6) {
+    recommendations.push(
+      "Try to get at least 7-9 hours of sleep per night. Poor sleep can increase anxiety levels."
+    );
+  } else if (data.sleepHours > 10) {
+    recommendations.push(
+      "Excessive sleep might be linked to fatigue or depression. Consider maintaining a balanced sleep schedule."
+    );
+  }
+
+  // Physical Activity
+  if (data.physicalActivity < 2) {
+    recommendations.push(
+      "Engage in at least 150 minutes of moderate exercise per week to help manage anxiety."
+    );
+  }
+
+  // Caffeine Intake
+  if (data.caffeineIntake > 400) {
+    recommendations.push(
+      "High caffeine intake can contribute to anxiety. Try reducing coffee or energy drink consumption."
+    );
+  }
+
+  // Alcohol Consumption
+  if (data.alcoholConsumption > 14) {
+    recommendations.push(
+      "Excessive alcohol consumption can negatively impact mental health. Consider reducing intake."
+    );
+  }
+
+  // Smoking
+  if (data.smoking) {
+    recommendations.push(
+      "Smoking may increase anxiety and stress over time. Consider seeking support to quit smoking."
+    );
+  }
+
+  // Stress Level
+  if (data.stressLevel > 3) {
+    recommendations.push(
+      "Practice relaxation techniques such as meditation, deep breathing, or yoga to manage stress."
+    );
+  }
+
+  // Dizziness
+  if (data.dizziness) {
+    recommendations.push(
+      "Frequent dizziness may be a sign of dehydration or anxiety-related hyperventilation. Stay hydrated and consult a doctor if persistent."
+    );
+  }
+
+  // Diet Quality
+  if (data.dietQuality < 3) {
+    recommendations.push(
+      "Improve your diet by including more fruits, vegetables, and whole foods for better mental health."
+    );
+  }
+
+  return recommendations;
+};
+
 export const randomRange = (min, max) => Math.random() * (max - min) + min;
 export const extractNumber = (text) => {
   const match = text.match(/^(\d+)\./); // Hanapin ang number sa simula ng text

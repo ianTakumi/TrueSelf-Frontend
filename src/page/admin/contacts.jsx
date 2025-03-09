@@ -10,6 +10,7 @@ import "jspdf-autotable";
 import { saveAs } from "file-saver";
 import ExcelJS from "exceljs";
 import "./datatable.css";
+
 const Contacts = () => {
   const [contacts, setContacts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);

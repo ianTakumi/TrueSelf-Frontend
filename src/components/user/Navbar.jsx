@@ -141,19 +141,23 @@ const Navbar = () => {
           ))}
 
           {/* Foods Dropdown for Desktop */}
-          {/* <Box
+          <Box
             className="relative"
             onMouseEnter={() => setDropdowns({ ...dropdowns, foods: true })}
           >
             <Button
               variant="text"
-              style={{ color: "white", fontWeight: "bold" }}
-              onClick={() => toggleDropdown("foods")}
+              style={{
+                color: "black",
+                fontWeight: "bold",
+                textTransform: "none",
+              }}
+              onClick={() => toggleDropdown("articles")}
             >
-              Foods
+              Article
               <KeyboardArrowDownIcon />
             </Button>
-            {dropdowns["foods"] && (
+            {dropdowns["articles"] && (
               <Box
                 style={{
                   position: "absolute",
@@ -163,22 +167,41 @@ const Navbar = () => {
                   borderRadius: "8px",
                   boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
                   zIndex: 10,
+                  maxHeight: "200px", // Limit height
+                  overflowY: "auto", // Enable scrolling if needed
                 }}
               >
-                <List>
-                  <ListItem button component={NavLink} to="/food/category">
-                    <ListItemText
-                      primary="Categories"
-                      sx={{ color: "white" }}
-                    />
-                  </ListItem>
-                  <ListItem button component={NavLink} to="/foods">
-                    <ListItemText primary="Foods" sx={{ color: "white" }} />
-                  </ListItem>
+                <List dense sx={{ padding: 0 }}>
+                  {[
+                    { label: "Healthcare", path: "/article/healthcare" },
+                    { label: "Mental Health", path: "/article/mental-health" },
+                    {
+                      label: "Domestic Abuse",
+                      path: "/article/domestic-abuse",
+                    },
+                    {
+                      label: "Support System",
+                      path: "/article/support-system",
+                    },
+                    { label: "Self Care", path: "/article/self-care" },
+                  ].map((item) => (
+                    <ListItem
+                      key={item.path}
+                      button
+                      component={NavLink}
+                      to={item.path}
+                      sx={{ paddingY: 0.5 }} // Adjust vertical padding
+                    >
+                      <ListItemText
+                        primary={item.label}
+                        sx={{ color: "white", fontSize: "0.9rem" }}
+                      />
+                    </ListItem>
+                  ))}
                 </List>
               </Box>
             )}
-          </Box> */}
+          </Box>
         </Box>
 
         {/* Search and Profile Icons */}
@@ -270,7 +293,7 @@ const Navbar = () => {
             </ListItem>
           ))}
           <Box>
-            <Button onClick={() => toggleDropdown("foods")} fullWidth>
+            <Button onClick={() => toggleDropdown("articles")} fullWidth>
               Foods
               {dropdowns["foods"] ? (
                 <KeyboardArrowUpIcon />

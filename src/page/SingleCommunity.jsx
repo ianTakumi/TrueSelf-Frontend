@@ -176,48 +176,50 @@ const SingleCommunity = () => {
       <Divider />
 
       {/* Create Post Section */}
-      <Card sx={{ mb: 3, p: 2 }} component="form" onSubmit={handlePostSubmit}>
-        <TextField
-          select
-          fullWidth
-          value={postType}
-          onChange={(e) => setPostType(e.target.value)}
-          variant="outlined"
-        >
-          <MenuItem value="text">Text Post</MenuItem>
-          <MenuItem value="image">Image</MenuItem>
-          <MenuItem value="video">Video</MenuItem>
-        </TextField>
+      {tab === 1 && (
+        <Card sx={{ mb: 3, p: 2 }} component="form" onSubmit={handlePostSubmit}>
+          <TextField
+            select
+            fullWidth
+            value={postType}
+            onChange={(e) => setPostType(e.target.value)}
+            variant="outlined"
+          >
+            <MenuItem value="text">Text Post</MenuItem>
+            <MenuItem value="image">Image</MenuItem>
+            <MenuItem value="video">Video</MenuItem>
+          </TextField>
 
-        {postType === "text" && (
-          <>
-            <TextField
-              {...register("title", { required: "Title is required" })}
-              placeholder="Enter title"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-            />
+          {postType === "text" && (
+            <>
+              <TextField
+                {...register("title", { required: "Title is required" })}
+                placeholder="Enter title"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+              />
 
-            <Controller
-              name="content"
-              control={control}
-              rules={{ required: "Content is required" }}
-              render={({ field }) => <ReactQuill theme="snow" {...field} />}
-            />
-          </>
-        )}
+              <Controller
+                name="content"
+                control={control}
+                rules={{ required: "Content is required" }}
+                render={({ field }) => <ReactQuill theme="snow" {...field} />}
+              />
+            </>
+          )}
 
-        <Box display="flex" justifyContent="flex-end" mt={2}>
-          <Button variant="contained" type="submit">
-            Post
-          </Button>
-        </Box>
-      </Card>
+          <Box display="flex" justifyContent="flex-end" mt={2}>
+            <Button variant="contained" type="submit">
+              Post
+            </Button>
+          </Box>
+        </Card>
+      )}
 
       {/* About Section */}
       {tab === 0 && (
-        <Box p={3}>
+        <Box p={3} mb={10}>
           <Typography variant="h6">About This Community</Typography>
           <Typography variant="body1" mt={1}>
             {community.description}

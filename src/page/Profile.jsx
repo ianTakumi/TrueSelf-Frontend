@@ -43,6 +43,10 @@ const Profile = () => {
     setIsModalOpen(false);
   };
 
+  const handleLinkFacebookAccount = async () => {
+    console.log("Linking Facebook account");
+  };
+
   const handleLinkGoogleAccount = async (credentialResponse) => {
     const decoded = jwtDecode(credentialResponse?.credential);
     const userId = user._id;
@@ -125,117 +129,167 @@ const Profile = () => {
     });
   };
   return (
-    <div className="profile-page h-screen mt-5">
-      <div className="curves curve-top-right"></div>
-      <div className="curves curve-bottom-left"></div>
+    <div className="profile-page h-screen mt-5 ">
+      {/* <div className="curves curve-top-right overflow-x-hidden"></div>
+      <div className="curves curve-bottom-left overflow-x-hidden"></div> */}
 
-      <div className="profile-container">
-        {/* Profile Header */}
-        <div className="profile-header flex flex-col items-center mb-3 ">
-          <div
-            className="profile-avatar w-24 h-24 flex justify-center items-center text-white text-4xl font-bold rounded-full mb-4 relative"
-            style={{
-              backgroundColor: user.profile?.url
-                ? "transparent"
-                : backgroundColor, // Transparent if profile.url has a value
-            }}
-          >
-            {user.profile?.url && user.profile?.public_id ? (
-              // Display the profile picture if URL and public_id are present
-              <img
-                src={user.profile.url}
-                alt="Profile"
-                className="w-full h-full rounded-full object-cover"
-              />
-            ) : (
-              // Display the fallback avatar with the initial
-              <>{initial}</>
-            )}
-
-            {/* Always display the camera icon */}
-            <IconButton
-              sx={{
-                position: "absolute",
-                bottom: "5px", // Position it slightly above the bottom edge
-                right: "5px", // Position it slightly left of the right edge
-                backgroundColor: "rgba(0, 0, 0, 0.5)",
-                color: "white",
-                "&:hover": {
-                  backgroundColor: "rgba(0, 0, 0, 0.7)",
-                },
+      <div className="flex flex-row justify-center mb-10">
+        <div className="profile-container">
+          {/* Profile Header */}
+          <div className="profile-header flex flex-col items-center mb-3 ">
+            <div
+              className="profile-avatar w-24 h-24 flex justify-center items-center text-white text-4xl font-bold rounded-full mb-4 relative"
+              style={{
+                backgroundColor: user.profile?.url
+                  ? "transparent"
+                  : backgroundColor, // Transparent if profile.url has a value
               }}
             >
-              <CameraAltIcon />
-              {/* File Input to select images */}
-              <input
-                type="file"
-                accept="image/*" // Restrict file types to images
-                onChange={handleFileChange} // Handle file change
-                style={{
+              {user.profile?.url && user.profile?.public_id ? (
+                // Display the profile picture if URL and public_id are present
+                <img
+                  src={user.profile.url}
+                  alt="Profile"
+                  className="w-full h-full rounded-full object-cover"
+                />
+              ) : (
+                // Display the fallback avatar with the initial
+                <>{initial}</>
+              )}
+
+              {/* Always display the camera icon */}
+              <IconButton
+                sx={{
                   position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                  opacity: 0,
-                  cursor: "pointer",
+                  bottom: "5px", // Position it slightly above the bottom edge
+                  right: "5px", // Position it slightly left of the right edge
+                  backgroundColor: "rgba(0, 0, 0, 0.5)",
+                  color: "white",
+                  "&:hover": {
+                    backgroundColor: "rgba(0, 0, 0, 0.7)",
+                  },
                 }}
-              />
-            </IconButton>
+              >
+                <CameraAltIcon />
+                {/* File Input to select images */}
+                <input
+                  type="file"
+                  accept="image/*" // Restrict file types to images
+                  onChange={handleFileChange} // Handle file change
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    opacity: 0,
+                    cursor: "pointer",
+                  }}
+                />
+              </IconButton>
+            </div>
+
+            <h2 className="profile-name text-2xl font-semibold">{user.name}</h2>
           </div>
 
-          <h2 className="profile-name text-2xl font-semibold">{user.name}</h2>
-        </div>
+          {/* Profile Card */}
+          <div className="profile-card">
+            <div className="card-header">
+              <h2 className="card-title">{user.name}</h2>
+              <p className="card-subtitle">{user.pronouns}</p>
+            </div>
 
-        {/* Profile Card */}
-        <div className="profile-card">
-          <div className="card-header">
-            <h2 className="card-title">{user.name}</h2>
-            <p className="card-subtitle">{user.pronouns}</p>
-          </div>
+            <div className="card-info">
+              <div>
+                <p className="info-label">Email:</p>
+                <p className="info-value">{user.email}</p>
+              </div>
+              <div>
+                <p className="info-label">Phone:</p>
+                <p className="info-value">{user.phoneNumber}</p>
+              </div>
+              <div>
+                <p className="info-label">Gender Identity:</p>
+                <p className="info-value">{user.genderIdentity}</p>
+              </div>
+              <div>
+                <p className="info-label">Sexual Orientation:</p>
+                <p className="info-value">{user.sexualOrientation}</p>
+              </div>
+              <div className="info-full">
+                <p className="info-label">Date of Birth:</p>
+                <p className="info-value">
+                  {new Date(user.dob).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </p>
+              </div>
+            </div>
 
-          <div className="card-info">
-            <div>
-              <p className="info-label">Email:</p>
-              <p className="info-value">{user.email}</p>
+            {/* Facebook Section */}
+            <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg shadow-sm mb-3">
+              <div className="flex items-center space-x-3">
+                <Facebook className="text-blue-600" fontSize="large" />
+                <p className="text-gray-700">
+                  <strong>Facebook:</strong>
+                </p>
+              </div>
+              {user?.socialAccounts?.find(
+                (account) => account.provider === "facebook"
+              ) ? (
+                <button className="border border-blue-500 text-blue-500 px-3 py-1 rounded-lg hover:bg-blue-500 hover:text-white transition">
+                  Already Linked
+                </button>
+              ) : (
+                <button
+                  onClick={handleLinkFacebookAccount} // Implement this function
+                  className="border border-blue-500 text-blue-500 px-3 py-1 rounded-lg hover:bg-blue-500 hover:text-white transition"
+                >
+                  Link Facebook
+                </button>
+              )}
             </div>
-            <div>
-              <p className="info-label">Phone:</p>
-              <p className="info-value">{user.phoneNumber}</p>
-            </div>
-            <div>
-              <p className="info-label">Gender Identity:</p>
-              <p className="info-value">{user.genderIdentity}</p>
-            </div>
-            <div>
-              <p className="info-label">Sexual Orientation:</p>
-              <p className="info-value">{user.sexualOrientation}</p>
-            </div>
-            <div className="info-full">
-              <p className="info-label">Date of Birth:</p>
-              <p className="info-value">
-                {new Date(user.dob).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </p>
-            </div>
-          </div>
 
-          <div className="card-buttons">
-            <button className="btn-primary" onClick={handleOpenPasswordModal}>
-              Change Password
-            </button>
-            <button className="btn-secondary" onClick={handleEditProfile}>
-              Update Profile
-            </button>
-            <button
-              className="px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600 transition"
-              onClick={handleDeleteAccount}
-            >
-              Delete Account
-            </button>
+            {/* Google Section */}
+            <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg shadow-sm">
+              <div className="flex items-center space-x-3">
+                <Google className="text-red-500" fontSize="large" />
+                <p className="text-gray-700">
+                  <strong>Google:</strong>
+                </p>
+              </div>
+              {user?.socialAccounts?.find(
+                (account) => account.provider === "google"
+              ) ? (
+                <button className="border border-green-500 text-green-500 px-3 py-1 rounded-lg hover:bg-green-500 hover:text-white transition">
+                  Already Linked
+                </button>
+              ) : (
+                <GoogleLogin
+                  onSuccess={handleLinkGoogleAccount}
+                  onError={() => {
+                    console.error("Google login failed");
+                    alert("Failed to authenticate with Google.");
+                  }}
+                />
+              )}
+            </div>
+            <div className="card-buttons">
+              <button className="btn-primary" onClick={handleOpenPasswordModal}>
+                Change Password
+              </button>
+              <button className="btn-secondary" onClick={handleEditProfile}>
+                Update Profile
+              </button>
+              <button
+                className="px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600 transition"
+                onClick={handleDeleteAccount}
+              >
+                Delete Account
+              </button>
+            </div>
           </div>
         </div>
       </div>

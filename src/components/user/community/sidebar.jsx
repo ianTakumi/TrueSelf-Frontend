@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   return (
-    <aside className="sidebar w-80 bg-purple-400 text-white p-5 h-screen sticky top-0 overflow-y-auto transition-all duration-300">
+    <aside className="sidebar w-80 bg-[#63579F] text-white p-5 h-screen sticky top-0 overflow-y-auto transition-all duration-300">
       <Link to={"/"}>
         <div className="flex flex-col  items-center">
           <img
@@ -61,12 +61,16 @@ const Sidebar = () => {
         <ul className="list-none p-0">
           {[
             { name: "About True Self", icon: "abouttrueself.png" },
-            { name: "Communities", icon: "communities.png" },
-            { name: "Topics", icon: "topics.png" },
+            {
+              name: "Communities",
+              icon: "communities.png",
+              link: "/community/communities",
+            },
+            // { name: "Topics", icon: "topics.png" },
           ].map((item) => (
             <li key={item.name} className="flex items-center gap-2.5 my-2.5">
               <Link
-                to="#"
+                to={item.link || "#"}
                 className="flex items-center text-white text-sm no-underline p-2.5"
               >
                 <img

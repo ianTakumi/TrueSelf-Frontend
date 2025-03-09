@@ -4,7 +4,7 @@ const SelfCare = () => {
   return (
     <div className="p-6 max-w-3xl mx-auto bg-white rounded-lg shadow-md my-10">
       <h1 className="text-2xl font-bold text-center mb-4">
-        Bridging the Healthcare Gap for LGBTQIA+ Individuals
+        Self-Care Practices for LGBTQIA+ Individuals
       </h1>
       <img
         src="/articles/selfCare.png"
