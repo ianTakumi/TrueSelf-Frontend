@@ -13,12 +13,16 @@ import {
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-
+import { GoogleLogin } from "@react-oauth/google";
 import Select from "react-select";
-import { WidthFull } from "@mui/icons-material";
+import { jwtDecode } from "jwt-decode";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [dob, setDob] = useState(null);
+  const navigate = useNavigate();
 
   const {
     control,
@@ -48,7 +52,8 @@ const Register = () => {
     try {
       await AxiosInstance.post("/auth/register", data).then((response) => {
         console.log(response);
-        alert("Registration successful");
+        notifySuccess("Registration successful");
+        navigate("/login");
       });
     } catch (error) {
       console.log(error);
@@ -70,6 +75,97 @@ const Register = () => {
     setCurrentStep(currentStep - 1);
   };
 
+  const handleGoogleLoginSuccess = async (credentialResponse) => {
+    const decoded = jwtDecode(credentialResponse.credential);
+    console.log(decoded);
+    let data = {
+      email: decoded.email,
+      sub: decoded.sub,
+    };
+    Swal.fire({
+      title: "Complete Your Information",
+      html: `
+        <input type="date" id="dob-input" class="swal2-input" required placeholder="Date of Birth"/>
+        <input type="password" id="password-input" class="swal2-input" required placeholder="Password"/>
+        <input type="password" id="confirm-password-input" class="swal2-input" required placeholder="Confirm Password"/>
+      `,
+      confirmButtonText: "Submit",
+      focusConfirm: false,
+      preConfirm: () => {
+        const dobInput = document.getElementById("dob-input").value;
+        const passwordInput = document.getElementById("password-input").value;
+        const confirmPasswordInput = document.getElementById(
+          "confirm-password-input"
+        ).value;
+
+        // **Validation**
+        if (!dobInput) {
+          Swal.showValidationMessage("Date of Birth is required!");
+          return false;
+        }
+        if (!passwordInput) {
+          Swal.showValidationMessage("Password is required!");
+          return false;
+        }
+        if (passwordInput.length < 6) {
+          Swal.showValidationMessage("Password must be at least 6 characters!");
+          return false;
+        }
+        if (passwordInput !== confirmPasswordInput) {
+          Swal.showValidationMessage("Passwords do not match!");
+          return false;
+        }
+
+        return { dob: dobInput, password: passwordInput };
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setDob(result.value.dob);
+
+        const data = {
+          email: decoded.email,
+          sub: decoded.sub,
+          name: decoded.name,
+          dob: result.value.dob,
+          password: result.value.password,
+          status: "activated",
+        };
+
+        console.log("Final Data:", data);
+        submitGoogleData(data);
+        navigate("/login");
+        notifySuccess("Registration successful");
+      }
+    });
+  };
+
+  const submitGoogleData = async (data) => {
+    try {
+      await AxiosInstance.post("/auth/googleSignUp", data)
+        .then((response) => {
+          console.log(response);
+          if (response.status === 200) {
+            authenticate(response.data, () => {
+              console.log("User authenticated");
+              notifySuccess("Login successful");
+              navigate("/login");
+            });
+            if (response.data.user.role === "admin") {
+              navigate("/admin");
+            }
+          } else {
+            notifyError(response.data.message);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          notifyError(error.data.message);
+        });
+    } catch (error) {
+      console.log(error);
+      notifyError("Login failed");
+    }
+  };
   return (
     <div>
       {/* Curved top section */}
@@ -188,6 +284,20 @@ const Register = () => {
                     <p className="text-red-500">{errors.phoneNumber.message}</p>
                   )}
                 </div>
+                <div className="flex items-center my-3">
+                  <div className="flex-grow border-t border-gray-300"></div>
+                  <span className="mx-3 text-gray-500">or</span>
+                  <div className="flex-grow border-t border-gray-300"></div>
+                </div>
+                <GoogleLogin
+                  onSuccess={(credentialResponse) => {
+                    handleGoogleLoginSuccess(credentialResponse);
+                  }}
+                  onError={() => {
+                    console.log("Login Failed");
+                  }}
+                  clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
+                />
               </div>
             )}
 

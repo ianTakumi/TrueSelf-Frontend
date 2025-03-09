@@ -24,14 +24,16 @@ const ComPage = () => {
       <main className="main-content flex-grow p-5">
         <div className="top-section grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 mb-5">
           {/* Card 1 */}
-          <div className="bg-white rounded-lg overflow-hidden shadow-md p-2.5 text-center flex flex-col justify-between">
-            <img
-              src="https://res.cloudinary.com/dco6n59if/image/upload/v1741173720/spaces/dydclsietbv6bfe35zpe.jpg"
-              alt="Community"
-              className="rounded-lg h-[200px] object-cover w-full"
-            />
-            <p className="text-sm font-medium mt-2">Who we are</p>
-          </div>
+          <Link to={"/community/67c833d69fdac0bf83ddc589"}>
+            <div className="bg-white rounded-lg overflow-hidden shadow-md p-2.5 text-center flex flex-col justify-between">
+              <img
+                src="https://res.cloudinary.com/dco6n59if/image/upload/v1741173720/spaces/dydclsietbv6bfe35zpe.jpg"
+                alt="Community"
+                className="rounded-lg h-[200px] object-cover w-full"
+              />
+              <p className="text-sm font-medium mt-2">Who we are</p>
+            </div>
+          </Link>
 
           {/* Card 2 */}
           <div className="bg-white rounded-lg overflow-hidden shadow-md p-2.5 text-center flex flex-col justify-between">

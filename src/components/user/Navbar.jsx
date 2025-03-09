@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
@@ -26,6 +26,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [profileDropdown, setProfileDropdown] = useState(false);
   const [dropdowns, setDropdowns] = useState({ foods: false });
+  const dropdownRef = useRef(null);
 
   const colors = {
     active: "#A3DCE4", // Light Blue (from your palette)
@@ -56,6 +57,22 @@ const Navbar = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setProfileDropdown(false);
+      }
+    };
+
+    if (profileDropdown) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [profileDropdown]);
 
   const handleLogout = () => {
     Swal.fire({
@@ -223,8 +240,10 @@ const Navbar = () => {
           </IconButton>
           {profileDropdown && user && (
             <Box
+              ref={dropdownRef}
               style={{
                 position: "absolute",
+
                 top: "100%",
                 right: 0,
                 backgroundColor: "#fff",

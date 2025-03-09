@@ -8,7 +8,7 @@ import { authenticate } from "../../utils/helpers";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
-import FacebookIcon from "@mui/icons-material/Facebook";
+// import FacebookIcon from "@mui/icons-material/Facebook";
 import { Link } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
@@ -82,6 +82,7 @@ const Login = () => {
             authenticate(response.data, () => {
               console.log("User authenticated");
               notifySuccess("Login successful");
+              navigate("/");
             });
             if (response.data.user.role === "admin") {
               navigate("/admin");
@@ -100,9 +101,10 @@ const Login = () => {
     }
   };
 
-  const handleFacebookLoginOrSignup = async () => {
-    window.location.href = "http://localhost:5000/api/v1/facebook/auth";
-  };
+  // const handleFacebookLoginOrSignup = async () => {
+  //   window.location.href = "http://localhost:5000/api/v1/facebook/auth";
+  // };
+
   // Toggle password visibility
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -184,14 +186,14 @@ const Login = () => {
             </div>
 
             <div className="flex justify-center items-center flex-col my-5 gap-4">
-              <div
+              {/* <div
                 className="flex items-center cursor-pointer justify-center w-52 h-10 bg-blue-600 text-white rounded-md gap-2 hover:bg-blue-700 transition-all duration-200"
                 style={{ width: "190px" }}
                 onClick={handleFacebookLoginOrSignup}
               >
                 Login with
                 <FacebookIcon fontSize="small" />
-              </div>
+              </div> */}
 
               <GoogleLogin
                 onSuccess={(credentialResponse) => {
