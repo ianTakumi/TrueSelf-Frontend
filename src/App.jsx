@@ -55,7 +55,7 @@ const App = () => {
           path="/mood"
           element={<ProtectedRoute element={<MoodIndex />} />}
         />
-        <Route path="/community" element={<CommunityLayout />}>
+        <Route path="/community" element={<UserLayout />}>
           <Route index element={<ComPage />} />
           <Route path="communities" element={<Communities />} />
           <Route path=":id" element={<SingleCommunity />} />

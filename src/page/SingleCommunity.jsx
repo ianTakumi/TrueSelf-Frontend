@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import AxiosInstance from "../../utils/AxiosInstance";
-import { notifyError } from "../../utils/helpers";
+import { getUser, notifyError, notifySuccess } from "../../utils/helpers";
 import {
   CircularProgress,
   Box,
@@ -20,35 +20,42 @@ import {
   MenuItem,
 } from "@mui/material";
 import {
-  Favorite,
   ChatBubbleOutline,
   Share,
-  Image,
-  VideoLibrary,
+  ThumbDown,
+  ThumbUp,
 } from "@mui/icons-material";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useForm, Controller } from "react-hook-form";
+import { FilePond, registerPlugin } from "react-filepond";
+import "filepond/dist/filepond.min.css";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import FilePondPluginFileEncode from "filepond-plugin-file-encode";
+
+registerPlugin(FilePondPluginImagePreview, FilePondPluginFileEncode);
 
 const SingleCommunity = () => {
+  const user = getUser();
+  const userId = user?._id;
   const { handleSubmit, control, register, setValue } = useForm({
     defaultValues: {
       title: "",
       content: "",
     },
   });
+  const [files, setFiles] = useState([]);
   const { id } = useParams();
   const [community, setCommunity] = useState(null);
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState(0);
   const [posts, setPosts] = useState([]);
   const [postType, setPostType] = useState("text");
-  const [postContent, setPostContent] = useState("");
-  const [postMedia, setPostMedia] = useState(null);
 
   const fetchPost = async () => {
     try {
-      const res = await AxiosInstance.get(`/posts/${id}`);
+      const res = await AxiosInstance.get(`/posts/community/${id}`);
       console.log(res.data);
       setPosts(res.data.data);
     } catch (error) {
@@ -67,6 +74,8 @@ const SingleCommunity = () => {
     }
   };
 
+  const handleLikePost = async () => {};
+
   useEffect(() => {
     fetchCommunity();
     fetchPost();
@@ -74,33 +83,43 @@ const SingleCommunity = () => {
 
   const handlePostSubmit = handleSubmit(async (data) => {
     console.log(postType);
+
+    const cleanedData = {
+      ...data,
+      type: postType,
+      id: id,
+    };
+
     if (postType === "text") {
-      console.log(data);
-      await AxiosInstance.post("/posts");
+      console.log(cleanedData);
+      await AxiosInstance.post(`/posts/${userId}`, cleanedData).then((res) => {
+        console.log(res.data);
+        notifySuccess("Post created successfully!");
+        setValue("title", "");
+        setValue("content", "");
+        fetchPost();
+      });
+    } else if (postType === "image" || postType === "video") {
+      const formData = new FormData();
+      formData.append("title", data.title);
+      formData.append("type", postType);
+      formData.append("id", id);
+      files.forEach((file) => {
+        formData.append("media", file.file);
+      });
+
+      await AxiosInstance.post(`/posts/${userId}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }).then((res) => {
+        console.log(res.data);
+        notifySuccess("Post created successfully!");
+        setValue("title", "");
+        setFiles([]);
+        fetchPost();
+      });
     }
-    // if (!data.title.trim() || !data.content.trim()) {
-    //   notifyError("Title and content are required.");
-    //   return;
-    // }
-
-    // try {
-    //   const payload = {
-    //     title: data.title,
-    //     content: data.content,
-    //     type: postType, // Ensure the type is included
-    //   };
-
-    //   const res = await AxiosInstance.post(`/posts/${id}`, payload);
-
-    //   notifySuccess("Post created successfully!");
-    //   fetchPost(); // Refresh posts after submission
-
-    //   // Reset form fields
-    //   setValue("title", "");
-    //   setValue("content", "");
-    // } catch (error) {
-    //   notifyError("Failed to create post. Please try again.");
-    // }
   });
 
   if (loading) {
@@ -128,7 +147,6 @@ const SingleCommunity = () => {
 
   return (
     <Box width="100%" maxWidth="800px" margin="auto">
-      {/* Banner */}
       <Box position="relative">
         <img
           src={community.banner?.url || "https://via.placeholder.com/800x300"}
@@ -190,16 +208,16 @@ const SingleCommunity = () => {
             <MenuItem value="video">Video</MenuItem>
           </TextField>
 
+          <TextField
+            {...register("title", { required: "Title is required" })}
+            placeholder="Enter title"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+          />
+
           {postType === "text" && (
             <>
-              <TextField
-                {...register("title", { required: "Title is required" })}
-                placeholder="Enter title"
-                variant="outlined"
-                fullWidth
-                margin="normal"
-              />
-
               <Controller
                 name="content"
                 control={control}
@@ -207,6 +225,23 @@ const SingleCommunity = () => {
                 render={({ field }) => <ReactQuill theme="snow" {...field} />}
               />
             </>
+          )}
+
+          {(postType === "image" || postType === "video") && (
+            <div className="mt-10">
+              <h1>Attachment</h1>
+              <FilePond
+                files={files}
+                onupdatefiles={setFiles}
+                allowMultiple={true}
+                maxFiles={5}
+                name="files"
+                labelIdle='Drag & Drop your files or <span className="filepond--label-action">Browse</span>'
+                allowFileEncode={true}
+                acceptedFileTypes={["image/*", "video/*", "application/pdf"]}
+                className="mt-2"
+              />
+            </div>
           )}
 
           <Box display="flex" justifyContent="flex-end" mt={2}>
@@ -241,33 +276,65 @@ const SingleCommunity = () => {
                   avatar={
                     <Avatar
                       src={
-                        post.author?.profilePic ||
+                        post.user?.profile.url ||
                         "https://via.placeholder.com/50"
                       }
                     />
                   }
-                  title={post.author?.name || "Unknown User"}
-                  subheader={new Date(post.createdAt).toLocaleString()}
+                  title={post.user?.name || "Unknown User"}
+                  subheader={new Date(post.createdAt).toLocaleString("en-US", {
+                    month: "long",
+                    day: "2-digit",
+                    year: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    hour12: true,
+                  })}
                 />
                 <CardContent>
-                  <Typography variant="body1">{post.content}</Typography>
+                  <Typography
+                    variant="body1"
+                    dangerouslySetInnerHTML={{ __html: post.content }}
+                  />
                 </CardContent>
-                {post.image && (
+
+                {post.images &&
+                  post.images.length > 0 &&
+                  post.images.map((img, index) => (
+                    <CardMedia
+                      key={index}
+                      component="img"
+                      sx={{
+                        width: "100%", // Full width
+                        maxHeight: 400, // Limit height
+                        objectFit: "contain", // Ensures the full image is visible
+                        borderRadius: 2, // Optional rounded corners
+                      }}
+                      image={img.url}
+                      alt={`Post Image ${index + 1}`}
+                    />
+                  ))}
+
+                {post.video && (
                   <CardMedia
-                    component="img"
-                    height="300"
-                    image={post.image}
-                    alt="Post Image"
+                    component="video"
+                    controls
+                    sx={{
+                      height: 300, // Set a fixed height
+                      objectFit: "cover", // Ensures the video fits well
+                      borderRadius: 2, // Optional: adds rounded corners
+                    }}
+                    src={post.video.url} // Make sure post.video contains { url, public_id }
                   />
                 )}
-                <Box
-                  display="flex"
-                  justifyContent="space-between"
-                  px={2}
-                  py={1}
-                >
+
+                {/* Icons Section - Aligned and Closer */}
+                <Box display="flex" justifyContent="center" gap={1.5} py={1}>
                   <IconButton>
-                    <Favorite />
+                    <ThumbUp />
+                  </IconButton>
+                  <IconButton>
+                    <ThumbDown /> {/* Dislike Button */}
                   </IconButton>
                   <IconButton>
                     <ChatBubbleOutline />

@@ -287,14 +287,19 @@ const Navbar = () => {
       </Box>
 
       {/* Mobile Sidebar */}
-      <Drawer anchor="left" open={isOpen} onClose={closeSidebar}>
+      <Drawer
+        anchor="left"
+        open={isOpen}
+        onClose={closeSidebar}
+        sx={{ "& .MuiDrawer-paper": { width: "80vw", maxWidth: 400 } }}
+      >
         <Box display="flex" justifyContent="flex-end" p={2}>
           <IconButton onClick={toggleSidebar}>
             <CloseIcon />
           </IconButton>
         </Box>
         <List>
-          {["/", "/about", "/contact", "/movies"].map((path) => (
+          {["/", "/about", "/contact"].map((path) => (
             <ListItem
               button
               component={NavLink}
@@ -314,13 +319,13 @@ const Navbar = () => {
           <Box>
             <Button onClick={() => toggleDropdown("articles")} fullWidth>
               Foods
-              {dropdowns["foods"] ? (
+              {dropdowns["articles"] ? (
                 <KeyboardArrowUpIcon />
               ) : (
                 <KeyboardArrowDownIcon />
               )}
             </Button>
-            {dropdowns["foods"] && (
+            {dropdowns["articles"] && (
               <List>
                 <ListItem
                   button
