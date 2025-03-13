@@ -9,9 +9,6 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import AxiosInstance from "../../../../utils/AxiosInstance";
-
-import { saveAs } from "file-saver";
-// import Papa from "papaparse";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
@@ -66,10 +63,9 @@ const MonthlyEngagementChart = () => {
 
   const exportToPDF = () => {
     const headerImg = new Image();
-    headerImg.src = "/logo/result.png"; // Make sure the image path is correct
+    headerImg.src = "/logo/result.png";
 
     headerImg.onload = () => {
-      // Fix the event name (onload, not onLoad)
       const input = chartRef.current;
 
       html2canvas(input, { scale: 2 }).then((canvas) => {
