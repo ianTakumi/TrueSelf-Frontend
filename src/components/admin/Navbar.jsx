@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Menu } from "@mui/icons-material";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
@@ -10,23 +10,29 @@ import Swal from "sweetalert2";
 
 const Navbar = ({ toggleSidebar }) => {
   const navigate = useNavigate();
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState("English");
   const user = getUser();
-
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
+  const profileDropdownRef = useRef(null);
 
   const toggleProfileDropdown = () => {
-    setIsProfileDropdownOpen(!isProfileDropdownOpen);
+    setIsProfileDropdownOpen((prev) => !prev);
   };
 
-  const handleLanguageChange = (language) => {
-    setSelectedLanguage(language);
-    setIsDropdownOpen(false);
+  const handleClickOutside = (event) => {
+    if (
+      profileDropdownRef.current &&
+      !profileDropdownRef.current.contains(event.target)
+    ) {
+      setIsProfileDropdownOpen(false);
+    }
   };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleLogout = () => {
     Swal.fire({
@@ -72,7 +78,7 @@ const Navbar = ({ toggleSidebar }) => {
             </button>
           </NavLink>
 
-          <div className="relative">
+          <div className="relative" ref={profileDropdownRef}>
             <button
               onClick={toggleProfileDropdown}
               className="text-black flex items-center gap-3"

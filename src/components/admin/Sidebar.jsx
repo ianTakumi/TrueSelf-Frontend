@@ -63,16 +63,24 @@ const Sidebar = ({ isMinimized }) => {
       style={{ backgroundColor: "#181824" }}
     >
       {!isMinimized && (
-        <div className="p-4 text-xl font-bold font-serif flex flex-row justify-center items-center -ml-2">
-          <img src="/logo/trueself5.png" alt="Cinemax" className="w-12 mr-3" />
-          Trueself
-        </div>
+        <Link to={"/admin"}>
+          <div className="p-4 text-xl font-bold font-serif flex flex-row justify-center items-center -ml-2">
+            <img
+              src="/logo/trueself5.png"
+              alt="Cinemax"
+              className="w-12 mr-3"
+            />
+            Trueself
+          </div>
+        </Link>
       )}
 
       {/* Image displayed when minimized */}
       {isMinimized && (
         <div className="p-4 flex justify-center items-center">
-          <img src="/logo/trueself5.png" alt="Trueself" className="ml-6" />
+          <Link to="/admin">
+            <img src="/logo/trueself5.png" alt="Trueself" className="ml-2" />
+          </Link>
         </div>
       )}
       <ul className="mt-5 text-xs">

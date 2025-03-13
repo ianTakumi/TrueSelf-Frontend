@@ -33,7 +33,7 @@ const AnxietyBarChart = () => {
       const res = await AxiosInstance.get("/anxietyPredictions/perMonth");
       if (res.status === 200 && res.data.success) {
         const formattedData = res.data.data.map((item) => ({
-          month: monthNames[item._id.month - 1], // Convert month number to name
+          month: monthNames[item._id.month - 1],
           mild: item.mildCount,
           severe: item.severeCount,
         }));
@@ -49,7 +49,12 @@ const AnxietyBarChart = () => {
   }, []);
 
   return (
-    <ResponsiveContainer width="100%" height={300}>
+    <ResponsiveContainer
+      width="100%"
+      height={300}
+      style={{ textAlign: "center" }}
+    >
+      <h2 className="text-xl font-bold mb-4"> Anxiety Level</h2>
       <BarChart
         data={anxietyData}
         margin={{ top: 20, right: 30, left: 20, bottom: 5 }}

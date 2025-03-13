@@ -15,7 +15,7 @@ import ChangePasswordModal from "../../components/admin/modals/ChangePassword.mo
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import AxiosInstance from "../../../utils/AxiosInstance";
-import { Facebook, Google } from "@mui/icons-material";
+import { Google } from "@mui/icons-material";
 const Profile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
@@ -38,9 +38,9 @@ const Profile = () => {
     setIsPasswordModalOpen(false);
   };
 
-  const handleLinkFacebookAccount = async () => {
-    console.log("Linking Facebook account");
-  };
+  // const handleLinkFacebookAccount = async () => {
+  //   console.log("Linking Facebook account");
+  // };
 
   const handleLinkGoogleAccount = async (credentialResponse) => {
     const decoded = jwtDecode(credentialResponse?.credential);
@@ -207,29 +207,7 @@ const Profile = () => {
           <h2 className="text-xl font-bold text-gray-800 text-center mb-4">
             Linked Accounts
           </h2>
-          {/* Facebook Section */}
-          <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg shadow-sm mb-3">
-            <div className="flex items-center space-x-3">
-              <Facebook className="text-blue-600" fontSize="large" />
-              <p className="text-gray-700">
-                <strong>Facebook:</strong>
-              </p>
-            </div>
-            {user?.socialAccounts?.find(
-              (account) => account.provider === "facebook"
-            ) ? (
-              <button className="border border-blue-500 text-blue-500 px-3 py-1 rounded-lg hover:bg-blue-500 hover:text-white transition">
-                Already Linked
-              </button>
-            ) : (
-              <button
-                onClick={handleLinkFacebookAccount} // Implement this function
-                className="border border-blue-500 text-blue-500 px-3 py-1 rounded-lg hover:bg-blue-500 hover:text-white transition"
-              >
-                Link Facebook
-              </button>
-            )}
-          </div>
+
           {/* Google Section */}
           <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg shadow-sm">
             <div className="flex items-center space-x-3">

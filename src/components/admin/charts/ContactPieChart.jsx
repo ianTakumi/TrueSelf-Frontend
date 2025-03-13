@@ -1,108 +1,105 @@
-import { useEffect, useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import AxiosInstance from "../../../../utils/AxiosInstance";
 import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
+  PieChart,
+  Pie,
+  Cell,
   Tooltip,
-  CartesianGrid,
+  Legend,
   ResponsiveContainer,
 } from "recharts";
-import AxiosInstance from "../../../../utils/AxiosInstance";
-
-import { saveAs } from "file-saver";
-// import Papa from "papaparse";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
-const MonthlyEngagementChart = () => {
+const COLORS = ["#FF69B4", "#FFB6C1", "#ADD8E6"];
+
+const capitalizeFirstLetter = (str) =>
+  str.charAt(0).toUpperCase() + str.slice(1);
+
+const ContactPieChart = () => {
   const [data, setData] = useState([]);
   const chartRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
 
-  const fetchMonthlyEngagements = async () => {
-    await AxiosInstance.get("/contacts/monthly-engagements").then((res) => {
+  useEffect(() => {
+    fetchContactData();
+  }, []);
+
+  const fetchContactData = async () => {
+    try {
+      const res = await AxiosInstance.get("/contacts/status-distribution");
       if (res.status === 200) {
         const formattedData = res.data.map((item) => ({
-          name: new Date(item.year, item.month - 1).toLocaleString("default", {
-            month: "short",
-          }),
-          total: item.total,
+          name: capitalizeFirstLetter(item._id), // Capitalize the first letter
+          value: item.count,
         }));
         setData(formattedData);
       }
-    });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  useEffect(() => {
-    fetchMonthlyEngagements();
-  }, []);
-
-  const exportToCSV = () => {
+  // Function to export data as CSV
+  const exportCSV = () => {
     let csvContent = "data:text/csv;charset=utf-8,";
 
-    // Add report title
-    csvContent += "Monthly Contact Engagement Report (Year 2025)\n\n";
+    csvContent += "Contact Status Distribution Report\n\n";
 
-    // Add CSV headers
-    csvContent += "Month,Total\n";
+    csvContent += "Status, Count\n";
 
-    // Data array (make sure `data` is defined before this function runs)
     data.forEach((row) => {
-      csvContent += `${row.month},${row.total}\n`;
+      csvContent += `${row.name}, ${row.value}\n`;
     });
 
-    // Convert to downloadable CSV file
+    // Create and download the CSV file
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "contact_engagement_2025.csv");
-
-    // Append link, trigger click, then remove the link
+    link.setAttribute("download", "contact_status_distribution.csv");
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
 
-  const exportToPDF = () => {
-    const headerImg = new Image();
-    headerImg.src = "/logo/result.png"; // Make sure the image path is correct
+  // Function to export chart as PDF
+  const exportPDF = () => {
+    const input = chartRef.current;
+    html2canvas(input, { scale: 2 }).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("p", "mm", "a4");
 
-    headerImg.onload = () => {
-      // Fix the event name (onload, not onLoad)
-      const input = chartRef.current;
-
-      html2canvas(input, { scale: 2 }).then((canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-        const pdf = new jsPDF("p", "mm", "a4");
-
-        // Add header image first
+      // Add header image
+      const headerImg = new Image();
+      headerImg.src = "/logo/result.png";
+      headerImg.onload = () => {
         pdf.addImage(headerImg, "PNG", 30, 10, 140, 40);
 
-        // Add title
         pdf.setFontSize(16);
         pdf.text("Contact Status Distribution", 15, 60);
 
-        // Add chart image below title
         pdf.addImage(imgData, "PNG", 15, 60, 180, 100);
 
-        // Save the PDF
-        pdf.save("Contacts_Engagement.pdf");
-      });
-    };
+        pdf.save("contact_status_distribution.pdf");
+      };
+    });
   };
 
+  // Function to print the chart
   const handlePrint = () => {
     const input = chartRef.current;
     html2canvas(input, { scale: 2 }).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
       const newWindow = window.open("", "_blank");
 
+      // Load header image
       const headerImg = new Image();
       headerImg.src = "/logo/result.png";
       headerImg.onload = () => {
         const headerImgData = headerImg.src;
-        newWindow.document.write(`  <html>
+
+        newWindow.document.write(`
+          <html>
             <head>
               <title>Print Chart</title>
             </head>
@@ -114,8 +111,8 @@ const MonthlyEngagementChart = () => {
                 window.onload = function() { window.print(); window.close(); };
               </script>
             </body>
-          </html>`);
-
+          </html>
+        `);
         newWindow.document.close();
       };
     });
@@ -123,36 +120,41 @@ const MonthlyEngagementChart = () => {
 
   return (
     <div className="w-full max-w-lg mx-auto flex flex-col items-center">
-      <h2 className="text-lg font-semibold mb-4">Monthly Contact Engagement</h2>
+      <h2 className="text-lg font-semibold mb-4">
+        Contact Status Distribution
+      </h2>
+
+      {/* Chart container */}
       <div ref={chartRef} className=" p-6  w-full flex justify-center">
         <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#ddd" />
-            <XAxis dataKey="name" stroke="#666" />
-            <YAxis tickFormatter={(value) => `${value}`} stroke="#666" />
+          <PieChart>
+            <Pie
+              data={data}
+              cx="50%"
+              cy="50%"
+              outerRadius={80}
+              dataKey="value"
+              label={({ percent }) => `${(percent * 100).toFixed(1)}%`}
+            >
+              {data.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
+              ))}
+            </Pie>
             <Tooltip
-              contentStyle={{ backgroundColor: "#ffffff", borderRadius: "8px" }}
-              labelFormatter={(label) => `Engagements in ${label}`}
+              formatter={(value, name) => [
+                `${value}%`,
+                capitalizeFirstLetter(name),
+              ]}
             />
-            <Line
-              type="monotone"
-              dataKey="total"
-              stroke="url(#colorEngagement)"
-              strokeWidth={3}
-              dot={{ stroke: "#8884d8", strokeWidth: 3, r: 5 }}
-              activeDot={{ r: 8 }}
-              isAnimationActive={true}
-            />
-            <defs>
-              <linearGradient id="colorEngagement" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#8884d8" stopOpacity={1} />
-                <stop offset="100%" stopColor="#8884d8" stopOpacity={0.3} />
-              </linearGradient>
-            </defs>
-          </LineChart>
+            <Legend formatter={(value) => capitalizeFirstLetter(value)} />
+          </PieChart>
         </ResponsiveContainer>
       </div>
 
+      {/* Export Buttons */}
       <div className="relative mt-6">
         {/* Main Export Button */}
         <button
@@ -167,7 +169,7 @@ const MonthlyEngagementChart = () => {
           <div className="absolute left-0 mt-2 w-40 bg-white border border-purple-300 rounded-lg shadow-md">
             <button
               onClick={() => {
-                exportToPDF();
+                exportPDF();
                 setIsOpen(false);
               }}
               className="block w-full text-left px-4 py-2 text-sm text-purple-600 hover:bg-purple-100"
@@ -176,7 +178,7 @@ const MonthlyEngagementChart = () => {
             </button>
             <button
               onClick={() => {
-                exportToCSV();
+                exportCSV();
                 setIsOpen(false);
               }}
               className="block w-full text-left px-4 py-2 text-sm text-purple-600 hover:bg-purple-100"
@@ -199,4 +201,4 @@ const MonthlyEngagementChart = () => {
   );
 };
 
-export default MonthlyEngagementChart;
+export default ContactPieChart;
