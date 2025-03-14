@@ -1,0 +1,1271 @@
+{
+  "Paranaque City": {
+    "The Nazareth Formation House": {
+      "Address": "Canberra Street, BF Homes, Phase 3, Para\u00f1aque City",
+      "Contact Number": ["(043) 706-2365", "0917-571-4597"],
+      "Email": "Not available",
+      "Coordinates": {
+        "Latitude": 14.462155333000158,
+
+        "Longitude": 121.00742564417887
+      }
+    }
+  },
+  "Pasay City": {
+    "Pasay City General Hospital": {
+      "Address": "P. Burgos Street, Pasay City",
+      "Contact Number": ["(02) 8833-6022"],
+      "Email": "Not available",
+      "Coordinates": {
+        "Latitude": 14.5378,
+        "Longitude": 120.9921
+      },
+      "Source": "owwamember.com",
+      "Specialties": [
+        "General Medicine",
+        "Surgery",
+        "Pediatrics",
+        "Obstetrics and Gynecology"
+      ]
+    }
+  },
+  "Pasig City": {
+    "Angela Aida W. Halili-Jao, M.D.": {
+      "Address": "Suite 508 Richmonde Plaza, Lourdes Drive Cor. San Miguel Ave., Pasig City",
+      "Contact Number": ["(02) 633-3893"],
+      "Email": "Not available",
+      "Coordinates": {
+        "Latitude": 14.5826,
+        "Longitude": 121.0605
+      },
+      "Source": "breakyourstigma.com",
+      "Specialties": ["Psychiatry"]
+    },
+    "Anna Cruz, M.D.": {
+      "Address": "The Medical City, Ortigas Avenue, Pasig City",
+      "Contact Number": ["(02) 988-1000"],
+      "Email": "Not available",
+      "Coordinates": {
+        "Latitude": 14.5919,
+        "Longitude": 121.0646
+      },
+      "Specialties": ["Psychiatry"]
+    },
+    "Ma. Ghia Nabong": {
+      "Address": "IBP Tower, Ortigas, Pasig Philippines, Metro Manila 1605",
+      "Contact Number": ["0917899-9807"],
+      "Email": "ghianabs@me.com",
+      "Coordinates": {
+        "Latitude": 14.5895,
+        "Longitude": 121.0614
+      },
+      "Specialties": ["Psychiatry"]
+    }
+  },
+  "Quezon City": {
+    "Clinic of the Holy Spirit": {
+      "Address": "4 Los Angeles Street, Brgy. Immaculate Conception, Quezon City",
+      "Contact Number": ["(02) 8721-4798", "(02) 8721-7180"],
+      "Email": "Not available",
+      "Coordinates": {
+        "Latitude": 14.6238,
+        "Longitude": 121.0336
+      },
+      "Specialties": ["General Medicine"]
+    },
+    "Adoracion L. Tanega, M.D.": {
+      "Address": "Room 16 Specialty Clinic, Philippine Children\u2019s Medical Center, Quezon Avenue, Quezon City",
+      "Contact Number": ["(02) 924-6601"],
+      "Email": "Not available",
+      "Coordinates": {
+        "Latitude": 14.6413,
+        "Longitude": 121.0373
+      },
+      "Specialties": ["Child Psychiatry"]
+    },
+    "Agnes Bueno, M.D.": {
+      "Address": "Room 501 Medical Arts Bldg., St. Luke\u2019s Medical Center, E. Rodriguez Avenue, Quezon City",
+      "Contact Number": ["(02) 723-8591"],
+      "Email": "Not available",
+      "Coordinates": {
+        "Latitude": 14.6181,
+        "Longitude": 121.0004
+      },
+      "Specialties": ["Psychology"]
+    }
+  },
+  "San Juan City": {
+    "San Juan Medical Center": {
+      "Address": "N. Domingo Street, San Juan City",
+      "Contact Number": ["(02) 8724-3266"],
+      "Email": "Not available",
+      "Coordinates": {
+        "Latitude": 14.6042,
+        "Longitude": 121.0289
+      },
+      "Specialties": [
+        "General Medicine",
+        "Surgery",
+        "Pediatrics",
+        "Obstetrics and Gynecology"
+      ]
+    }
+  },
+  "Taguig City": {
+    "Taguig-Pateros District Hospital": {
+      "Address": "East Service Road, Taguig City",
+      "Contact Number": ["(02) 8837-8132"],
+      "Email": "Not available",
+      "Coordinates": {
+        "Latitude": 14.510855637992663,
+        "Longitude": 121.03410115727964
+      },
+      "Source": "owwamember.com",
+      "Specialties": [
+        "General Medicine",
+        "Surgery",
+        "Pediatrics",
+        "Obstetrics and Gynecology"
+      ]
+    }
+  },
+  "Valenzuela City": {
+    "Angela E. Bunag-Joaquin, M.A., RPm, RPsy": {
+      "Address": "Valenzuela City",
+      "Contact Number": "Not available",
+      "Email": "Not available",
+      "Coordinates": {
+        "Latitude": 14.7006,
+        "Longitude": 120.983
+      },
+      "Source": "breakyourstigma.com",
+      "Specialties": ["Psychology"]
+    }
+  },
+  "Caloocan City": {
+    "Bermudez Polymedic": {
+      "Address": "391, Q3CH+366, 185 Malaria Rd, Caloocan, 1427 Metro Manila",
+      "Contact Number": ["Not Available"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.776367995080127,
+        "Longitude": 121.0780927404212
+      },
+      "Specialties": ["General Medicine Services"],
+      "Source": "Excel Data"
+    },
+    "MCU Hospital - Filemon D. Tanchoco, Sr. Medical Foundation ": {
+      "Address": "EDSA, Caloocan City, Metro Manila ",
+      "Contact Number": ["09673672031", "09673614664", "09673654868"],
+      "Email": "customercare@mcufdtmf.org",
+      "Coordinates": {
+        "Latitude": 14.654211863263823,
+        "Longitude": 120.97274169489576
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Our Lady of Grace Hospital": {
+      "Address": "8th Avenue West Corner F. Roxas Street, Caloocan City, Metro Manila",
+      "Contact Number": ["09673611124", "09673611138"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.657201233722127,
+        "Longitude": 120.98269805501528
+      },
+      "Specialties": ["Psychiatry ", "Pediatrics", "Internal Medicine"],
+      "Source": "Excel Data"
+    },
+    "North Caloocan Doctors Hospital": {
+      "Address": "Lot 31 Block 10, Quirino Highway, Bankers Village 2, Caloocan City, Metro Manila",
+      "Contact Number": ["09679615213"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.771335685642155,
+        "Longitude": 121.08556220870948
+      },
+      "Specialties": ["General Medicine Services"],
+      "Source": "Excel Data"
+    },
+    "Caloocan City Medical Center South": {
+      "Address": "A. Mabini Street, Caloocan City, Metro Manila",
+      "Contact Number": ["09672887077", "09673235464"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.654876171335005,
+        "Longitude": 120.9734283404212
+      },
+      "Specialties": [
+        "Psychiatry",
+        "Pediatrics",
+        "Cardiology",
+        "Acupuncture",
+        "Addiction Medicine",
+        "Reconstructive and Burn",
+        "Allergology & Immunology",
+        "Audiology",
+        "Cardiology"
+      ],
+      "Source": "Excel Data"
+    },
+    "Martinez Memorial Hospital": {
+      "Address": "198 A. Mabini Street, Maypajo, Caloocan City, Metro Manila",
+      "Contact Number": ["09672884574", "09672888861"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.64457916994259,
+        "Longitude": 120.97651824528587
+      },
+      "Specialties": ["General Medicine Services"],
+      "Source": "Excel Data"
+    },
+    "Camarin Doctor\u2019s Hospital": {
+      "Address": "Zabarte Road, Camarin, Caloocan City, Metro Manila",
+      "Contact Number": ["Not Available"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.759003690404302,
+        "Longitude": 121.04008786318398
+      },
+      "Specialties": ["Psychiatry", "General Medicine", "Surgery"],
+      "Source": "Excel Data"
+    },
+    "Caloocan City North Medical Center": {
+      "Address": "Congressional Road, Barangay 171, Bagumbong, Caloocan City, Metro Manila",
+      "Contact Number": ["Not Available"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.764684619767868,
+        "Longitude": 121.05040916318396
+      },
+      "Specialties": ["Psychiatry", "Pediatrics", "Cardiology"],
+      "Source": "Excel Data"
+    },
+    "Ronn-Carmel General Hospital ": {
+      "Address": "#3 10th Avenue, Caloocan City, Metro Manila",
+      "Contact Number": ["09673632789", "09673632775"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.668161909675709,
+        "Longitude": 120.99402770618576
+      },
+      "Specialties": ["Psychiatry", "General Medicine", "Surgery"],
+      "Source": "Excel Data"
+    },
+    "Acebedo General Hospital": {
+      "Address": "300 General Luis, Caloocan, 1420 Metro Manila",
+      "Contact Number": ["09674001272", "09674044181", "09679835363"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.721960897339663,
+        "Longitude": 121.00432738906802
+      },
+      "Specialties": ["Psychiatry", "Pediatrics", "Internal Medicine"],
+      "Source": "Excel Data"
+    },
+    "Babaguin Family Hospital": {
+      "Address": "849 General Luis Street, Bagbaguin, Caloocan City, Metro Manila",
+      "Contact Number": ["09679835363"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.724949341307273,
+        "Longitude": 121.005700680119
+      },
+      "Specialties": ["Psychiatry", "General Medicine", "Pediatrics"],
+      "Source": "Excel Data"
+    },
+    "Dr. Jose N. Rodriguez Memorial Hospital ": {
+      "Address": "Administration Site, Caloocan City, Metro Manila",
+      "Contact Number": ["09679628209", "09679629877", "09679629884"],
+      "Email": "djnrmh2003@yahoo.com",
+      "Coordinates": {
+        "Latitude": 14.77317357118602,
+        "Longitude": 121.06522041765848
+      },
+      "Specialties": [
+        "Psychiatry",
+        "Dermatology",
+        "Orthopedic Care",
+        "Outpatient Care",
+        "Reconstructive Surgery",
+        "Internal Medicine ",
+        "Obstetrics and gynecology",
+        "Opthalmology"
+      ],
+      "Source": "Excel Data"
+    },
+    "Hernandez General Hospital": {
+      "Address": "1372 Rizal Avenue Extension, Caloocan City, Metro Manila",
+      "Contact Number": ["09673645588"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.652551084274496,
+        "Longitude": 120.98235473225252
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Ospital ng Caloocan": {
+      "Address": "A. Mabini Street, Caloocan City, Metro Manila",
+      "Contact Number": ["09672887077", "09673235464"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.654211863263823,
+        "Longitude": 120.97274169489576
+      },
+      "Specialties": ["Psychiatry", "Pediatrics", "Cardiology"],
+      "Source": "Excel Data"
+    },
+    "Markvim Hospital ": {
+      "Address": "Zabarte Road, Camarin, Caloocan City, Metro Manila",
+      "Contact Number": ["Not Available"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.75961016745415,
+        "Longitude": 121.04249402660751
+      },
+      "Specialties": ["Psychiatry", "General Medicine", "Surgery"],
+      "Source": "Excel Data"
+    },
+    "MCU-FDT Medical Foundation": {
+      "Address": "EDSA, Caloocan City, Metro Manila ",
+      "Contact Number": ["09673672031", "09673614664", "09673654868"],
+      "Email": "customercare@mcufdtmf.org",
+      "Coordinates": {
+        "Latitude": 14.663511992942103,
+        "Longitude": 120.9864746054054
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Nodado General Hospital": {
+      "Address": "Quirino Highway, Barangay 171, Bagumbong, Caloocan City, Metro Manila",
+      "Contact Number": ["09679628021", "09679615213", "09679627991"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.770222649726136,
+        "Longitude": 121.042918372133
+      },
+      "Specialties": ["Psychiatry", "General Medicine", "Pediatrics"],
+      "Source": "Excel Data"
+    },
+    "Lady of Lourdes Hospital": {
+      "Address": "Rizal Avenue Extension, Caloocan City, Metro Manila",
+      "Contact Number": ["09679835581", "09679841413"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.72594548019368,
+        "Longitude": 121.00467071183078
+      },
+      "Specialties": ["Psychiatry", "Obstetrics and Gynecology", "Pediatrics"],
+      "Source": "Excel Data"
+    },
+    "San Lorenzo Hospital": {
+      "Address": "Quirino Highway, Barangay 175, Camarin, Caloocan City, Metro Manila",
+      "Contact Number": ["09679362683", "09679396042"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.742628986572322,
+        "Longitude": 121.03254566318394
+      },
+      "Specialties": ["General Medicine Services"],
+      "Source": "Excel Data"
+    }
+  },
+  "NaN": {
+    "NaN": {
+      "Address": "",
+      "Contact Number": ["Not available"],
+      "Email": "Not available",
+      "Coordinates": {
+        "Latitude": "",
+        "Longitude": ""
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    }
+  },
+  "Las Pi\u00f1as City": {
+    "Perpetual Help Medical Center": {
+      "Address": "Alabang\u2013Zapote Rd, Las Pi\u00f1as, 1740 Metro Manila",
+      "Contact Number": ["8-874-8515"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.45174838327705,
+        "Longitude": 120.98597033159196
+      },
+      "Specialties": [
+        "Psychiatry",
+        "General Surgery",
+        "Family Medicine",
+        "Cardiology",
+        "ENT"
+      ],
+      "Source": "Excel Data"
+    },
+    "Las Pi\u00f1as General Hospital and Satellite Trauma Center": {
+      "Address": "Bernabe Compound, Diego Cera Ave, Pulanglupa I, Las Pi\u00f1as, Metro Manila",
+      "Contact Number": ["8-873-0556", "8-824-9434", "0995-629-7269"],
+      "Email": "omcc@lpghstc.doh.gov.ph, contact@lpghstc.doh.gov.ph",
+      "Coordinates": {
+        "Latitude": 14.473665168457766,
+        "Longitude": 120.97354850882924
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Las Pi\u00f1as Doctors Hospital": {
+      "Address": "#8009 CAA Rd, Pulanglupa II, Las Pi\u00f1as, Metro Manila",
+      "Contact Number": ["8-825-5236"],
+      "Email": "lpdh.industrial@yahoo.com",
+      "Coordinates": {
+        "Latitude": 14.458060735118073,
+        "Longitude": 120.99349442468515
+      },
+      "Specialties": [
+        "Anesthesiology",
+        "Cardio-Pulmonology",
+        "Dentistry",
+        "Dermatology",
+        "Diagnostics",
+        "Laboratory",
+        "ENT",
+        "Pediatrics",
+        "Rehabilitation Medicine"
+      ],
+      "Source": "Excel Data"
+    },
+    "Unihealth Las Pi\u00f1as Christ the King Medical Center ": {
+      "Address": "130 Alabang\u2013Zapote Rd, Pamplona 1, Las Pi\u00f1as, 1740 Metro Manila",
+      "Contact Number": ["Not Available"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.460911683001797,
+        "Longitude": 120.96941518606648
+      },
+      "Specialties": ["Heart Station", "ICU", "Endoscopy", "Laboratory", "OPD"],
+      "Source": "Excel Data"
+    },
+    "Las Pi\u00f1as City Medical Center ": {
+      "Address": "1314 Marcos Alvarez Ave, Las Pi\u00f1as, 1747 Metro Manila",
+      "Contact Number": ["800-5695"],
+      "Email": "lpcmc_2003@yahoo.com",
+      "Coordinates": {
+        "Latitude": 14.43311899705787,
+        "Longitude": 121.00369359297332
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Pamplona Hospital and Medical Center": {
+      "Address": "46 Alabang\u2013Zapote Rd, Pamplona 1, Las Pi\u00f1as, 1740 Metro Manila",
+      "Contact Number": ["Not Available"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.464466665398582,
+        "Longitude": 120.96866710882922
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "A. Zarate General Hospital ": {
+      "Address": "13-765 Atlas compond, Naga Rd, Las Pi\u00f1as, 2011 Metro Manila",
+      "Contact Number": ["8-874-6903", "8-872-4827"],
+      "Email": "azarategeneralhospital91@gmail.com",
+      "Coordinates": {
+        "Latitude": 14.470198065094872,
+        "Longitude": 120.980670831592
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Pope John Paul 2 Hospital and Medical Center": {
+      "Address": "545 Alabang\u2013Zapote Rd, Las Pi\u00f1as, 1747 Metro Manila",
+      "Contact Number": ["8-876-0285", "0906-058-5109"],
+      "Email": "hmo.pjp2@gmail.com",
+      "Coordinates": {
+        "Latitude": 14.446710429997353,
+        "Longitude": 120.9962284702106
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "South Superhighway Medical Center": {
+      "Address": "South Superhighway Medical Center",
+      "Contact Number": ["Not Available"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.436123419885206,
+        "Longitude": 121.010339931592
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Las Pinas Heart Group Incorporated": {
+      "Address": "CXXP+78V, Medical Art Building, University of Perpetual Help Dalta Medical Center, Alabang-Zapote Road, Pamplona Tres, Las Pi\u00f1as, 1740 Metro Manila",
+      "Contact Number": ["Not Available"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.45049400727492,
+        "Longitude": 120.9859146546493
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Our Lady of Peace Hospital (Charity Hospital)": {
+      "Address": "Our Lady Of Peace Hospital, E3, Para\u00f1aque, 1700 Metro Manila",
+      "Contact Number": ["Not Available"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.490880817704866,
+        "Longitude": 120.98376783159198
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Las Pi\u00f1as Lying-In Center ": {
+      "Address": "Las Pi\u00f1as Lying-In Center ",
+      "Contact Number": ["Not Available"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.459810094500249,
+        "Longitude": 120.99438724744785
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    }
+  },
+  "Malabon City": {
+    "Malabon City Hospital ": {
+      "Address": "Malabon, 1409 Metro Manila",
+      "Contact Number": ["Not Available"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.667838450926272,
+        "Longitude": 120.96292932636788
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "San Lorenzo Ruiz General Hospital ": {
+      "Address": "MXV4+MG9, o. reyes St, Malabon, 1478 Metro Manila",
+      "Contact Number": ["(02) 294-4853"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.708774142689988,
+        "Longitude": 120.9566887263679
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "RMI Medical and Diagnostic Center ": {
+      "Address": "block 1 lot 1 ph2 A/B3, Pampano St, Malabon, 1472 Metro Manila",
+      "Contact Number": ["(02) 511-0461"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.66214601814138,
+        "Longitude": 120.95994638979144
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Tito Oreta Memorial Hospital ": {
+      "Address": "MX42+W75, F. Sevilla Blvd, Malabon, Metro Manila",
+      "Contact Number": ["(02) 511-0462"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.667888939447788,
+        "Longitude": 120.9462748076895
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Calalang General Hospital": {
+      "Address": "4th St, Valenzuela, 1440 Metro Manila",
+      "Contact Number": ["(02) 511-0463"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.683233794265774,
+        "Longitude": 120.97923669874048
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "CB Medical Services Center Corporation ": {
+      "Address": "57 Gen. Luna St, Malabon, Metro Manila",
+      "Contact Number": ["(02) 511-0464"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.673600708320013,
+        "Longitude": 120.9510813808424
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "MGC Polyclinic": {
+      "Address": "55 Maria Clara St, Malabon, Metro Manila",
+      "Contact Number": ["(02) 511-0465"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.677520871787715,
+        "Longitude": 120.967301244266
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "MedExcel Healthcare + Inc. ": {
+      "Address": "Level 2 Robinsons Town Mall Malabon,#5 Governor Pascual Ave, cor Crispin St, Malabon, 1470 Kalakhang Maynila",
+      "Contact Number": ["(02) 511-0466"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.68195440119338,
+        "Longitude": 120.9676190263679
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Family First Multispecialty, diagnostic And Maternity Clinic ": {
+      "Address": "13 Marcelo H. Del Pilar St, Malabon, Metro Manila",
+      "Contact Number": ["(02) 511-0467"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.673216452199036,
+        "Longitude": 120.9716694174189
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Fatima University Medical Center - Valenzuela ": {
+      "Address": "120 MacArthur Hwy, Valenzuela, 1440 Metro Manila",
+      "Contact Number": ["(02) 511-0468"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.692003326504748,
+        "Longitude": 120.97994348084238
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "RX MEDIKA HEALTH CLINIC": {
+      "Address": "68 Panghulo Rd, Malabon, 1478 Metro Manila",
+      "Contact Number": ["(02) 511-0469"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.687546135166963,
+        "Longitude": 120.95615097324333
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "St. Jude Medical Clinic and Diagnostic Center ": {
+      "Address": "RLN Centre Bldg., M.H. Del Pilar Cor. Gov. Pascual Ave, Malabon, 1470 Metro Manila",
+      "Contact Number": ["(02) 511-0470"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.668909798229029,
+        "Longitude": 120.96515479566035
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    }
+  },
+  "Mandaluyong City": {
+    "Mandaluyong City Medical Center ": {
+      "Address": "F. Martinez Ave, Mandaluyong, 1550 Metro Manila",
+      "Contact Number": [
+        "8532-2563",
+        "8532-2781",
+        "8532-0480",
+        "8532-2574",
+        "8747-3393"
+      ],
+      "Email": "mcmc@mandaluyong.gov.ph",
+      "Coordinates": {
+        "Latitude": 14.596926152630916,
+        "Longitude": 121.0359801754198
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "VRP Medical Center ": {
+      "Address": "163 Epifanio de los Santos Ave, Mandaluyong, 1501 Metro Manila",
+      "Contact Number": ["(02) 8464 9999"],
+      "Email": "info@vrp.com.ph",
+      "Coordinates": {
+        "Latitude": 14.602309718109469,
+        "Longitude": 121.04588627106754
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "St. Michael's Medical Center ": {
+      "Address": "2nd Floor Star Mall, Shaw Boulivard, Mandaluyong, 1550 Metro Manila",
+      "Contact Number": ["(02) 477-8937", "710-0448"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.593417309186943,
+        "Longitude": 121.0544448534166
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "ACE Medical Center Mandaluyong ": {
+      "Address": "145 Haig, Mandaluyong, 1550 Metro Manila",
+      "Contact Number": ["Not Available"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.607644109609575,
+        "Longitude": 121.02565170145408
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "National Center For Mental Health ": {
+      "Address": "H2JV+JMR, Nueve de Febrero, Mandaluyong, Kalakhang Maynila",
+      "Contact Number": ["Not Available"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.595882547351763,
+        "Longitude": 121.04161659187388
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Cardinal Santos Medical Center ": {
+      "Address": "10 Wilson, Greenhills West, San Juan, 1502 Metro Manila",
+      "Contact Number": ["Not Available"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.607029737257005,
+        "Longitude": 121.04494532557035
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Health Cube Medical Clinics - Shaw": {
+      "Address": "241 Shaw Blvd, Mandaluyong, 1552 Metro Manila",
+      "Contact Number": ["Not Available"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.604957711042632,
+        "Longitude": 121.03039880318326
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Divine Mercy Psychiatric Facility Inc ": {
+      "Address": "Barangay, 455 Boni Ave, Mandaluyong, 1550 Metro Manila",
+      "Contact Number": ["Not Available"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.602007145016302,
+        "Longitude": 121.02958658826287
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Mauway Health Center ": {
+      "Address": "Dr Jose Fabella Rd, Mandaluyong, Metro Manila",
+      "Contact Number": ["Not Available"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.592803722543524,
+        "Longitude": 121.04234253630224
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "High Pointe Medical Hub": {
+      "Address": "241 Shaw Blvd, Mandaluyong, Metro Manila",
+      "Contact Number": ["Not Available"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.602840378073456,
+        "Longitude": 121.03228401788344
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    }
+  },
+  "Manila City": {
+    "Bagong Ospital ng Maynila": {
+      "Address": "719 Quirino Avenue, corner A. Mabini St, Malate, Manila, 1004 Metro Manila",
+      "Contact Number": ["Not Available"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.56841534677818,
+        "Longitude": 120.9868194404212
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Philippine General Hospital ": {
+      "Address": "HXHP+469, Taft Ave, Ermita, Manila, 1000 Metro Manila",
+      "Contact Number": ["(02) 8554-8400"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.585423179869808,
+        "Longitude": 120.98508971765848
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Our Lady of Lourdes Hospital ": {
+      "Address": "46 P. Sanchez St, Santa Mesa, Manila, 1000 Metro Manila",
+      "Contact Number": ["(02) 8716-3901"],
+      "Email": "info@ollh.ph",
+      "Coordinates": {
+        "Latitude": 14.604245954964036,
+        "Longitude": 121.0220000104528
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "San Lazaro Hospital": {
+      "Address": "Quiricada St, Santa Cruz, Manila, 1003 Metro Manila",
+      "Contact Number": ["(02) 8731-3001"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.62002831036676,
+        "Longitude": 120.98073314042117
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Santa Ana Hospital ": {
+      "Address": "H2M8+8HQ, New Panaderos, Santa Ana, Manila, Metro Manila",
+      "Contact Number": ["(02) 8516-6790"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.588630583367632,
+        "Longitude": 121.01650684624892
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Mary Chiles General Hospital": {
+      "Address": "667 Dalupan St, Sampaloc, Manila, 1008 Metro Manila",
+      "Contact Number": ["(02) 8731-5868"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.6089168652214,
+        "Longitude": 120.98993266318396
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Chinese General Hospital and Medical Center ": {
+      "Address": "286 Blumentritt Rd, Santa Cruz, Manila, 1014 Metro Manila",
+      "Contact Number": ["(02) 8711-4141"],
+      "Email": "info@cghmc.com.ph",
+      "Coordinates": {
+        "Latitude": 14.633794098790862,
+        "Longitude": 120.98909623147212
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Perpetual Succor Hospital": {
+      "Address": "836 F, Cayco St, Sampaloc, Manila, 1008 Metro Manila",
+      "Contact Number": ["Not Available"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.620427117881194,
+        "Longitude": 120.9916373196152
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Manila Doctors Hospital ": {
+      "Address": "667 United Nations Ave, Ermita, Manila, 1000 Metro Manila",
+      "Contact Number": ["(02) 8558-0888"],
+      "Email": "info@maniladoctors.com.ph",
+      "Coordinates": {
+        "Latitude": 14.587596812501744,
+        "Longitude": 120.98247631765844
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Dr. Jose Fabella Memorial Hospital ": {
+      "Address": "1003 Lope de Vega St, Santa Cruz, Manila, 1003 Metro Manila",
+      "Contact Number": ["(02) 8733-8550"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.61385669235364,
+        "Longitude": 120.98341759489573
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "University of Santo Tomas Hospital ": {
+      "Address": "Espa\u00f1a Blvd, Sampaloc, Manila, 1015 Metro Manila",
+      "Contact Number": ["(02) 8731-3001"],
+      "Email": "info@usthospital.com.ph",
+      "Coordinates": {
+        "Latitude": 14.617055295775916,
+        "Longitude": 120.99043576318394
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "ManilaMed ": {
+      "Address": "850 United Nations Ave, Paco, Manila, Metro Manila",
+      "Contact Number": ["(02) 8558-0888"],
+      "Email": "info@manilamed.com.ph",
+      "Coordinates": {
+        "Latitude": 14.588515851610564,
+        "Longitude": 120.9854298404212
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Metropolitan Medical Center": {
+      "Address": "1357 Masangkay St, Santa Cruz, Manila, 1008 Metro Manila",
+      "Contact Number": ["(02) 8711-4141"],
+      "Email": "info@metromedicalcenter.com",
+      "Coordinates": {
+        "Latitude": 14.614939688194752,
+        "Longitude": 120.9775835948957
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Tondo Medical Center ": {
+      "Address": "Honorio Lopez Blvd, Tondo, Manila, Metro Manila",
+      "Contact Number": ["(02) 8255-1000"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.639189947398874,
+        "Longitude": 120.96257761765844
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "De Ocampo Memorial Medical Center ": {
+      "Address": "2921 Nagtahan St, Santa Mesa, Manila, 1016 Metro Manila",
+      "Contact Number": ["(02) 8711-4141"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.605907099473455,
+        "Longitude": 120.99899738534906
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    }
+  },
+  "Marikina City": {
+    "Marikina Valley Medical Center": {
+      "Address": "Sumulong Hwy, Marikina, 1800 Metro Manila",
+      "Contact Number": [
+        "(02) 8-682-2222",
+        "(02) 8-681-0317",
+        "(02) 8-682-4886"
+      ],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.636401383755574,
+        "Longitude": 121.10383005129086
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Amang Rodriguez Memorial Medical Center": {
+      "Address": "J3PX+975, Sumulong Hwy, Marikina, 1800 Metro Manila",
+      "Contact Number": [
+        "(02) 8-292-2388",
+        "(02) 8-292-1261",
+        "(02) 8-292-2388"
+      ],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.637212425200492,
+        "Longitude": 121.09827731579598
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Marikina St. Vincent General Hospital, Inc.": {
+      "Address": "35 Bayan-Bayanan Ave, Marikina, 1800 Metro Manila",
+      "Contact Number": [
+        "(02) 8-948-6100",
+        "(02) 8-948-6111",
+        "(02) 8-948-6111"
+      ],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.65334198705933,
+        "Longitude": 121.10760660168108
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Marikina Doctors Hospital and Medical Center, Inc. ": {
+      "Address": "10 Evangelista Ave, Pasig, 1800 Metro Manila",
+      "Contact Number": [
+        "(02) 8-653-1543",
+        "(02) 8-653-4354",
+        "(02) 8-653-2462"
+      ],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.622087363004686,
+        "Longitude": 121.08255788510526
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "St. Anthony Medical Center ": {
+      "Address": "32 Santa Ana, Ext, Marikina, 1801 Metro Manila",
+      "Contact Number": [
+        "(02) 8-345-2088",
+        "(02) 8-345-2099",
+        "(02) 8-345-2100"
+      ],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.62577131758597,
+        "Longitude": 121.10288591369336
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "St. Victoria Hospital ": {
+      "Address": "444 J. P. Rizal St, Marikina, 1800 Metro Manila",
+      "Contact Number": [
+        "(02) 8-948-7342",
+        "(02) 8-948-7341",
+        "(02) 8-948-7340"
+      ],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.64188459689897,
+        "Longitude": 121.09398699303324
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "SDS Medical Center Inc.": {
+      "Address": "61 Katipunan St, Marikina, 1800 Metro Manila",
+      "Contact Number": [
+        "(02) 8-672-2671",
+        "(02) 8-672-2673",
+        "(02) 8-672-2674"
+      ],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.641633180340987,
+        "Longitude": 121.10958070756683
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Immaculate Conception Hospital ": {
+      "Address": "195 Katipunan St, Marikina, 1800 Metro Manila",
+      "Contact Number": ["(02) 8-933-5240", "(02) 8-933-5222"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.639806217935336,
+        "Longitude": 121.10906572342272
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Garcia General Hospital": {
+      "Address": "49 Bayan-Bayanan Ave, Marikina, 1800 Metro Manila",
+      "Contact Number": ["Not Available"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.652511595841624,
+        "Longitude": 121.11078233723644
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "P. Gonzales Memorial Hospital, Inc. ": {
+      "Address": "582 J. P. Rizal St, Marikina, 1805 Metro Manila",
+      "Contact Number": [
+        "(02) 8-933-5189",
+        "(02) 8-933-5240",
+        "(02) 8-933-5222"
+      ],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.651171663945222,
+        "Longitude": 121.09820199303324
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Salve Regina General Hospital, Inc.": {
+      "Address": "J39W+XGG, Marikina-Infanta Hwy, Pasig, 1800 Metro Manila",
+      "Contact Number": [
+        "(02) 8-928-7373",
+        "(02) 8-928-7372",
+        "(02) 8-928-7371"
+      ],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.621359372753693,
+        "Longitude": 121.09568867027048
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Noah Medical Center": {
+      "Address": "M4C5+784, J. P. Rizal St, Marikina, Metro Manila",
+      "Contact Number": ["Not Available"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.67246940527374,
+        "Longitude": 121.10794466234256
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "St. John the Baptist of Marikina Hospital ": {
+      "Address": "No. 23, Sta. Ana Ext. cor. Betelnut St., A. Tuazon, San, Marikina, Metro Manila",
+      "Contact Number": [
+        "(02) 8-651-8359",
+        "(02) 8-651-9319",
+        "(02) 8-651-9320"
+      ],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.650601684099591,
+        "Longitude": 121.10786409375314
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Marikina Multispecialty Healthcare Services Inc. (MMHSI) ": {
+      "Address": "855 J. P. Rizal St, Marikina, 1800 Metro Manila",
+      "Contact Number": ["Not Available"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.654670606462236,
+        "Longitude": 121.1022850988585
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    }
+  },
+  "Muntinlupa City": {
+    "Medical Center Muntinlupa, Inc.": {
+      "Address": "38 National Road, Muntinlupa, 1772 Metro Manila",
+      "Contact Number": [
+        "0966 634 6943",
+        "0966 103 6563",
+        "0927 964 2408",
+        "0939 513 5162",
+        "0927 964 2409"
+      ],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.403086211494609,
+        "Longitude": 121.04450601765843
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Asian Hospital and Medical Center": {
+      "Address": "2205 Civic Dr, Muntinlupa, 1780 Metro Manila",
+      "Contact Number": ["0917 719 9000", "0917 865 755"],
+      "Email": "info@asianhospital.com",
+      "Coordinates": {
+        "Latitude": 14.421778258900282,
+        "Longitude": 121.04370516318396
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Ospital Ng Muntinlupa ": {
+      "Address": "C27V+PJJ Filinvest Corporate City, Civic Dr, Muntinlupa, Metro Manila",
+      "Contact Number": ["Not Available"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.421989619525752,
+        "Longitude": 121.0438294404212
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Alabang Medical Center": {
+      "Address": "Alabang\u2013Zapote Rd, Muntinlupa, 1771 Metro Manila",
+      "Contact Number": ["Not Available"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.432938763430275,
+        "Longitude": 121.02367209489574
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "BC Family Medical Corp. ": {
+      "Address": "Manila S Rd, Muntinlupa, 1773 Metro Manila",
+      "Contact Number": ["Not Available"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.378268137565088,
+        "Longitude": 121.0492398404212
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Alabang South Doctors Medical Center, Inc.": {
+      "Address": "64 National Road, Muntinlupa, 1772 Metro Manila",
+      "Contact Number": ["Not Available"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.403907634830263,
+        "Longitude": 121.0461705859467
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "Hillside General Hospital": {
+      "Address": "C2JV+P93, Km. 23, West Service Road, Muntinlupa, 1770 Metro Manila",
+      "Contact Number": ["Not Available"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.436753282789253,
+        "Longitude": 121.04256769489574
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "San Roque Medical Clinic": {
+      "Address": "C29W+PRG, Muntinlupa, 1770 Metro Manila",
+      "Contact Number": ["Not Available"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.426289455270068,
+        "Longitude": 121.04657761765844
+      },
+      "Specialties": [],
+      "Source": "Excel Data"
+    },
+    "National Bilibid Prison Hospital And Laboratory": {
+      "Address": "NBP Reservation, Sampaguita Road, Poblacion, Muntinlupa City, 1776, Metro Manila",
+      "Contact Number": ["Not Available"],
+      "Email": "Not Available",
+      "Coordinates": {
+        "Latitude": 14.38823327661468,
+        "Longitude": 121.02985550870942
+      },
+      "Specialties": []
+    }
+  },
+  "Navotas City": {
+    "Navotas City Hospital": {
+      "Address": "MW6W+5C4, M. Naval St, Navotas, Metro Manila",
+      "Contact Number": ["09283518021"],
+      "Email": "don.navotascityhospital@gmail.com",
+      "Coordinates": {
+        "Latitude": 14.662100032574171,
+        "Longitude": 120.94640512518144
+      },
+      "Specialties": []
+    }
+  }
+}

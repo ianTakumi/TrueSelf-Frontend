@@ -1,8 +1,20 @@
 import React, { useState, useEffect } from "react";
 import AxiosInstance from "../../../utils/AxiosInstance";
-import { notifyError, formatDate } from "../../../utils/helpers";
+import {
+  notifyError,
+  formatDate,
+  getUser,
+  notifySuccess,
+} from "../../../utils/helpers";
 import { Link } from "react-router-dom";
-import { CircularProgress, Button } from "@mui/material";
+import {
+  CircularProgress,
+  Button,
+  Menu,
+  MenuItem,
+  IconButton,
+} from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import { saveAs } from "file-saver";
@@ -15,12 +27,53 @@ const Users = () => {
   const [page, setPage] = useState(1);
   const rowsPerPage = 10;
 
+  const user = getUser();
+  const [menuAnchor, setMenuAnchor] = useState({});
+  const [selectedUser, setSelectedUser] = useState(null);
+  const handleClick = (event, user, index) => {
+    setMenuAnchor((prev) => ({ ...prev, [index]: event.currentTarget }));
+    setSelectedUser(user);
+  };
+
+  const handleClose = (index) => {
+    setMenuAnchor((prev) => ({ ...prev, [index]: null }));
+    setSelectedUser(null);
+  };
+
+  const toggleStatus = async () => {
+    const newStatus =
+      selectedUser.status === "deactivated" ? "activated" : "deactivated";
+    const endpoint =
+      newStatus === "deactivated"
+        ? `/users/deactivate/${selectedUser._id}`
+        : `/users/activate/${selectedUser._id}`;
+
+    try {
+      const res = await AxiosInstance.put(endpoint);
+
+      if (res.status === 200) {
+        notifySuccess(`Successfully ${newStatus}`);
+
+        fetchUsers();
+      } else {
+        console.error("⚠️ Unexpected Status Code:", res.status);
+        notifyError("Unexpected response from server");
+      }
+    } catch (err) {
+      console.error("❌ API Error:", err);
+      notifyError("Something went wrong");
+    }
+
+    handleClose();
+  };
+
   const fetchUsers = async () => {
     setIsLoading(true);
     try {
       const res = await AxiosInstance.get("/users");
       if (res.status === 200) {
         setUsers(res.data.data);
+        console.log("📤 Response:", res.data.data);
       }
     } catch (err) {
       notifyError("Error", err.message);
@@ -171,8 +224,10 @@ const Users = () => {
   const columns = [
     {
       name: "no",
-      label: "No.",
-      options: { customBodyRender: (_, tableMeta) => tableMeta.rowIndex + 1 },
+      label: "#",
+      options: {
+        customBodyRender: (value, tableMeta) => tableMeta.rowIndex + 1,
+      },
     },
     { name: "name", label: "Name" },
     {
@@ -183,22 +238,45 @@ const Users = () => {
       },
     },
     { name: "genderIdentity", label: "Gender Identity" },
-
     { name: "email", label: "Email" },
-    { name: "phoneNumber", label: "Phone" },
-    {
-      name: "status",
-      label: "Status",
-      options: {
-        customBodyRender: (value) =>
-          value.charAt(0).toUpperCase() + value.slice(1),
-      },
-    },
+    { name: "phoneNumber", label: "Phone Number" },
     {
       name: "createdAt",
       label: "Registered At",
       options: {
         customBodyRender: (value) => formatDate(value),
+      },
+    },
+    {
+      name: "actions",
+      label: "Actions",
+      options: {
+        filter: false,
+        sort: false,
+        customBodyRender: (_, tableMeta) => {
+          const userObj = users[tableMeta.rowIndex]; // Get the correct user
+          const index = tableMeta.rowIndex; // Track row index
+
+          return (
+            <>
+              <IconButton onClick={(e) => handleClick(e, userObj, index)}>
+                <MoreVertIcon />
+              </IconButton>
+
+              <Menu
+                anchorEl={menuAnchor[index]} // Open only for the clicked row
+                open={Boolean(menuAnchor[index])} // Ensure it matches the row
+                onClose={() => handleClose(index)}
+              >
+                <MenuItem onClick={() => toggleStatus(index)}>
+                  {selectedUser?.status === "deactivated"
+                    ? "Activate"
+                    : "Deactivate"}
+                </MenuItem>
+              </Menu>
+            </>
+          );
+        },
       },
     },
   ];

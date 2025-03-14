@@ -47,6 +47,12 @@ const Login = () => {
     await AxiosInstance.post("/auth/login", data)
       .then((response) => {
         console.log(response);
+        if (response.data.user.status === "deactivated") {
+          notifyError(
+            "Your account has been deactivated. Please contact us for more information."
+          );
+          return;
+        }
         authenticate(response.data, () => {
           console.log("User authenticated");
           notifySuccess("Login successful");

@@ -6,7 +6,7 @@ const teamMembers = [
   {
     name: "Barcelona, Anna Martine",
     role: "Graphics Designer and Documentation",
-    image: "/team/anna.png",
+    image: "/team/anna2.png",
   },
   {
     name: "Calica, Ian Gabriel",
@@ -16,12 +16,17 @@ const teamMembers = [
   {
     name: "Candelario, Jhan Kyle",
     role: "Documentation",
-    image: "/team/kyle.png",
+    image: "/team/kyle2.png",
   },
   {
     name: "Castronuevo, Gelain",
     role: "UI/UX Designer and Frontend Developer",
     image: "/team/gelain.png",
+  },
+  {
+    name: "Madriaga, Pops V.  MSCS",
+    role: "Thesis Adviser",
+    image: "/team/advisor.jpg",
   },
 ];
 
