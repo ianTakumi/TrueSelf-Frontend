@@ -15,17 +15,16 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { modules } from "../../../../configs/ReactQuill.config";
+import { modules } from "../../../configs/ReactQuill.config";
 
 const JournalModal = ({ isEditing, fetchJournals, journal, onClose }) => {
   const user = getUser();
+  const [content, setContent] = useState(journal?.content || "");
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
-  const [content, setContent] = useState(journal?.content || "");
 
   const onSubmit = async (data) => {
     const userId = user._id;

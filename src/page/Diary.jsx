@@ -23,7 +23,7 @@ import {
   getPreviewHtml,
 } from "../../utils/helpers";
 import { useForm } from "react-hook-form";
-import { modules } from "../../configs/ReactQuill.config";
+import { modules } from "../configs/ReactQuill.config";
 import AxiosInstance from "../../utils/AxiosInstance";
 import Swal from "sweetalert2";
 import { Edit, Delete, TableChart, ViewModule } from "@mui/icons-material";

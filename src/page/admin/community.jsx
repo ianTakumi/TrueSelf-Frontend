@@ -59,6 +59,9 @@ const spaces = () => {
   const [communityToEdit, setCommunityToEdit] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [expandedRow, setExpandedRow] = useState(null);
+  const [selectedCommunity, setSelectedCommunity] = useState(null);
+  const [menuAnchor, setMenuAnchor] = useState({});
+
   const fetchSpaces = async () => {
     try {
       await AxiosInstance.get("/spaces").then((response) => {
@@ -70,6 +73,16 @@ const spaces = () => {
       console.log(error);
       notifyError("Failed to fetch spaces");
     }
+  };
+
+  const handleClick = (event, community, index) => {
+    setMenuAnchor((prev) => ({ ...prev, [index]: event.currentTarget }));
+    setSelectedCommunity(community);
+  };
+
+  const handleClose = (index) => {
+    setMenuAnchor((prev) => ({ ...prev, [index]: null }));
+    setSelectedUser(null);
   };
 
   useEffect(() => {
@@ -332,6 +345,34 @@ const spaces = () => {
           );
         },
         setCellProps: () => ({ style: { textAlign: "center" } }),
+      },
+    },
+    {
+      name: "actions",
+      label: "Actions",
+      options: {
+        filter: false,
+        sort: false,
+        customBodyRender: (_, tableMeta) => {
+          const community = spaces[tableMeta.rowIndex];
+          const index = tableMeta.rowIndex;
+
+          return (
+            <>
+              <IconButton onClick={(e) => handleClick(e, userObj, index)}>
+                <MoreVertIcon />
+              </IconButton>
+
+              <Menu
+                anchorEl={menuAnchor[index]}
+                open={Boolean(menuAnchor[index])}
+                onClose={() => handleClose(index)}
+              >
+                {/* <MenuItem onClick={() =>}></MenuItem> */}
+              </Menu>
+            </>
+          );
+        },
       },
     },
   ];

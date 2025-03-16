@@ -27,9 +27,9 @@ const Users = () => {
   const [page, setPage] = useState(1);
   const rowsPerPage = 10;
 
-  const user = getUser();
   const [menuAnchor, setMenuAnchor] = useState({});
   const [selectedUser, setSelectedUser] = useState(null);
+
   const handleClick = (event, user, index) => {
     setMenuAnchor((prev) => ({ ...prev, [index]: event.currentTarget }));
     setSelectedUser(user);

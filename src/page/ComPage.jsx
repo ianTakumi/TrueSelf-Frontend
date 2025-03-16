@@ -25,6 +25,7 @@ const ComPage = () => {
       {/* Main Content */}
       <main className="main-content flex-grow p-5">
         <div className="top-section grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 mb-5">
+          {/* First Card */}
           <Link
             to={"/community/67c833d69fdac0bf83ddc589"}
             className="cursor-pointer"
@@ -68,6 +69,51 @@ const ComPage = () => {
             </motion.div>
           </Link>
 
+          {/*  Second Card */}
+          <Link
+            to={"/community/67c83855e670d3676c687169"}
+            className="cursor-pointer"
+          >
+            <motion.div
+              whileHover={{
+                scale: 1.05,
+                boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)",
+              }}
+              transition={{ duration: 0.3 }}
+              className="relative bg-white rounded-xl overflow-hidden shadow-lg text-center flex flex-col justify-between group"
+            >
+              {/* Image with Gradient Overlay */}
+              <div className="relative">
+                <img
+                  src="https://res.cloudinary.com/dco6n59if/image/upload/v1741174548/spaces/me6soiubs5nicsmfzl9f.jpg"
+                  alt="Community"
+                  className="rounded-lg h-[200px] object-cover w-full"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </div>
+
+              {/* Text & CTA */}
+              <div className="p-4">
+                <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                  <p className="text-sm font-medium mt-2">Spectrum Voices</p>
+                </h3>
+                <p className="text-sm text-gray-600 mt-1">
+                  Join our community and connect!
+                </p>
+
+                {/* Call to Action Button */}
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.2 }}
+                  className="mt-3 px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-lg text-sm font-medium shadow-md"
+                >
+                  Explore Now
+                </motion.button>
+              </div>
+            </motion.div>
+          </Link>
+
+          {/* Third Card */}
           <Link
             to={"/community/67c83855e670d3676c687169"}
             className="cursor-pointer"

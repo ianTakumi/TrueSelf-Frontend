@@ -7,34 +7,33 @@ import {
   Box,
   Typography,
   Avatar,
-  Tabs,
-  Tab,
+  Paper,
   Card,
   CardContent,
   CardHeader,
   CardMedia,
   Divider,
-  IconButton,
   Button,
-  TextField,
-  MenuItem,
+  ButtonGroup,
+  Stack,
+  Skeleton,
+  Badge,
 } from "@mui/material";
 import {
   ChatBubbleOutline,
   Share,
   ThumbDown,
   ThumbUp,
+  MoreVert,
+  Edit,
+  Delete,
+  PostAdd,
 } from "@mui/icons-material";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
 import { useForm, Controller } from "react-hook-form";
-import { FilePond, registerPlugin } from "react-filepond";
-import "filepond/dist/filepond.min.css";
-import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
-import FilePondPluginImagePreview from "filepond-plugin-image-preview";
-import FilePondPluginFileEncode from "filepond-plugin-file-encode";
-
-registerPlugin(FilePondPluginImagePreview, FilePondPluginFileEncode);
+import GroupIcon from "@mui/icons-material/Group";
+import InfoOutlined from "@mui/icons-material/InfoOutlined";
+import GavelOutlined from "@mui/icons-material/GavelOutlined";
+import { Link } from "react-router-dom";
 
 const SingleCommunity = () => {
   const user = getUser();
@@ -52,12 +51,18 @@ const SingleCommunity = () => {
   const [tab, setTab] = useState(0);
   const [posts, setPosts] = useState([]);
   const [postType, setPostType] = useState("text");
+  const [isMember, setIsMember] = useState(false);
+  const [joinLoading, setJoinLoading] = useState(true);
+  const [bannerLoaded, setBannerLoaded] = useState(false);
+  const [profileLoaded, setProfileLoaded] = useState(false);
 
   const fetchPost = async () => {
     try {
       const res = await AxiosInstance.get(`/posts/community/${id}`);
       console.log(res.data);
-      setPosts(res.data.data);
+      if (res.data) {
+        setPosts(res.data.data);
+      }
     } catch (error) {
       notifyError("Failed to fetch posts. Please try again.");
     }
@@ -67,10 +72,15 @@ const SingleCommunity = () => {
     try {
       const res = await AxiosInstance.get(`/spaces/${id}`);
       setCommunity(res.data.data);
+      console.log(res.data.data);
+      if (res.data.data.members.includes(userId)) {
+        setIsMember(true);
+      }
     } catch (error) {
       notifyError("Failed to fetch community. Please try again.");
     } finally {
       setLoading(false);
+      setJoinLoading(false);
     }
   };
 
@@ -80,6 +90,21 @@ const SingleCommunity = () => {
     fetchCommunity();
     fetchPost();
   }, [id]);
+
+  const handleJoinCommunity = async () => {
+    setJoinLoading(true);
+    try {
+      const res = await AxiosInstance.get(`/spaces/join/${id}/${userId}`);
+      console.log(res.data);
+      notifySuccess("Joined community successfully!");
+      setIsMember(true);
+    } catch (error) {
+      console.error("Error joining community:", error);
+      notifyError("Failed to join community. Please try again.");
+    } finally {
+      setJoinLoading(false);
+    }
+  };
 
   const handlePostSubmit = handleSubmit(async (data) => {
     console.log(postType);
@@ -146,124 +171,110 @@ const SingleCommunity = () => {
   }
 
   return (
-    <Box width="100%" maxWidth="800px" margin="auto">
-      <Box position="relative">
-        <img
-          src={community.banner?.url || "https://via.placeholder.com/800x300"}
-          alt="Community Banner"
-          style={{
-            width: "100%",
-            height: "300px",
-            objectFit: "cover",
-            borderRadius: "8px",
-          }}
-        />
-        <Avatar
-          src={community.profile?.url || "https://via.placeholder.com/100"}
-          sx={{
-            width: 120,
-            height: 120,
-            position: "absolute",
-            bottom: -40,
-            left: 20,
-            border: "4px solid white",
-          }}
-        />
-      </Box>
+    <Box width="100%" maxWidth="1000px" margin="auto" display={"flex"} gap={10}>
+      <Box width={"70%"}>
+        <Box position="relative">
+          {!bannerLoaded && (
+            <Skeleton
+              variant="rectangular"
+              width="100%"
+              height={300}
+              sx={{ borderRadius: "8px" }}
+            />
+          )}
 
-      {/* Community Info */}
-      <Box mt={6} mb={2} px={2}>
-        <Typography variant="h4" fontWeight="bold">
-          {community.name}
-        </Typography>
-        <Typography variant="body1" color="textSecondary">
-          {community.description}
-        </Typography>
-        <Typography variant="body2" color="textSecondary" mt={1}>
-          <strong>Status:</strong> {community.status} |{" "}
-          <strong>Members:</strong> {community.members?.length || 0}
-        </Typography>
-      </Box>
-
-      {/* Tabs: About & Posts */}
-      <Tabs value={tab} onChange={(e, newValue) => setTab(newValue)} centered>
-        <Tab label="About" />
-        <Tab label="Posts" />
-      </Tabs>
-
-      <Divider />
-
-      {/* Create Post Section */}
-      {tab === 1 && (
-        <Card sx={{ mb: 3, p: 2 }} component="form" onSubmit={handlePostSubmit}>
-          <TextField
-            select
-            fullWidth
-            value={postType}
-            onChange={(e) => setPostType(e.target.value)}
-            variant="outlined"
-          >
-            <MenuItem value="text">Text Post</MenuItem>
-            <MenuItem value="image">Image</MenuItem>
-            <MenuItem value="video">Video</MenuItem>
-          </TextField>
-
-          <TextField
-            {...register("title", { required: "Title is required" })}
-            placeholder="Enter title"
-            variant="outlined"
-            fullWidth
-            margin="normal"
+          <img
+            src={community.banner?.url || "https://via.placeholder.com/800x300"}
+            alt="Community Banner"
+            style={{
+              width: "100%",
+              height: "150px",
+              objectFit: "cover",
+              borderRadius: "8px",
+              display: bannerLoaded ? "block" : "none",
+            }}
+            onLoad={() => setBannerLoaded(true)}
           />
 
-          {postType === "text" && (
-            <>
-              <Controller
-                name="content"
-                control={control}
-                rules={{ required: "Content is required" }}
-                render={({ field }) => <ReactQuill theme="snow" {...field} />}
-              />
-            </>
+          {/* Skeleton for Avatar */}
+          {!profileLoaded && (
+            <Skeleton
+              variant="circular"
+              width={120}
+              height={120}
+              sx={{
+                position: "absolute",
+                bottom: -40,
+                left: 20,
+                border: "4px solid white",
+              }}
+            />
           )}
 
-          {(postType === "image" || postType === "video") && (
-            <div className="mt-10">
-              <h1>Attachment</h1>
-              <FilePond
-                files={files}
-                onupdatefiles={setFiles}
-                allowMultiple={true}
-                maxFiles={5}
-                name="files"
-                labelIdle='Drag & Drop your files or <span className="filepond--label-action">Browse</span>'
-                allowFileEncode={true}
-                acceptedFileTypes={["image/*", "video/*", "application/pdf"]}
-                className="mt-2"
-              />
-            </div>
-          )}
+          <Avatar
+            src={community.profile?.url || "https://via.placeholder.com/100"}
+            sx={{
+              width: 120,
+              height: 120,
+              position: "absolute",
+              bottom: -40,
+              left: 20,
+              border: "4px solid white",
+              display: profileLoaded ? "block" : "none",
+            }}
+            onLoad={() => setProfileLoaded(true)}
+          />
+        </Box>
 
-          <Box display="flex" justifyContent="flex-end" mt={2}>
-            <Button variant="contained" type="submit">
-              Post
+        {/* Community Info */}
+        <Box mt={6} mb={2} px={2}>
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+            mb={2}
+          >
+            <Typography variant="h4" fontWeight="bold">
+              {community.name}
+            </Typography>
+
+            <Button
+              variant="outlined"
+              color="secondary"
+              disabled={isMember || joinLoading}
+              onClick={handleJoinCommunity}
+            >
+              {joinLoading ? "Joining..." : isMember ? "Joined" : "Join Now"}
             </Button>
-          </Box>
-        </Card>
-      )}
-
-      {/* About Section */}
-      {tab === 0 && (
-        <Box p={3} mb={10}>
-          <Typography variant="h6">About This Community</Typography>
-          <Typography variant="body1" mt={1}>
+          </Stack>
+          <Typography variant="body1" color="textSecondary">
             {community.description}
           </Typography>
+          <Box display="flex" alignItems="center" gap={1} mt={1}>
+            <GroupIcon color="action" />
+            <Typography variant="body2" color="textSecondary">
+              Members
+            </Typography>
+            <Badge
+              badgeContent={community.members?.length || 0}
+              color="primary"
+              sx={{ ml: "10px" }}
+            />
+            <Link>
+              <Button
+                variant="outlined"
+                color="secondary"
+                sx={{ ml: "auto" }}
+                startIcon={<PostAdd />}
+              >
+                Create
+              </Button>
+            </Link>
+          </Box>
         </Box>
-      )}
 
-      {/* Posts Section */}
-      {tab === 1 && (
+        <Divider />
+
         <Box mt={3}>
           {posts.length === 0 ? (
             <Typography variant="body1" textAlign="center">
@@ -320,34 +331,151 @@ const SingleCommunity = () => {
                     component="video"
                     controls
                     sx={{
-                      height: 300, // Set a fixed height
-                      objectFit: "cover", // Ensures the video fits well
-                      borderRadius: 2, // Optional: adds rounded corners
+                      height: 300,
+                      objectFit: "cover",
+                      borderRadius: 2,
                     }}
-                    src={post.video.url} // Make sure post.video contains { url, public_id }
+                    src={post.video.url}
                   />
                 )}
 
-                {/* Icons Section - Aligned and Closer */}
-                <Box display="flex" justifyContent="center" gap={1.5} py={1}>
-                  <IconButton>
-                    <ThumbUp />
-                  </IconButton>
-                  <IconButton>
-                    <ThumbDown /> {/* Dislike Button */}
-                  </IconButton>
-                  <IconButton>
-                    <ChatBubbleOutline />
-                  </IconButton>
-                  <IconButton>
-                    <Share />
-                  </IconButton>
+                <Box display="flex" alignItems="center" gap={1} py={1} ml={1}>
+                  {/* Vote Button Group */}
+                  <ButtonGroup
+                    variant="outlined"
+                    sx={{
+                      borderRadius: "20px",
+                      overflow: "hidden",
+                      borderColor: "rgba(0,0,0,0.1)",
+                    }}
+                  >
+                    {/* Upvote Button */}
+                    <Button
+                      sx={{
+                        borderRadius: 0,
+                        borderColor: "rgba(0,0,0,0.1)",
+                        color: "gray",
+                        transition: "all 0.3s ease-in-out",
+                        "&:hover": {
+                          backgroundColor: "rgba(255,69,0,0.15)",
+                          color: "#FF4500",
+                          transform: "scale(1.05)",
+                        },
+                        "&:active": {
+                          transform: "scale(0.95)",
+                        },
+                      }}
+                    >
+                      <ThumbUp fontSize="small" />
+                      <Typography
+                        variant="body2"
+                        sx={{ fontWeight: "bold", ml: 0.5 }}
+                      >
+                        898
+                      </Typography>
+                    </Button>
+
+                    <Button
+                      sx={{
+                        borderRadius: 0,
+                        borderColor: "rgba(0,0,0,0.1)",
+                        color: "gray",
+                        transition: "all 0.3s ease-in-out",
+                        "&:hover": {
+                          backgroundColor: "rgba(90, 117, 204, 0.15)", // Light blue tint
+                          color: "#5A75CC", // Reddit's downvote blue
+                          transform: "scale(1.05)", // Slight pop effect
+                        },
+                        "&:active": {
+                          transform: "scale(0.95)", // Slight press effect
+                        },
+                      }}
+                    >
+                      <ThumbDown fontSize="small" />
+                    </Button>
+                  </ButtonGroup>
+
+                  {/* Comment Button */}
+                  <Button
+                    variant="outlined"
+                    sx={{
+                      borderRadius: "20px",
+                      px: 1.5,
+                      borderColor: "rgba(0,0,0,0.1)",
+                      color: "gray",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <ChatBubbleOutline fontSize="small" sx={{ mr: 0.5 }} />
+                    <Typography variant="body2">126</Typography>
+                  </Button>
+
+                  {/* Share Button */}
+                  <Button
+                    variant="outlined"
+                    sx={{
+                      borderRadius: "20px",
+                      px: 1.5,
+                      borderColor: "rgba(0,0,0,0.1)",
+                      color: "gray",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Share fontSize="small" sx={{ mr: 0.5 }} />
+                    <Typography variant="body2">Share</Typography>
+                  </Button>
                 </Box>
               </Card>
             ))
           )}
         </Box>
-      )}
+      </Box>
+
+      {/* Right Sidebar */}
+      <Box width="30%" position="sticky" top={20} height="80vh">
+        <Paper
+          sx={{
+            p: 3,
+            maxHeight: "70vh",
+            overflowY: "auto",
+            bgcolor: "#f9f9f9",
+            borderRadius: 2,
+            boxShadow: 3,
+            "&::-webkit-scrollbar": {
+              width: "6px",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              backgroundColor: "#bbb",
+              borderRadius: "10px",
+            },
+          }}
+        >
+          <Box display="flex" alignItems="center">
+            <InfoOutlined sx={{ mr: 1, color: "primary.main" }} />
+            <Typography variant="subtitle1" fontWeight="bold">
+              Mission
+            </Typography>
+          </Box>
+          <Typography variant="body1" mt={1} lineHeight={1.6}>
+            {community.mission}
+          </Typography>
+
+          <Box display="flex" alignItems="center" mt={3}>
+            <GavelOutlined sx={{ mr: 1, color: "primary.main" }} />
+            <Typography variant="subtitle1" fontWeight="bold">
+              Rules
+            </Typography>
+          </Box>
+          <Typography
+            variant="body1"
+            mt={1}
+            lineHeight={1.6}
+            dangerouslySetInnerHTML={{ __html: community.rules }}
+          />
+        </Paper>
+      </Box>
     </Box>
   );
 };

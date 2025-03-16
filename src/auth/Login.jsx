@@ -8,6 +8,7 @@ import { authenticate } from "../../utils/helpers";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
+import { generateToken } from "../configs/FirebaseAuth";
 // import FacebookIcon from "@mui/icons-material/Facebook";
 import { Link } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -42,9 +43,13 @@ const Login = () => {
   }, [location.state?.message]);
 
   const onSubmit = async (data) => {
-    console.log(data);
-
-    await AxiosInstance.post("/auth/login", data)
+    const token = await generateToken();
+    const cleanedData = {
+      ...data,
+      fcmToken: token,
+    };
+    console.log(token);
+    await AxiosInstance.post("/auth/login", cleanedData)
       .then((response) => {
         console.log(response);
         if (response.data.user.status === "deactivated") {
@@ -53,10 +58,13 @@ const Login = () => {
           );
           return;
         }
+
+        // AxiosInstance.put("/");
         authenticate(response.data, () => {
           console.log("User authenticated");
           notifySuccess("Login successful");
         });
+
         if (response.data.user.role === "admin") {
           navigate("/admin");
         } else {

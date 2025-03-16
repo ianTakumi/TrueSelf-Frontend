@@ -18,6 +18,9 @@ import "filepond/dist/filepond.min.css";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import FilePondPluginFileEncode from "filepond-plugin-file-encode";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { modules } from "../../../configs/ReactQuill.config";
 
 registerPlugin(FilePondPluginImagePreview, FilePondPluginFileEncode);
 
@@ -37,6 +40,7 @@ const CommunityModal = ({
   const user = getUser();
   const [profileFiles, setProfileFiles] = useState([]);
   const [bannerFiles, setBannerFiles] = useState([]);
+  const [content, setContent] = useState(communityToEdit?.rules || "");
 
   useEffect(() => {
     if (communityToEdit) {
@@ -73,6 +77,8 @@ const CommunityModal = ({
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("description", data.description);
+    formData.append("mission", data.mission);
+    formData.append("rules", content);
 
     if (isEditing) {
       formData.append("status", data.status);
@@ -154,6 +160,28 @@ const CommunityModal = ({
                 rows={1}
                 InputProps={{ readOnly: isEditing ? true : false }}
                 {...register("description")}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                id="mission"
+                label="Mission"
+                variant="outlined"
+                fullWidth
+                multiline
+                rows={1}
+                InputProps={{ readOnly: isEditing ? true : false }}
+                {...register("mission")}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <ReactQuill
+                theme="snow"
+                value={content}
+                onChange={setContent}
+                modules={modules}
               />
             </Grid>
 

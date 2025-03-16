@@ -43,9 +43,9 @@ const Profile = () => {
     setIsModalOpen(false);
   };
 
-  const handleLinkFacebookAccount = async () => {
-    console.log("Linking Facebook account");
-  };
+  // const handleLinkFacebookAccount = async () => {
+  //   console.log("Linking Facebook account");
+  // };
 
   const handleLinkGoogleAccount = async (credentialResponse) => {
     const decoded = jwtDecode(credentialResponse?.credential);
@@ -229,7 +229,7 @@ const Profile = () => {
             </div>
 
             {/* Facebook Section */}
-            <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg shadow-sm mb-3">
+            {/* <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg shadow-sm mb-3">
               <div className="flex items-center space-x-3">
                 <Facebook className="text-blue-600" fontSize="large" />
                 <p className="text-gray-700">
@@ -250,7 +250,7 @@ const Profile = () => {
                   Link Facebook
                 </button>
               )}
-            </div>
+            </div> */}
 
             {/* Google Section */}
             <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg shadow-sm">

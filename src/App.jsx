@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { onMessage } from "firebase/messaging";
+import { messaging } from "./configs/Firebase.config";
+
 import ProtectedRoute from "../utils/ProtectedRoute";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
@@ -45,8 +48,16 @@ import AdminPredictions from "./page/admin/Predictions";
 import { ToastContainer } from "react-toastify";
 import "./index.css";
 import SingleCommunity from "./page/SingleCommunity";
+import { notifyFirebase } from "../utils/helpers";
 
 const App = () => {
+  useEffect(() => {
+    onMessage(messaging, (payload) => {
+      console.log("Message received. ", payload);
+      notifyFirebase(payload.notification.title, payload.notification.body);
+    });
+  });
+
   return (
     <Router>
       <Routes>

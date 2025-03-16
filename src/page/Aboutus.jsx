@@ -11,7 +11,7 @@ const teamMembers = [
   {
     name: "Calica, Ian Gabriel",
     role: "Full-Stack Developer and Machine Learning Developer",
-    image: "/team/ian.png",
+    image: "/team/ian2.jpg",
   },
   {
     name: "Candelario, Jhan Kyle",
@@ -21,7 +21,7 @@ const teamMembers = [
   {
     name: "Castronuevo, Gelain",
     role: "UI/UX Designer and Frontend Developer",
-    image: "/team/gelain.png",
+    image: "/team/gelain2.jpg",
   },
   {
     name: "Madriaga, Pops V.  MSCS",

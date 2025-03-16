@@ -16,6 +16,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import AxiosInstance from "../../../utils/AxiosInstance";
 import { Google } from "@mui/icons-material";
+
 const Profile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
