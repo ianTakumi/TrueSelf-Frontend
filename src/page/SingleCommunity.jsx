@@ -18,48 +18,65 @@ import {
   Stack,
   Skeleton,
   Badge,
+  Menu,
+  MenuItem,
+  IconButton,
 } from "@mui/material";
 import {
   ChatBubbleOutline,
   Share,
-  ThumbDown,
-  ThumbUp,
   MoreVert,
-  Edit,
-  Delete,
   PostAdd,
 } from "@mui/icons-material";
-import { useForm, Controller } from "react-hook-form";
 import GroupIcon from "@mui/icons-material/Group";
 import InfoOutlined from "@mui/icons-material/InfoOutlined";
 import GavelOutlined from "@mui/icons-material/GavelOutlined";
+import ArrowCircleUpOutlinedIcon from "@mui/icons-material/ArrowCircleUpOutlined";
+import ArrowCircleDownOutlinedIcon from "@mui/icons-material/ArrowCircleDownOutlined";
 import { Link } from "react-router-dom";
+import ReportModal from "../components/user/modals/ReportModal";
 
 const SingleCommunity = () => {
   const user = getUser();
   const userId = user?._id;
-  const { handleSubmit, control, register, setValue } = useForm({
-    defaultValues: {
-      title: "",
-      content: "",
-    },
-  });
-  const [files, setFiles] = useState([]);
   const { id } = useParams();
   const [community, setCommunity] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [tab, setTab] = useState(0);
   const [posts, setPosts] = useState([]);
-  const [postType, setPostType] = useState("text");
   const [isMember, setIsMember] = useState(false);
   const [joinLoading, setJoinLoading] = useState(true);
   const [bannerLoaded, setBannerLoaded] = useState(false);
   const [profileLoaded, setProfileLoaded] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedPostId, setSelectedPostId] = useState(null);
+  const open = Boolean(anchorEl);
+  const [isReportOpen, setIsReportOpen] = useState(false);
+  const [reportPostId, setReportPostId] = useState(null);
+
+  const handleOpenReportModal = (postId) => {
+    setIsReportOpen(true);
+    setReportPostId(postId);
+  };
+
+  const handleCloseReportModal = () => {
+    setIsReportOpen(false);
+    setReportPostId(null);
+  };
+
+  const handleMenuOpen = (event, postId) => {
+    setAnchorEl(event.currentTarget);
+    setSelectedPostId(postId);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    setSelectedPostId(null);
+  };
 
   const fetchPost = async () => {
     try {
       const res = await AxiosInstance.get(`/posts/community/${id}`);
-      console.log(res.data);
+
       if (res.data) {
         setPosts(res.data.data);
       }
@@ -72,7 +89,7 @@ const SingleCommunity = () => {
     try {
       const res = await AxiosInstance.get(`/spaces/${id}`);
       setCommunity(res.data.data);
-      console.log(res.data.data);
+
       if (res.data.data.members.includes(userId)) {
         setIsMember(true);
       }
@@ -84,7 +101,63 @@ const SingleCommunity = () => {
     }
   };
 
-  const handleLikePost = async () => {};
+  const handleLikePost = async (postId) => {
+    console.log("Liking post:", postId);
+    await AxiosInstance.post(`/posts/like/${postId}`, { userId }).then(
+      (res) => {
+        if (res.status === 200) {
+          notifySuccess("Post liked successfully.");
+
+          setPosts((prevPosts) =>
+            prevPosts.map((post) =>
+              post._id === postId
+                ? { ...post, likes: [...post.likes, "currentUserId"] } // Optimistically update
+                : post
+            )
+          );
+        }
+      }
+    );
+  };
+
+  const handleDislikePost = async (postId) => {
+    try {
+      const res = await AxiosInstance.post(`/posts/dislike/${postId}`, {
+        userId,
+      });
+
+      if (res.status === 200) {
+        notifySuccess("Post disliked successfully.");
+
+        setPosts((prevPosts) =>
+          prevPosts.map((post) =>
+            post._id === postId
+              ? {
+                  ...post,
+                  likes: post.likes.filter((like) => like !== userId),
+                  dislikes: [...post.dislikes, userId],
+                }
+              : post
+          )
+        );
+      }
+    } catch (error) {
+      notifyError("Failed to dislike post.");
+      console.error("Error disliking post:", error);
+    }
+  };
+
+  const onEdit = async (postId) => {};
+
+  const onDelete = async (postId) => {
+    console.log("Deleting post:", postId);
+    await AxiosInstance.delete(`/posts/${postId}`).then((res) => {
+      if (res.status === 200) {
+        notifySuccess("Post deleted successfully.");
+        fetchPost();
+      }
+    });
+  };
 
   useEffect(() => {
     fetchCommunity();
@@ -105,47 +178,6 @@ const SingleCommunity = () => {
       setJoinLoading(false);
     }
   };
-
-  const handlePostSubmit = handleSubmit(async (data) => {
-    console.log(postType);
-
-    const cleanedData = {
-      ...data,
-      type: postType,
-      id: id,
-    };
-
-    if (postType === "text") {
-      console.log(cleanedData);
-      await AxiosInstance.post(`/posts/${userId}`, cleanedData).then((res) => {
-        console.log(res.data);
-        notifySuccess("Post created successfully!");
-        setValue("title", "");
-        setValue("content", "");
-        fetchPost();
-      });
-    } else if (postType === "image" || postType === "video") {
-      const formData = new FormData();
-      formData.append("title", data.title);
-      formData.append("type", postType);
-      formData.append("id", id);
-      files.forEach((file) => {
-        formData.append("media", file.file);
-      });
-
-      await AxiosInstance.post(`/posts/${userId}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }).then((res) => {
-        console.log(res.data);
-        notifySuccess("Post created successfully!");
-        setValue("title", "");
-        setFiles([]);
-        fetchPost();
-      });
-    }
-  });
 
   if (loading) {
     return (
@@ -172,6 +204,9 @@ const SingleCommunity = () => {
 
   return (
     <Box width="100%" maxWidth="1000px" margin="auto" display={"flex"} gap={10}>
+      {isReportOpen && (
+        <ReportModal onClose={handleCloseReportModal} postId={reportPostId} />
+      )}
       <Box width={"70%"}>
         <Box position="relative">
           {!bannerLoaded && (
@@ -260,11 +295,10 @@ const SingleCommunity = () => {
               color="primary"
               sx={{ ml: "10px" }}
             />
-            <Link>
+            <Link to={`/create-post/${id}`} className="ml-auto">
               <Button
                 variant="outlined"
                 color="secondary"
-                sx={{ ml: "auto" }}
                 startIcon={<PostAdd />}
               >
                 Create
@@ -292,6 +326,53 @@ const SingleCommunity = () => {
                       }
                     />
                   }
+                  action={
+                    <>
+                      <IconButton
+                        onClick={(event) => handleMenuOpen(event, post._id)}
+                      >
+                        <MoreVert />
+                      </IconButton>
+
+                      <Menu
+                        anchorEl={anchorEl}
+                        open={Boolean(anchorEl) && selectedPostId === post._id}
+                        onClose={handleMenuClose}
+                      >
+                        {post.user?._id === userId ? (
+                          // If the user is the owner, show Edit & Delete
+                          <>
+                            <MenuItem
+                              onClick={() => {
+                                handleMenuClose();
+                                onEdit(post);
+                              }}
+                            >
+                              Edit
+                            </MenuItem>
+                            <MenuItem
+                              onClick={() => {
+                                handleMenuClose();
+                                onDelete(post._id);
+                              }}
+                            >
+                              Delete
+                            </MenuItem>
+                          </>
+                        ) : (
+                          // If the user is NOT the owner, show Report
+                          <MenuItem
+                            onClick={() => {
+                              handleMenuClose();
+                              handleOpenReportModal(post._id);
+                            }}
+                          >
+                            Report
+                          </MenuItem>
+                        )}
+                      </Menu>
+                    </>
+                  }
                   title={post.user?.name || "Unknown User"}
                   subheader={new Date(post.createdAt).toLocaleString("en-US", {
                     month: "long",
@@ -303,6 +384,9 @@ const SingleCommunity = () => {
                   })}
                 />
                 <CardContent>
+                  <Typography variant="h6" fontWeight="bold" gutterBottom>
+                    {post.title}
+                  </Typography>
                   <Typography
                     variant="body1"
                     dangerouslySetInnerHTML={{ __html: post.content }}
@@ -316,10 +400,10 @@ const SingleCommunity = () => {
                       key={index}
                       component="img"
                       sx={{
-                        width: "100%", // Full width
-                        maxHeight: 400, // Limit height
-                        objectFit: "contain", // Ensures the full image is visible
-                        borderRadius: 2, // Optional rounded corners
+                        width: "100%",
+                        maxHeight: 400,
+                        objectFit: "contain",
+                        borderRadius: 2,
                       }}
                       image={img.url}
                       alt={`Post Image ${index + 1}`}
@@ -330,17 +414,12 @@ const SingleCommunity = () => {
                   <CardMedia
                     component="video"
                     controls
-                    sx={{
-                      height: 300,
-                      objectFit: "cover",
-                      borderRadius: 2,
-                    }}
+                    sx={{ height: 300, objectFit: "cover", borderRadius: 2 }}
                     src={post.video.url}
                   />
                 )}
 
                 <Box display="flex" alignItems="center" gap={1} py={1} ml={1}>
-                  {/* Vote Button Group */}
                   <ButtonGroup
                     variant="outlined"
                     sx={{
@@ -349,8 +428,9 @@ const SingleCommunity = () => {
                       borderColor: "rgba(0,0,0,0.1)",
                     }}
                   >
-                    {/* Upvote Button */}
                     <Button
+                      disabled={post.likes.includes(userId)}
+                      onClick={() => handleLikePost(post._id)}
                       sx={{
                         borderRadius: 0,
                         borderColor: "rgba(0,0,0,0.1)",
@@ -366,36 +446,37 @@ const SingleCommunity = () => {
                         },
                       }}
                     >
-                      <ThumbUp fontSize="small" />
+                      <ArrowCircleUpOutlinedIcon fontSize="small" />
                       <Typography
                         variant="body2"
                         sx={{ fontWeight: "bold", ml: 0.5 }}
                       >
-                        898
+                        {post.likes.length}
                       </Typography>
                     </Button>
 
                     <Button
+                      onClick={() => handleDislikePost(post._id)}
+                      disabled={post.user._id === userId}
                       sx={{
                         borderRadius: 0,
                         borderColor: "rgba(0,0,0,0.1)",
                         color: "gray",
                         transition: "all 0.3s ease-in-out",
                         "&:hover": {
-                          backgroundColor: "rgba(90, 117, 204, 0.15)", // Light blue tint
-                          color: "#5A75CC", // Reddit's downvote blue
-                          transform: "scale(1.05)", // Slight pop effect
+                          backgroundColor: "rgba(90, 117, 204, 0.15)",
+                          color: "#5A75CC",
+                          transform: "scale(1.05)",
                         },
                         "&:active": {
-                          transform: "scale(0.95)", // Slight press effect
+                          transform: "scale(0.95)",
                         },
                       }}
                     >
-                      <ThumbDown fontSize="small" />
+                      <ArrowCircleDownOutlinedIcon fontSize="small" />
                     </Button>
                   </ButtonGroup>
 
-                  {/* Comment Button */}
                   <Button
                     variant="outlined"
                     sx={{
@@ -408,10 +489,11 @@ const SingleCommunity = () => {
                     }}
                   >
                     <ChatBubbleOutline fontSize="small" sx={{ mr: 0.5 }} />
-                    <Typography variant="body2">126</Typography>
+                    <Typography variant="body2">
+                      {post.comments.length}
+                    </Typography>
                   </Button>
 
-                  {/* Share Button */}
                   <Button
                     variant="outlined"
                     sx={{

@@ -26,6 +26,7 @@ import Authors from "./page/Authors";
 import Healthcare from "./page/articles/Healthcare";
 import MentalHealth from "./page/articles/MentalHealth";
 import DomesticAbuse from "./page/articles/DomesticAbuse";
+import CreatePost from "./page/CreatePost";
 import SexualHealth from "./page/articles/SexualHealth";
 import SupportSystem from "./page/articles/SupportSystem";
 import SelfCare from "./page/articles/SelfCare";
@@ -37,6 +38,7 @@ import ResetPassword from "./page/resetPassword";
 import ResetPasswordRequest from "./page/resetPasswordRequest";
 import CommunityLayout from "./components/user/community/layout";
 import Result from "./page/Result";
+
 import AdminLayout from "./components/admin/Layout";
 import AdminIndex from "./page/admin/index";
 import AdminEmail from "./page/admin/email";
@@ -45,6 +47,7 @@ import AdminProfile from "./page/admin/profile";
 import AdminCommunity from "./page/admin/community";
 import AdminUsers from "./page/admin/users";
 import AdminPredictions from "./page/admin/Predictions";
+import ReportsPage from "./page/admin/Reports";
 import { ToastContainer } from "react-toastify";
 import "./index.css";
 import SingleCommunity from "./page/SingleCommunity";
@@ -100,7 +103,7 @@ const App = () => {
             path="/test-anxiety"
             element={<ProtectedRoute element={<TestAnxiety />} />}
           />
-
+          <Route path="/create-post/:id" element={<CreatePost />} />
           <Route path="/myDiary" element={<DiaryEditor />} />
           <Route path="/recommend" element={<Recommend />} />
           <Route path="/crisis-support" element={<CrisisSupport />} />
@@ -133,6 +136,7 @@ const App = () => {
           <Route path="profile" element={<AdminProfile />} />
           <Route path="communities" element={<AdminCommunity />} />
           <Route path="users" element={<AdminUsers />} />
+          <Route path="reports" element={<ReportsPage />} />
           <Route path="predictions" element={<AdminPredictions />} />
         </Route>
       </Routes>

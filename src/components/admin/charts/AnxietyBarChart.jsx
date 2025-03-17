@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, forwardRef } from "react";
 import {
   BarChart,
   Bar,
@@ -27,9 +27,8 @@ const monthNames = [
   "December",
 ];
 
-const AnxietyBarChart = () => {
+const AnxietyBarChart = forwardRef((props, ref) => {
   const [anxietyData, setAnxietyData] = useState([]);
-  const chartRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
 
   const fetchAnxietyData = async () => {
@@ -42,6 +41,10 @@ const AnxietyBarChart = () => {
           severe: item.severeCount,
         }));
         setAnxietyData(formattedData);
+
+        if (props.onDataUpdate) {
+          props.onDataUpdate(anxietyData);
+        }
       }
     } catch (err) {
       console.log(err);
@@ -52,6 +55,12 @@ const AnxietyBarChart = () => {
     fetchAnxietyData();
   }, []);
 
+  useEffect(() => {
+    if (props.onDataUpdate) {
+      props.onDataUpdate(anxietyData);
+    }
+  }, [anxietyData]);
+
   const exportToCSV = () => {
     const currentYear = new Date().getFullYear();
 
@@ -60,7 +69,7 @@ const AnxietyBarChart = () => {
     csvContent += "Month,Mild Count,Severe Count\n";
 
     anxietyData.forEach((row) => {
-      const { month, mild, severe } = row; // Directly use the properties from anxietyData
+      const { month, mild, severe } = row;
       csvContent += `${month},${mild},${severe}\n`;
     });
 
@@ -70,7 +79,7 @@ const AnxietyBarChart = () => {
     link.setAttribute("download", `anxiety_data_${currentYear}.csv`);
     document.body.appendChild(link);
 
-    link.click(); // Trigger the download
+    link.click();
     document.body.removeChild(link);
   };
 
@@ -79,48 +88,133 @@ const AnxietyBarChart = () => {
     headerImg.src = "/logo/result.png";
 
     headerImg.onload = () => {
-      const input = chartRef.current;
+      const input = ref.current;
 
       html2canvas(input, { scale: 2 }).then((canvas) => {
         const imgData = canvas.toDataURL("image/png");
         const pdf = new jsPDF("p", "mm", "a4");
 
+        // Add header image
         pdf.addImage(headerImg, "PNG", 30, 10, 140, 40);
 
+        // Title
         pdf.setFontSize(16);
-        pdf.text("Anxiety Data per month", 15, 60);
+        pdf.text("Anxiety Data per Month", 15, 60);
 
-        pdf.addImage(imgData, "PNG", 15, 60, 180, 100);
+        // Add chart image
+        pdf.addImage(imgData, "PNG", 15, 70, 180, 100);
 
+        let yPosition = 180;
+
+        let explanation = `This chart visualizes the monthly distribution of anxiety cases. `;
+        explanation += `It categorizes cases into mild and severe levels based on contributing factors such as lifestyle, health, and stress levels.\n\n`;
+
+        pdf.setFontSize(12);
+        pdf.text(explanation, 15, yPosition, { maxWidth: 180 });
+        yPosition += 15;
+
+        // **Dynamic Data Insights**
+        let insights = "Key observations from the data:\n";
+        anxietyData.forEach((entry) => {
+          insights += `- In ${entry.month}, there were ${entry.mild} mild cases and ${entry.severe} severe cases.\n`;
+        });
+
+        const totalMild = anxietyData.reduce(
+          (sum, entry) => sum + entry.mild,
+          0
+        );
+        const totalSevere = anxietyData.reduce(
+          (sum, entry) => sum + entry.severe,
+          0
+        );
+
+        insights += `\nOverall, there were ${totalMild} mild cases and ${totalSevere} severe cases recorded.\n\n`;
+
+        pdf.text(insights, 15, yPosition, { maxWidth: 180 });
+        yPosition += 25;
+
+        // **Dynamic Interpretation**
+        let interpretation = "Data Interpretation:\n";
+        if (totalSevere > totalMild) {
+          interpretation +=
+            "The data indicates a higher occurrence of severe anxiety cases. ";
+        } else {
+          interpretation +=
+            "The mild cases outnumber the severe ones, suggesting a manageable level of anxiety. ";
+        }
+        interpretation +=
+          "Notably, fluctuations in anxiety levels across months could be linked to academic stress, work deadlines, or seasonal effects. Understanding these trends can aid in implementing targeted mental health support strategies.";
+
+        pdf.text(interpretation, 15, yPosition, { maxWidth: 180 });
+
+        // Save the PDF
         pdf.save("anxiety_data_per_month.pdf");
       });
     };
   };
 
   const handlePrint = () => {
-    const input = chartRef.current;
-
+    const input = ref.current;
     html2canvas(input, { scale: 2 }).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
       const newWindow = window.open("", "_blank");
 
       const headerImg = new Image();
       headerImg.src = "/logo/result.png";
+
       headerImg.onload = () => {
         const headerImgData = headerImg.src;
-        newWindow.document.write(`<html>
+
+        // **Dynamic Data Insights**
+        let insights =
+          "<h4>Key Observations:</h4><ul style='text-align: left; padding-left: 20px; font-size: 12px;'>";
+        anxietyData.forEach((entry) => {
+          insights += `<li>In ${entry.month}, there were <b>${entry.mild}</b> mild cases and <b>${entry.severe}</b> severe cases.</li>`;
+        });
+        insights += "</ul>";
+
+        const totalMild = anxietyData.reduce(
+          (sum, entry) => sum + entry.mild,
+          0
+        );
+        const totalSevere = anxietyData.reduce(
+          (sum, entry) => sum + entry.severe,
+          0
+        );
+
+        insights += `<p style="font-size: 12px;"><strong>Overall: ${totalMild} mild cases, ${totalSevere} severe cases recorded.</strong></p>`;
+
+        // **Dynamic Interpretation**
+        let interpretation =
+          "<h4>Interpretation:</h4><p style='font-size: 12px;'>";
+        if (totalSevere > totalMild) {
+          interpretation +=
+            "The data shows a higher number of severe anxiety cases. ";
+        } else {
+          interpretation +=
+            "Mild cases outnumber the severe ones, indicating a manageable level of anxiety. ";
+        }
+        interpretation +=
+          "Fluctuations may be linked to academic stress, work deadlines, or seasonal effects. Understanding these trends can help in implementing better mental health support strategies.</p>";
+
+        // **Generate the print document**
+        newWindow.document.write(`
+          <html>
             <head>
               <title>Print Chart</title>
             </head>
-            <body style="text-align: center;">
-              <img src="${headerImgData}" style="width: 600px; margin-bottom: 20px;" />
-              <h2>Contact Status Distribution</h2>
-              <img src="${imgData}" style="width: 100%;" />
+            <body style="text-align: center; font-family: Arial, sans-serif; padding: 10px; max-width: 800px; margin: auto;">
+              <img src="${headerImgData}" style="width: 400px; margin-bottom: 10px;" />
+              <h3 style="font-size: 16px;">Contact Status Distribution</h3>
+              <img src="${imgData}" style="width: 90%; max-width: 500px; margin-bottom: 10px;" />
+              ${insights}
+              ${interpretation}
               <script>
                 window.onload = function() { window.print(); window.close(); };
               </script>
             </body>
           </html>`);
+
         newWindow.document.close();
       };
     });
@@ -131,13 +225,12 @@ const AnxietyBarChart = () => {
       <h2 className="text-lg font-semibold mb-4">
         Monthly Anxiety Test Results
       </h2>
-      <div ref={chartRef} className=" p-6  w-full flex justify-center">
+      <div ref={ref} className=" p-6  w-full flex justify-center">
         <ResponsiveContainer width="100%" height={300}>
           <BarChart
             data={anxietyData}
             margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
           >
-            {/* Gradient Definitions */}
             <defs>
               <linearGradient id="mildGradient" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="#FED0C5" />
@@ -214,6 +307,6 @@ const AnxietyBarChart = () => {
       </div>
     </div>
   );
-};
+});
 
 export default AnxietyBarChart;
