@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import AxiosInstance from "../../utils/AxiosInstance";
 import { getUser, notifyError, notifySuccess } from "../../utils/helpers";
 import {
@@ -33,7 +33,6 @@ import InfoOutlined from "@mui/icons-material/InfoOutlined";
 import GavelOutlined from "@mui/icons-material/GavelOutlined";
 import ArrowCircleUpOutlinedIcon from "@mui/icons-material/ArrowCircleUpOutlined";
 import ArrowCircleDownOutlinedIcon from "@mui/icons-material/ArrowCircleDownOutlined";
-import { Link } from "react-router-dom";
 import ReportModal from "../components/user/modals/ReportModal";
 
 const SingleCommunity = () => {
@@ -295,15 +294,17 @@ const SingleCommunity = () => {
               color="primary"
               sx={{ ml: "10px" }}
             />
-            <Link to={`/create-post/${id}`} className="ml-auto">
-              <Button
-                variant="outlined"
-                color="secondary"
-                startIcon={<PostAdd />}
-              >
-                Create
-              </Button>
-            </Link>
+            {isMember && (
+              <Link to={`/create-post/${id}`} className="ml-auto">
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  startIcon={<PostAdd />}
+                >
+                  Create
+                </Button>
+              </Link>
+            )}
           </Box>
         </Box>
 
@@ -477,22 +478,24 @@ const SingleCommunity = () => {
                     </Button>
                   </ButtonGroup>
 
-                  <Button
-                    variant="outlined"
-                    sx={{
-                      borderRadius: "20px",
-                      px: 1.5,
-                      borderColor: "rgba(0,0,0,0.1)",
-                      color: "gray",
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                  >
-                    <ChatBubbleOutline fontSize="small" sx={{ mr: 0.5 }} />
-                    <Typography variant="body2">
-                      {post.comments.length}
-                    </Typography>
-                  </Button>
+                  <Link to={`/community/post/${post._id}`}>
+                    <Button
+                      variant="outlined"
+                      sx={{
+                        borderRadius: "20px",
+                        px: 1.5,
+                        borderColor: "rgba(0,0,0,0.1)",
+                        color: "gray",
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      <ChatBubbleOutline fontSize="small" sx={{ mr: 0.5 }} />
+                      <Typography variant="body2">
+                        {post.comments.length}
+                      </Typography>
+                    </Button>
+                  </Link>
 
                   <Button
                     variant="outlined"

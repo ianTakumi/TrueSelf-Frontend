@@ -38,6 +38,7 @@ import ResetPassword from "./page/resetPassword";
 import ResetPasswordRequest from "./page/resetPasswordRequest";
 import CommunityLayout from "./components/user/community/layout";
 import Result from "./page/Result";
+import SinnglePost from "./page/SinglePost";
 
 import AdminLayout from "./components/admin/Layout";
 import AdminIndex from "./page/admin/index";
@@ -73,6 +74,7 @@ const App = () => {
           <Route index element={<ComPage />} />
           <Route path="communities" element={<Communities />} />
           <Route path=":id" element={<SingleCommunity />} />
+          <Route path="post/:postId" element={<SinnglePost />} />
         </Route>
 
         <Route index element={<Home />} />

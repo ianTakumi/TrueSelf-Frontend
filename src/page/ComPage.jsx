@@ -3,21 +3,25 @@ import { Link } from "react-router-dom";
 import AxiosInstance from "../../utils/AxiosInstance";
 import { motion } from "framer-motion";
 import { ThumbUp, ThumbDown, ChatBubbleOutline } from "@mui/icons-material";
+import { notifyError } from "../../utils/helpers";
 
 const ComPage = () => {
-  const [topCommunities, setTopCommunities] = useState([]);
+  const [otherCommunities, setOtherCommunities] = useState([]);
 
-  const fetchTopCommunities = async () => {
-    try {
-      const res = await AxiosInstance.get("/community/top");
-      setTopCommunities(res.data);
-    } catch (error) {
-      console.log(error);
-    }
+  const fetchOtherCommunities = async () => {
+    await AxiosInstance.get("/spaces/others")
+      .then((res) => {
+        if (res.status === 200) {
+          setOtherCommunities(res.data.data);
+        }
+      })
+      .catch((err) => {
+        notifyError("Failed to fetch other communities");
+      });
   };
 
   useEffect(() => {
-    fetchTopCommunities();
+    fetchOtherCommunities();
   }, []);
 
   return (
@@ -115,7 +119,7 @@ const ComPage = () => {
 
           {/* Third Card */}
           <Link
-            to={"/community/67c83855e670d3676c687169"}
+            to={"/community/67c839d7e670d3676c68717b"}
             className="cursor-pointer"
           >
             <motion.div
@@ -129,7 +133,7 @@ const ComPage = () => {
               {/* Image with Gradient Overlay */}
               <div className="relative">
                 <img
-                  src="https://res.cloudinary.com/dco6n59if/image/upload/v1741174548/spaces/me6soiubs5nicsmfzl9f.jpg"
+                  src="https://res.cloudinary.com/dco6n59if/image/upload/v1741175256/spaces/vht8mvhtwkewrdmnbejr.png"
                   alt="Community"
                   className="rounded-lg h-[200px] object-cover w-full"
                 />
@@ -139,7 +143,7 @@ const ComPage = () => {
               {/* Text & CTA */}
               <div className="p-4">
                 <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
-                  <p className="text-sm font-medium mt-2">Spectrum Voices</p>
+                  <p className="text-sm font-medium mt-2">Equality Alliance</p>
                 </h3>
                 <p className="text-sm text-gray-600 mt-1">
                   Join our community and connect!
@@ -188,43 +192,30 @@ const ComPage = () => {
           </div>
         </div>
       </main>
-      <aside className="w-full lg:w-[300px] bg-white shadow-md rounded-lg p-4 lg:ml-5 lg:self-start">
-        <h3 className="text-lg font-semibold text-gray-900 mb-3">
-          Popular Communities
+
+      <aside className="w-full lg:w-[320px] bg-white shadow-lg rounded-2xl p-6 lg:ml-5 lg:self-start">
+        <h3 className="text-xl font-bold text-gray-900 mb-4">
+          Other Communities
         </h3>
         <ul>
-          <li className="mb-2">
+          {otherCommunities.map((community) => (
             <Link
-              to="/community/tech"
-              className="text-blue-600 hover:underline"
+              to={`/community/${community._id}`}
+              className="text-gray-800 font-medium text-lg transition duration-200 hover:text-gray-900"
             >
-              r/Technology
+              <li
+                key={community.id}
+                className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-100 transition duration-300 cursor-pointer"
+              >
+                <img
+                  src={community.profile.url}
+                  alt={community.name}
+                  className="w-12 h-12 rounded-full border border-gray-300 shadow-sm"
+                />
+                <p>{community.name}</p>
+              </li>
             </Link>
-          </li>
-          <li className="mb-2">
-            <Link
-              to="/community/gaming"
-              className="text-blue-600 hover:underline"
-            >
-              r/Gaming
-            </Link>
-          </li>
-          <li className="mb-2">
-            <Link
-              to="/community/movies"
-              className="text-blue-600 hover:underline"
-            >
-              r/Movies
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/community/science"
-              className="text-blue-600 hover:underline"
-            >
-              r/Science
-            </Link>
-          </li>
+          ))}
         </ul>
       </aside>
     </div>
