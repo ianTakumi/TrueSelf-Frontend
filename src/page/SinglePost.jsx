@@ -43,7 +43,10 @@ const SinglePost = () => {
   const onSubmit = async (data) => {
     console.log(data);
 
-    await AxiosInstance.post(`/`);
+    await AxiosInstance.post(`/comments/${userId}/${postId}`).then((res) => {
+      if (res.status === 200) {
+      }
+    });
     // handleAddComment(post._id, data.comment);
     // reset(); // Clear input after submitting
     // setShowCommentInput(false); // Hide input after submitting
