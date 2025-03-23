@@ -384,32 +384,21 @@ const TestAnxiety = () => {
 
   const submitData = async (data) => {
     const userId = user._id;
+    // console.log(data);
+    const formattedData = Object.fromEntries(
+      Object.entries(data).map(([key, value]) => [
+        key,
+        isNaN(value) || value === "" ? value : Number(value), // Convert only valid numeric strings
+      ])
+    );
 
-    await AxiosAIInstance.post(`/predict/${userId}`, data).then((response) => {
-      const severity = Math.round(response.data.predicted_severity);
-      if (severity > 5) {
+    // console.log(formattedData);
+    await AxiosAIInstance.post(`/predict/${userId}`, formattedData).then(
+      (response) => {
+        const severity = Math.round(response.data.predicted_severity);
         navigate("/Result");
-      } else {
-        Swal.fire({
-          title: translations[language].manageMildAnxiety,
-          html: `
-            <p>${translations[language].anxietyLevel} <strong>${severity}</strong></p>
-            <p style="margin-bottom: 15px" >${translations[language].techniques}</p>
-            <ul style="text-align: left;">
-              <li>- ${translations[language].mindfulness}</li>
-              <li>- ${translations[language].physicalActivity}</li>
-              <li>- ${translations[language].balancedDiet}</li>
-              <li>- ${translations[language].limitCaffeine}</li>
-              <li>- ${translations[language].connectLovedOnes}</li>
-              <li>- ${translations[language].enjoyHobbies}</li>
-            </ul>
-            <p>${translations[language].seekHelp}</p>
-          `,
-          icon: "info",
-          confirmButtonText: translations[language].gotIt,
-        });
       }
-    });
+    );
   };
 
   return (

@@ -19,7 +19,7 @@ const Result = () => {
   const [data, setData] = useState([]);
   const [tabIndex, setTabIndex] = useState(0);
   const [recommendations, setRecommendations] = useState([]);
-  const severityScore = data?.severityScore || 0;
+  const severityScore = Math.round(data?.severityScore || 0);
   const percentage = (severityScore / 10) * 100;
   const isSevere = severityScore > 5;
 
@@ -31,6 +31,7 @@ const Result = () => {
       `/anxietyPredictions/lastPrediction/${user._id}`
     ).then((res) => {
       setData(res.data.data);
+      console.log(res.data.data);
       setRecommendations(getRecommendations(res.data.data));
     });
   };
@@ -541,7 +542,9 @@ const Result = () => {
 
         <p
           className={`text-lg font-bold text-center mb-1 ${
-            data.severityScore > 5 ? "text-red-500" : "text-yellow-500"
+            Math.round(data.severityScore) > 5
+              ? "text-red-500"
+              : "text-yellow-500"
           }`}
         >
           {Math.round(data.severityScore)}/10
