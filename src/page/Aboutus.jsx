@@ -182,28 +182,23 @@ const AboutPage = () => {
           </motion.svg>
         </div>
 
-        <motion.div
-          className="team-section py-12"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.1 }}
-        >
+        <div className="flex flex-col gap-12 justify-center" ref={teamRef}>
           {/* Team Title Animation */}
           <motion.h1
             className="text-3xl font-bold text-center mb-8"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 1.2 }}
+            initial={{ x: "-500px" }}
+            animate={isTeamRefInView ? { x: 0 } : {}}
+            transition={{ delay: 0.2 }}
           >
-            Meet The Team
+            MEET THE TEAM
           </motion.h1>
 
           {/* Team Cards Animation */}
           <motion.div
             className="flex flex-wrap justify-center gap-8"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 1.3 }}
+            initial={{ x: "-600px" }}
+            animate={isTeamRefInView ? { x: 0 } : {}}
+            transition={{ delay: 0.2 }}
           >
             {teamMembers.map((member, index) => (
               <motion.div
@@ -223,7 +218,7 @@ const AboutPage = () => {
               </motion.div>
             ))}
           </motion.div>
-        </motion.div>
+        </div>
       </div>
 
       <div className="hidden lg:block lg:w-1/3 fixed right-0 top-0 h-screen">
