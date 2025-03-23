@@ -48,6 +48,7 @@ const Login = () => {
       ...data,
       fcmToken: token,
     };
+
     console.log(token);
     await AxiosInstance.post("/auth/login", cleanedData)
       .then((response) => {
@@ -59,7 +60,7 @@ const Login = () => {
           return;
         }
 
-        // AxiosInstance.put("/");
+        AxiosInstance.put("/");
         authenticate(response.data, () => {
           console.log("User authenticated");
           notifySuccess("Login successful");

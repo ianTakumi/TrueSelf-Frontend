@@ -169,6 +169,7 @@ const SingleCommunity = () => {
       const res = await AxiosInstance.get(`/spaces/join/${id}/${userId}`);
       console.log(res.data);
       notifySuccess("Joined community successfully!");
+      fetchCommunity();
       setIsMember(true);
     } catch (error) {
       console.error("Error joining community:", error);
@@ -420,65 +421,84 @@ const SingleCommunity = () => {
                   />
                 )}
 
-                <Box display="flex" alignItems="center" gap={1} py={1} ml={1}>
-                  <ButtonGroup
-                    variant="outlined"
-                    sx={{
-                      borderRadius: "20px",
-                      overflow: "hidden",
-                      borderColor: "rgba(0,0,0,0.1)",
-                    }}
-                  >
-                    <Button
-                      disabled={post.likes.includes(userId)}
-                      onClick={() => handleLikePost(post._id)}
+                {community.members.includes(userId) && (
+                  <Box display="flex" alignItems="center" gap={1} py={1} ml={1}>
+                    <ButtonGroup
+                      variant="outlined"
                       sx={{
-                        borderRadius: 0,
+                        borderRadius: "20px",
+                        overflow: "hidden",
                         borderColor: "rgba(0,0,0,0.1)",
-                        color: "gray",
-                        transition: "all 0.3s ease-in-out",
-                        "&:hover": {
-                          backgroundColor: "rgba(255,69,0,0.15)",
-                          color: "#FF4500",
-                          transform: "scale(1.05)",
-                        },
-                        "&:active": {
-                          transform: "scale(0.95)",
-                        },
                       }}
                     >
-                      <ArrowCircleUpOutlinedIcon fontSize="small" />
-                      <Typography
-                        variant="body2"
-                        sx={{ fontWeight: "bold", ml: 0.5 }}
+                      <Button
+                        disabled={post.likes.includes(userId)}
+                        onClick={() => handleLikePost(post._id)}
+                        sx={{
+                          borderRadius: 0,
+                          borderColor: "rgba(0,0,0,0.1)",
+                          color: "gray",
+                          transition: "all 0.3s ease-in-out",
+                          "&:hover": {
+                            backgroundColor: "rgba(255,69,0,0.15)",
+                            color: "#FF4500",
+                            transform: "scale(1.05)",
+                          },
+                          "&:active": {
+                            transform: "scale(0.95)",
+                          },
+                        }}
                       >
-                        {post.likes.length}
-                      </Typography>
-                    </Button>
+                        <ArrowCircleUpOutlinedIcon fontSize="small" />
+                        <Typography
+                          variant="body2"
+                          sx={{ fontWeight: "bold", ml: 0.5 }}
+                        >
+                          {post.likes.length}
+                        </Typography>
+                      </Button>
 
-                    <Button
-                      onClick={() => handleDislikePost(post._id)}
-                      disabled={post.user._id === userId}
-                      sx={{
-                        borderRadius: 0,
-                        borderColor: "rgba(0,0,0,0.1)",
-                        color: "gray",
-                        transition: "all 0.3s ease-in-out",
-                        "&:hover": {
-                          backgroundColor: "rgba(90, 117, 204, 0.15)",
-                          color: "#5A75CC",
-                          transform: "scale(1.05)",
-                        },
-                        "&:active": {
-                          transform: "scale(0.95)",
-                        },
-                      }}
-                    >
-                      <ArrowCircleDownOutlinedIcon fontSize="small" />
-                    </Button>
-                  </ButtonGroup>
+                      <Button
+                        onClick={() => handleDislikePost(post._id)}
+                        disabled={post.user._id === userId}
+                        sx={{
+                          borderRadius: 0,
+                          borderColor: "rgba(0,0,0,0.1)",
+                          color: "gray",
+                          transition: "all 0.3s ease-in-out",
+                          "&:hover": {
+                            backgroundColor: "rgba(90, 117, 204, 0.15)",
+                            color: "#5A75CC",
+                            transform: "scale(1.05)",
+                          },
+                          "&:active": {
+                            transform: "scale(0.95)",
+                          },
+                        }}
+                      >
+                        <ArrowCircleDownOutlinedIcon fontSize="small" />
+                      </Button>
+                    </ButtonGroup>
 
-                  <Link to={`/community/post/${post._id}`}>
+                    <Link to={`/community/post/${post._id}`}>
+                      <Button
+                        variant="outlined"
+                        sx={{
+                          borderRadius: "20px",
+                          px: 1.5,
+                          borderColor: "rgba(0,0,0,0.1)",
+                          color: "gray",
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        <ChatBubbleOutline fontSize="small" sx={{ mr: 0.5 }} />
+                        <Typography variant="body2">
+                          {post.comments.length}
+                        </Typography>
+                      </Button>
+                    </Link>
+
                     <Button
                       variant="outlined"
                       sx={{
@@ -490,28 +510,11 @@ const SingleCommunity = () => {
                         alignItems: "center",
                       }}
                     >
-                      <ChatBubbleOutline fontSize="small" sx={{ mr: 0.5 }} />
-                      <Typography variant="body2">
-                        {post.comments.length}
-                      </Typography>
+                      <Share fontSize="small" sx={{ mr: 0.5 }} />
+                      <Typography variant="body2">Share</Typography>
                     </Button>
-                  </Link>
-
-                  <Button
-                    variant="outlined"
-                    sx={{
-                      borderRadius: "20px",
-                      px: 1.5,
-                      borderColor: "rgba(0,0,0,0.1)",
-                      color: "gray",
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Share fontSize="small" sx={{ mr: 0.5 }} />
-                    <Typography variant="body2">Share</Typography>
-                  </Button>
-                </Box>
+                  </Box>
+                )}
               </Card>
             ))
           )}

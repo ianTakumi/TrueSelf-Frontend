@@ -23,6 +23,8 @@ import { MoreVert, ChatBubbleOutline, Share } from "@mui/icons-material";
 import ArrowCircleUpOutlinedIcon from "@mui/icons-material/ArrowCircleUpOutlined";
 import ArrowCircleDownOutlinedIcon from "@mui/icons-material/ArrowCircleDownOutlined";
 import CircularProgress from "@mui/material/CircularProgress";
+import Comments from "../components/user/Comments";
+import { useNavigate } from "react-router-dom";
 
 const SinglePost = () => {
   const user = getUser();
@@ -32,6 +34,23 @@ const SinglePost = () => {
   const [isReportOpen, setIsReportOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [showCommentInput, setShowCommentInput] = useState(false);
+  const [comments, setComments] = useState([]);
+  const [visibleCount, setVisibleCount] = useState(2);
+  const navigate = useNavigate();
+
+  const fetchComments = async () => {
+    console.log("Fetching comments for post:", postId);
+    await AxiosInstance.get(`/comments/${postId}`)
+      .then((res) => {
+        if (res.status === 200) {
+          setComments(res.data.data);
+          console.log("Comments:", res.data.data);
+        }
+      })
+      .catch((err) => {
+        notifyError("Failed to fetch comments");
+      });
+  };
 
   const {
     register,
@@ -43,22 +62,23 @@ const SinglePost = () => {
   const onSubmit = async (data) => {
     console.log(data);
 
-    await AxiosInstance.post(`/comments/${userId}/${postId}`).then((res) => {
-      if (res.status === 200) {
+    await AxiosInstance.post(`/comments/${userId}/${postId}`, {
+      content: data.comment,
+    }).then((res) => {
+      if (res.status === 201) {
+        notifySuccess("Comment added successfully");
+        fetchComments();
       }
     });
-    // handleAddComment(post._id, data.comment);
-    // reset(); // Clear input after submitting
-    // setShowCommentInput(false); // Hide input after submitting
+    reset();
+    setShowCommentInput(false);
   };
 
   const fetchPost = async () => {
     await AxiosInstance.get(`/posts/singlePost/${postId}`)
       .then((res) => {
         if (res.status === 200) {
-          console.log(res.data.data);
           setPost(res.data.data);
-          console.log(post);
         }
       })
       .catch((err) => {
@@ -96,7 +116,62 @@ const SinglePost = () => {
 
   useEffect(() => {
     fetchPost();
+    fetchComments();
   }, []);
+
+  const handleLikePost = async (postId) => {
+    await AxiosInstance.post(`/posts/like/${postId}`, { userId })
+      .then((res) => {
+        if (res.status === 200) {
+          notifySuccess("Post liked successfully.");
+
+          setPost((prevPost) =>
+            prevPost && prevPost._id === postId
+              ? { ...prevPost, likes: [...prevPost.likes, { userId }] }
+              : prevPost
+          );
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          notifyError("You have already liked this post.");
+        }
+      });
+  };
+
+  const handleDislikePost = async (postId) => {
+    try {
+      const res = await AxiosInstance.post(`/posts/dislike/${postId}`, {
+        userId,
+      });
+
+      if (res.status === 200) {
+        notifySuccess("Post disliked successfully.");
+        setPost((prevPost) =>
+          prevPost && prevPost._id === postId
+            ? {
+                ...prevPost,
+                likes: prevPost.likes.filter((like) => like.userId !== userId), // Remove from likes
+                dislikes: [...(prevPost.dislikes || []), { userId }], // Add to dislikes
+              }
+            : prevPost
+        );
+      }
+    } catch (error) {
+      notifyError("Failed to dislike post.");
+      console.error("Error disliking post:", error);
+    }
+  };
+
+  const onDelete = async (postId) => {
+    console.log("Deleting post:", postId);
+    await AxiosInstance.delete(`/posts/${postId}`).then((res) => {
+      if (res.status === 200) {
+        notifySuccess("Post deleted successfully.");
+        navigate(`/community/${post.communityId._id}`);
+      }
+    });
+  };
 
   return (
     <>
@@ -104,11 +179,13 @@ const SinglePost = () => {
         <Box
           display="flex"
           justifyContent="center"
-          alignItems="center"
+          alignItems="flex-start"
           minHeight="100vh"
-          mt={-10}
+          mt={10}
         >
-          <Card sx={{ width: "60%", mb: 2 }}>
+          <Card
+            sx={{ width: "60%", mb: 2, p: 2, boxShadow: 3, borderRadius: 3 }}
+          >
             <CardHeader
               avatar={
                 <Avatar
@@ -126,7 +203,7 @@ const SinglePost = () => {
                   </IconButton>
                   <Menu
                     anchorEl={anchorEl}
-                    open={Boolean(anchorEl) && selectedPostId === post._id}
+                    open={Boolean(anchorEl) && postId === post._id}
                     onClose={handleMenuClose}
                   >
                     {post.user?._id === userId ? (
@@ -162,17 +239,11 @@ const SinglePost = () => {
                 </>
               }
               title={post.user?.name || "Unknown User"}
-              subheader={new Date(post.createdAt).toLocaleString("en-US", {
-                month: "long",
-                day: "2-digit",
-                year: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-                hour12: true,
-              })}
+              subheader={new Date(post.createdAt).toLocaleString()}
             />
+
             <CardContent>
-              <Typography variant="h6" fontWeight="bold" gutterBottom>
+              <Typography variant="h6" fontWeight="bold">
                 {post.title}
               </Typography>
               <Typography
@@ -180,120 +251,82 @@ const SinglePost = () => {
                 dangerouslySetInnerHTML={{ __html: post.content }}
               />
             </CardContent>
-            {post.images &&
-              post.images.length > 0 &&
-              post.images.map((img, index) => (
-                <CardMedia
-                  key={index}
-                  component="img"
-                  sx={{
-                    width: "100%",
-                    maxHeight: 400,
-                    objectFit: "contain",
-                    borderRadius: 2,
-                  }}
-                  image={img.url}
-                  alt={`Post Image ${index + 1}`}
-                />
-              ))}
+
+            {post.images?.length > 0 && (
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, p: 1 }}>
+                {post.images.map((img, index) => (
+                  <CardMedia
+                    key={index}
+                    component="img"
+                    sx={{
+                      width: "100%",
+                      maxHeight: 400,
+                      objectFit: "contain",
+                      borderRadius: 2,
+                    }}
+                    image={img.url}
+                    alt={`Post Image ${index + 1}`}
+                  />
+                ))}
+              </Box>
+            )}
+
             {post.video && (
               <CardMedia
                 component="video"
                 controls
-                sx={{ height: 300, objectFit: "cover", borderRadius: 2 }}
+                sx={{ width: "100%", borderRadius: 2 }}
                 src={post.video.url}
               />
             )}
-            <Box display="flex" alignItems="center" gap={1} py={1} ml={1}>
-              <ButtonGroup
-                variant="outlined"
-                sx={{
-                  borderRadius: "20px",
-                  overflow: "hidden",
-                  borderColor: "rgba(0,0,0,0.1)",
-                }}
-              >
-                <Button
-                  disabled={post.likes.includes(userId)}
+
+            {post.communityId.members.includes(userId) && (
+              <Box display="flex" alignItems="center" gap={2} py={2}>
+                <IconButton
                   onClick={() => handleLikePost(post._id)}
-                  sx={{
-                    borderRadius: 0,
-                    borderColor: "rgba(0,0,0,0.1)",
-                    color: "gray",
-                    transition: "all 0.3s ease-in-out",
-                    "&:hover": {
-                      backgroundColor: "rgba(255,69,0,0.15)",
-                      color: "#FF4500",
-                      transform: "scale(1.05)",
-                    },
-                    "&:active": { transform: "scale(0.95)" },
-                  }}
+                  color={post.likes.includes(userId) ? "secondary" : "primary"}
+                  disabled={post.user._id === userId} // Disable if the post belongs to the user
                 >
-                  <ArrowCircleUpOutlinedIcon fontSize="small" />
-                  <Typography
-                    variant="body2"
-                    sx={{ fontWeight: "bold", ml: 0.5 }}
-                  >
+                  <ArrowCircleUpOutlinedIcon />
+                  <Typography variant="body2" sx={{ ml: 0.5 }}>
                     {post.likes.length}
                   </Typography>
-                </Button>
-                <Button
+                </IconButton>
+
+                <IconButton
                   onClick={() => handleDislikePost(post._id)}
-                  disabled={post.user?._id === userId}
-                  sx={{
-                    borderRadius: 0,
-                    borderColor: "rgba(0,0,0,0.1)",
-                    color: "gray",
-                    transition: "all 0.3s ease-in-out",
-                    "&:hover": {
-                      backgroundColor: "rgba(90, 117, 204, 0.15)",
-                      color: "#5A75CC",
-                      transform: "scale(1.05)",
-                    },
-                    "&:active": { transform: "scale(0.95)" },
-                  }}
+                  color={
+                    post.dislikes?.includes(userId) ? "secondary" : "primary"
+                  }
+                  disabled={post.user._id === userId} // Disable if the post belongs to the user
                 >
-                  <ArrowCircleDownOutlinedIcon fontSize="small" />
-                </Button>
-              </ButtonGroup>
+                  <ArrowCircleDownOutlinedIcon />
+                </IconButton>
 
-              <Button
-                variant="outlined"
-                onClick={() => setShowCommentInput(!showCommentInput)}
-                sx={{
-                  borderRadius: "20px",
-                  px: 1.5,
-                  borderColor: "rgba(0,0,0,0.1)",
-                  color: "gray",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <ChatBubbleOutline fontSize="small" sx={{ mr: 0.5 }} />
-                <Typography variant="body2">{post.comments.length}</Typography>
-              </Button>
+                <IconButton
+                  onClick={() => setShowCommentInput(!showCommentInput)}
+                  color="secondary"
+                >
+                  <ChatBubbleOutline />
+                  <Typography variant="body2" sx={{ ml: 0.5 }}>
+                    {comments.length}
+                  </Typography>
+                </IconButton>
 
-              <Button
-                onClick={handleCopyLink}
-                variant="outlined"
-                sx={{
-                  borderRadius: "20px",
-                  px: 1.5,
-                  borderColor: "rgba(0,0,0,0.1)",
-                  color: "gray",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <Share fontSize="small" sx={{ mr: 0.5 }} />
-                <Typography variant="body2">Share</Typography>
-              </Button>
-            </Box>
+                <IconButton onClick={handleCopyLink}>
+                  <Share />
+                  <Typography variant="body2" sx={{ ml: 0.5 }}>
+                    Share
+                  </Typography>
+                </IconButton>
+              </Box>
+            )}
+
             {showCommentInput && (
               <Box
                 component="form"
                 onSubmit={handleSubmit(onSubmit)}
-                sx={{ p: 2 }}
+                sx={{ px: 2, pb: 2 }}
               >
                 <TextField
                   fullWidth
@@ -304,12 +337,27 @@ const SinglePost = () => {
                   })}
                   error={!!errors.comment}
                   helperText={errors.comment?.message}
-                  sx={{ mb: 1 }}
+                  sx={{ mb: 1, borderRadius: "20px", bgcolor: "#f9f9f9" }}
                 />
-                <Button type="submit" variant="contained" color="primary">
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  sx={{ borderRadius: 2 }}
+                >
                   Submit
                 </Button>
               </Box>
+            )}
+
+            {comments && (
+              <Comments
+                postId={postId}
+                comments={comments}
+                currentUserId={userId}
+                setComments={setComments}
+                fetchComments={fetchComments}
+              />
             )}
           </Card>
         </Box>

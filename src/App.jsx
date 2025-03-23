@@ -65,7 +65,6 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        {/* Routes for user */}
         <Route
           path="/mood"
           element={<ProtectedRoute element={<MoodIndex />} />}
