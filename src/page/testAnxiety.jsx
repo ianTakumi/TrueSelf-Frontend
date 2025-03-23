@@ -395,8 +395,9 @@ const TestAnxiety = () => {
     // console.log(formattedData);
     await AxiosAIInstance.post(`/predict/${userId}`, formattedData).then(
       (response) => {
-        const severity = Math.round(response.data.predicted_severity);
-        navigate("/Result");
+        if (response.status === 200) {
+          navigate("/Result");
+        }
       }
     );
   };

@@ -10,7 +10,7 @@ const Footer = () => {
     <footer className="bg-[#63579F] text-[#F8F8F8] py-10 px-6 md:px-16 z-30">
       <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-y-6">
         {/* Logo */}
-        <Link to={"/"}>
+        <Link to={"/"} onClick={() => window.scrollTo(0, 0)}>
           <div className="flex flex-col items-center text-center">
             <img
               src="/logo/trueself5.png"
@@ -25,7 +25,7 @@ const Footer = () => {
         <nav>
           <h3 className="font-bold font-mono mb-3">LEARN MORE</h3>
           <ul className="space-y-2">
-            <Link to={"/about"}>
+            <Link to={"/about"} onClick={() => window.scrollTo(0, 0)}>
               <li className="hover:text-gray-300 transition-colors duration-200 text-sm cursor-pointer mb-1">
                 About True Self
               </li>
@@ -34,19 +34,22 @@ const Footer = () => {
             <li className="hover:text-gray-300 transition-colors duration-200  text-sm cursor-pointer mb-2">
               Articles
             </li>
-            <Link to={"/terms-of-service"}>
+            <Link
+              to={"/terms-of-service"}
+              onClick={() => window.scrollTo(0, 0)}
+            >
               <li className="hover:text-gray-300 transition-colors duration-200 text-sm cursor-pointer mb-2">
                 Terms of Service
               </li>
             </Link>
 
-            <Link to="/privacy-policy">
+            <Link to="/privacy-policy" onClick={() => window.scrollTo(0, 0)}>
               <li className="hover:text-gray-300 transition-colors duration-200 text-sm cursor-pointer mb-2">
                 Privacy Policy
               </li>
             </Link>
 
-            <Link to={"/contact"}>
+            <Link to={"/contact"} onClick={() => window.scrollTo(0, 0)}>
               <li className="hover:text-gray-300 transition-colors duration-200 text-sm cursor-pointer mb-2">
                 Contact Us
               </li>
@@ -58,12 +61,18 @@ const Footer = () => {
         <nav>
           <h3 className="font-semibold mb-3">Community Forum</h3>
           <ul className="space-y-2">
-            <li className="hover:text-gray-300 transition-colors duration-200 cursor-pointer mb-2 text-sm">
-              All Communities
-            </li>
-            <li className="hover:text-gray-300 transition-colors duration-200 cursor-pointer mb-2 text-sm">
+            <Link
+              to={"/community/communities"}
+              onClick={() => window.scrollTo(0, 0)}
+            >
+              <li className="hover:text-gray-300 transition-colors duration-200 cursor-pointer mb-2 text-sm">
+                All Communities
+              </li>
+            </Link>
+
+            {/* <li className="hover:text-gray-300 transition-colors duration-200 cursor-pointer mb-2 text-sm">
               Search Communities
-            </li>
+            </li> */}
           </ul>
         </nav>
 
@@ -71,27 +80,23 @@ const Footer = () => {
         <nav>
           <h3 className="font-semibold mb-3">Mental Health Resources</h3>
           <ul className="space-y-2">
-            <Link to={"/test-anxiety"}>
+            <Link to={"/test-anxiety"} onClick={() => window.scrollTo(0, 0)}>
               <li className="hover:text-gray-300 transition-colors duration-200 cursor-pointer mb-2 text-sm">
                 Anxiety Severity Test (AI-Powered)
               </li>
             </Link>
-
-            <li className="hover:text-gray-300 transition-colors duration-200 cursor-pointer mb-2 text-sm">
-              Journaling
-            </li>
-            <Link to={"/mood"}>
-              <li className="hover:text-gray-300 transition-colors duration-200 cursor-pointer mb-2 text-sm">
-                Mood Tracker
-              </li>
-            </Link>
-            <Link to="/myDiary">
+            <Link to="/myDiary" onClick={() => window.scrollTo(0, 0)}>
               <li className="hover:text-gray-300 transition-colors duration-200 cursor-pointer mb-2 text-sm">
                 My Journal
               </li>
             </Link>
+            <Link to={"/mood"} onClick={() => window.scrollTo(0, 0)}>
+              <li className="hover:text-gray-300 transition-colors duration-200 cursor-pointer mb-2 text-sm">
+                Mood Tracker
+              </li>
+            </Link>
 
-            <Link to="/crisis-support">
+            <Link to="/crisis-support" onClick={() => window.scrollTo(0, 0)}>
               <li className="hover:text-gray-300 transition-colors duration-200 cursor-pointer mb-2 text-sm">
                 Crisis Support Hotlines
               </li>

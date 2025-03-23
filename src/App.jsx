@@ -38,7 +38,7 @@ import ResetPassword from "./page/resetPassword";
 import ResetPasswordRequest from "./page/resetPasswordRequest";
 import CommunityLayout from "./components/user/community/layout";
 import Result from "./page/Result";
-import SinnglePost from "./page/SinglePost";
+import SinglePost from "./page/SinglePost";
 
 import AdminLayout from "./components/admin/Layout";
 import AdminIndex from "./page/admin/index";
@@ -69,11 +69,24 @@ const App = () => {
           path="/mood"
           element={<ProtectedRoute element={<MoodIndex />} />}
         />
+        {/* <Route
+            path="/mood-dashboard"
+            element={<ProtectedRoute element={<MoodDashboard />} />}
+          /> */}
         <Route path="/community" element={<UserLayout />}>
-          <Route index element={<ComPage />} />
-          <Route path="communities" element={<Communities />} />
-          <Route path=":id" element={<SingleCommunity />} />
-          <Route path="post/:postId" element={<SinnglePost />} />
+          <Route index element={<ProtectedRoute element={ComPage} />} />
+          <Route
+            path="communities"
+            element={<ProtectedRoute element={Communities} />}
+          />
+          <Route
+            path=":id"
+            element={<ProtectedRoute element={<SingleCommunity />} />}
+          />
+          <Route
+            path="post/:postId"
+            element={<ProtectedRoute element={<SinglePost />} />}
+          />
         </Route>
 
         <Route index element={<Home />} />
@@ -105,7 +118,10 @@ const App = () => {
             element={<ProtectedRoute element={<TestAnxiety />} />}
           />
           <Route path="/create-post/:id" element={<CreatePost />} />
-          <Route path="/myDiary" element={<DiaryEditor />} />
+          <Route
+            path="/myDiary"
+            element={<ProtectedRoute element={<DiaryEditor />} />}
+          />
           <Route path="/recommend" element={<Recommend />} />
           <Route path="/crisis-support" element={<CrisisSupport />} />
         </Route>
