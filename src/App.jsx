@@ -74,10 +74,10 @@ const App = () => {
             element={<ProtectedRoute element={<MoodDashboard />} />}
           /> */}
         <Route path="/community" element={<UserLayout />}>
-          <Route index element={<ProtectedRoute element={ComPage} />} />
+          <Route index element={<ProtectedRoute element={<ComPage />} />} />
           <Route
             path="communities"
-            element={<ProtectedRoute element={Communities} />}
+            element={<ProtectedRoute element={<Communities />} />}
           />
           <Route
             path=":id"

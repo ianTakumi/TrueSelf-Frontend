@@ -12,7 +12,6 @@ import { generateToken } from "../configs/FirebaseAuth";
 // import FacebookIcon from "@mui/icons-material/Facebook";
 import { Link } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -226,7 +225,7 @@ const Login = () => {
           </form>
           <div className="login-register-link">
             <p>
-              Don't have an account? <a href="/register">Register</a>
+              Don't have an account? <Link to="/register">Register</Link>
             </p>
           </div>
         </div>
