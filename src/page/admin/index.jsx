@@ -15,6 +15,8 @@ import ContactPieChart from "../../components/admin/charts/ContactPieChart";
 import { Button } from "@mui/material";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import MoodDistribution from "../../components/admin/charts/MoodDistribution";
+import MoodPerMonthLineChart from "../../components/admin/charts/MoodPerMonthLineChart";
 
 const index = () => {
   const [userCount, setUserCount] = useState(0);
@@ -27,6 +29,7 @@ const index = () => {
   const scatterChartRef = useRef(null);
   const contactEngagementRef = useRef(null);
   const contactPieRef = useRef(null);
+  const moodDistributionChartRef = useRef(null);
 
   const [receivedAnxietyChartData, setReceivedAnxietyChartData] = useState([]);
   const [receivedOccupationPieChartData, setReceivedOccupationPieChartData] =
@@ -38,6 +41,8 @@ const index = () => {
   const [receivedContactPieData, setReceivedContactPieData] = useState([]);
   const [receivedAnalysisScatterData, setReceivedAnalysisScatterData] =
     useState({});
+  const [receivedMoodDistributionData, setReceivedMoodDistributionData] =
+    useState([]);
 
   const handleAnxietyChartDataUpdate = (newData) => {
     setReceivedAnxietyChartData(newData);
@@ -65,6 +70,10 @@ const index = () => {
 
   const handleAnalysisScatterDataUpdate = (newData) => {
     setReceivedAnalysisScatterData(newData);
+  };
+
+  const handleMoodDistributionDataUpdate = (newData) => {
+    setReceivedMoodDistributionData(newData);
   };
 
   const downloadReports = async () => {
@@ -678,6 +687,23 @@ const index = () => {
         </div>
       </div>
 
+      <div className="mt-10 mb-24 space-y-6">
+        <h2 className="text-2xl font-semibold text-gray-800 text-center">
+          Mood Section
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <MoodDistribution
+              ref={moodDistributionChartRef}
+              onDataUpdate={handleMoodDistributionDataUpdate}
+            />
+          </div>
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <MoodPerMonthLineChart />
+          </div>
+        </div>
+      </div>
       {/* <div className="flex-1 bg-white rounded-lg shadow-lg p-6">
         <h3 className="text-2xl font-semibold text-gray-800 mb-4">
           Users Mood Distribution per Week

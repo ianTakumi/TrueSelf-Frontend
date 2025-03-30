@@ -89,6 +89,10 @@ const spaces = () => {
     fetchSpaces();
   }, []);
 
+  const handleDelete = async (id) => {
+    console.log("Delete", id);
+  };
+
   const exportToPDF = async () => {
     const doc = new jsPDF();
 
@@ -368,7 +372,9 @@ const spaces = () => {
                 open={Boolean(menuAnchor[index])}
                 onClose={() => handleClose(index)}
               >
-                {/* <MenuItem onClick={() =>}></MenuItem> */}
+                <MenuItem onClick={() => handleDelete(community._id)}>
+                  Delete
+                </MenuItem>
               </Menu>
             </>
           );

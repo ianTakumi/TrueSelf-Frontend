@@ -188,35 +188,80 @@ const Contacts = () => {
     {
       name: "no",
       label: "No.",
-      options: { customBodyRender: (_, tableMeta) => tableMeta.rowIndex + 1 },
+      options: {
+        filter: false,
+        customBodyRender: (_, tableMeta) => tableMeta.rowIndex + 1,
+      },
     },
-    { name: "name", label: "Name" },
-    { name: "email", label: "Email" },
-    { name: "phone", label: "Phone" },
-    { name: "subject", label: "Subject" },
-    { name: "message", label: "Message" },
+    {
+      name: "name",
+      label: "Name",
+      options: {
+        filter: true,
+        filterType: "textField",
+      },
+    },
+    {
+      name: "email",
+      label: "Email",
+      options: {
+        filter: true,
+        filterType: "dropdown",
+      },
+    },
+    {
+      name: "phone",
+      label: "Phone",
+      options: {
+        filter: true,
+        filterType: "dropdown",
+      },
+    },
+    {
+      name: "subject",
+      label: "Subject",
+      options: {
+        filter: true,
+        filterType: "textField",
+      },
+    },
+    {
+      name: "message",
+      label: "Message",
+      options: {
+        filter: true,
+        filterType: "textField",
+      },
+    },
     {
       name: "status",
       label: "Status",
       options: {
         customBodyRender: (value) =>
           value.charAt(0).toUpperCase() + value.slice(1),
+
+        filterOptions: {
+          names: ["Pending", "Resolved", "Closed"],
+        },
       },
     },
     {
       name: "createdAt",
       label: "Date Sent",
+
       options: {
+        filter: false,
+        sort: true,
         customBodyRender: (value) => formatDate(value),
       },
     },
-    {
-      name: "updatedAt",
-      label: "Updated At",
-      options: {
-        customBodyRender: (value) => formatDate(value),
-      },
-    },
+    // {
+    //   name: "updatedAt",
+    //   label: "Updated At",
+    //   options: {
+    //     customBodyRender: (value) => formatDate(value),
+    //   },
+    // },
     {
       name: "actions",
       label: "Actions",
@@ -291,7 +336,7 @@ const Contacts = () => {
       link.click();
       document.body.removeChild(link);
 
-      return false; // Prevent default MUIDataTable download
+      return false;
     },
   };
 
@@ -320,8 +365,9 @@ const Contacts = () => {
 
       <div className="mt-6">
         {isLoading ? (
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center flex-col items-center mt-60">
             <CircularProgress />
+            <h1 className="font-bold mt-2">Loading...</h1>
           </div>
         ) : (
           <>

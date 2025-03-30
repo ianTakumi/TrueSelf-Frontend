@@ -9,18 +9,25 @@ import {
   DialogActions,
   DialogTitle,
   MenuItem,
+  CircularProgress,
   Box,
+  Autocomplete,
   Divider,
 } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 
 const PredictionModal = ({ onClose, predictionToView, download }) => {
+  console.log("Prediction Modal", predictionToView);
   const yesNoOptions = [
     { value: 1, label: "Yes" },
     { value: 0, label: "No" },
   ];
 
-  const { register, reset, control } = useForm();
+  const { register, reset, control, watch } = useForm({
+    defaultValues: {
+      occupation: predictionToView?.occupation || "", // Ensure default value is set
+    },
+  });
 
   useEffect(() => {
     if (predictionToView) {
@@ -57,6 +64,48 @@ const PredictionModal = ({ onClose, predictionToView, download }) => {
       </DialogTitle>
       <Divider />
       <DialogContent>
+        <Grid
+          item
+          xs={12}
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+        >
+          <Typography variant="h5" fontWeight="bold" gutterBottom>
+            Anxiety Prediction Score
+          </Typography>
+          <Box position="relative" display="inline-flex">
+            <CircularProgress
+              variant="determinate"
+              value={(watch("severityScore") / 10) * 100}
+              size={100}
+              thickness={6}
+              sx={{
+                color:
+                  watch("severityScore") < 4
+                    ? "#4CAF50"
+                    : watch("severityScore") < 7
+                    ? "#FFC107"
+                    : "#F44336",
+              }}
+            />
+            <Box
+              position="absolute"
+              top={0}
+              left={0}
+              bottom={0}
+              right={0}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Typography variant="h5" fontWeight="bold">
+                {watch("severityScore")}
+              </Typography>
+            </Box>
+          </Box>
+        </Grid>
+
         <Grid container spacing={2}>
           {/* Personal Information */}
           <Grid item xs={12}>
@@ -65,13 +114,23 @@ const PredictionModal = ({ onClose, predictionToView, download }) => {
             </Typography>
           </Grid>
           <Grid item xs={6}>
-            <TextField
-              label="Name"
-              fullWidth
-              InputProps={{ readOnly: true }}
-              {...register("name")}
+            <Autocomplete
+              options={[
+                "Engineer",
+                "Other",
+                "Student",
+                "Teacher",
+                "Unemployed",
+              ]}
+              getOptionLabel={(option) => option}
+              value={watch("occupation") || ""} // Ensure the selected value is set
+              onChange={(_, newValue) => setValue("occupation", newValue)} // Update form state
+              renderInput={(params) => (
+                <TextField {...params} label="Occupation" fullWidth />
+              )}
             />
           </Grid>
+
           <Grid item xs={6}>
             <TextField
               label="Age"
@@ -81,10 +140,10 @@ const PredictionModal = ({ onClose, predictionToView, download }) => {
             />
           </Grid>
 
-          {/* Health Metrics */}
+          {/* Health Factors */}
           <Grid item xs={12}>
             <Typography variant="subtitle1" fontWeight="bold">
-              Health Metrics
+              Health Factors
             </Typography>
           </Grid>
           <Grid item xs={4}>
@@ -111,43 +170,21 @@ const PredictionModal = ({ onClose, predictionToView, download }) => {
               {...register("sweatingLevel")}
             />
           </Grid>
-
-          {/* Lifestyle Factors */}
-          <Grid item xs={12}>
-            <Typography variant="subtitle1" fontWeight="bold">
-              Lifestyle Factors
-            </Typography>
+          <Grid item xs={4}>
+            <TextField
+              label="Therapy Sessions/month"
+              fullWidth
+              inputProps={{ readOnly: true }}
+              {...register("theraphySession")}
+            />
           </Grid>
           {[
-            { name: "sleepHours", label: "Sleep Hours" },
-            { name: "physicalActivity", label: "Physical Activity" },
-            { name: "caffeineIntake", label: "Caffeine Intake" },
-            { name: "alcoholIntake", label: "Alcohol Intake" },
-            { name: "dietQuality", label: "Diet Quality" },
-          ].map((field) => (
-            <Grid item xs={4} key={field.name}>
-              <TextField
-                label={field.label}
-                fullWidth
-                InputProps={{ readOnly: true }}
-                {...register(field.name)}
-              />
-            </Grid>
-          ))}
-
-          {/* Select Fields */}
-          <Grid item xs={12}>
-            <Typography variant="subtitle1" fontWeight="bold">
-              Medical & Family History
-            </Typography>
-          </Grid>
-          {[
-            { name: "smoking", label: "Smoking" },
+            { name: "smokingHabits", label: "Smoking" },
             { name: "familyHistory", label: "Family History" },
             { name: "dizziness", label: "Dizziness" },
             { name: "medication", label: "Medication" },
           ].map((field) => (
-            <Grid item xs={3} key={field.name}>
+            <Grid item xs={4} key={field.name}>
               <Controller
                 name={field.name}
                 control={control}
@@ -166,6 +203,30 @@ const PredictionModal = ({ onClose, predictionToView, download }) => {
                     ))}
                   </TextField>
                 )}
+              />
+            </Grid>
+          ))}
+
+          {/* Lifestyle Factors */}
+          <Grid item xs={12}>
+            <Typography variant="subtitle1" fontWeight="bold">
+              Lifestyle Factors
+            </Typography>
+          </Grid>
+          {[
+            { name: "sleepHours", label: "Hours of sleep/day" },
+            { name: "physicalActivity", label: "Physical Activity(mins/week)" },
+            { name: "caffeeineIntake", label: "Caffeine Intake(mg/day)" },
+            { name: "alcoholConsumption", label: "Alcohol Intake(Bottle/day)" },
+            { name: "dietQuality", label: "Diet Quality(1-10)" },
+            { name: "stressLevel", label: "Stress Level(1-10)" },
+          ].map((field) => (
+            <Grid item xs={4} key={field.name}>
+              <TextField
+                label={field.label}
+                fullWidth
+                InputProps={{ readOnly: true }}
+                {...register(field.name)}
               />
             </Grid>
           ))}

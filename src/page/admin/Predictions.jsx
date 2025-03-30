@@ -5,7 +5,6 @@ import MUIDataTable from "mui-datatables";
 import { CircularProgress, Button, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import PredictionModal from "../../components/admin/modals/Prediction.modal";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import { saveAs } from "file-saver";
@@ -23,7 +22,7 @@ const Predictions = () => {
     try {
       const res = await AxiosInstance.get("/anxietyPredictions");
       const formattedData = res.data.data.map(({ userId, ...rest }) => ({
-        ...rest, // Keep all other fields
+        ...rest,
         name: userId?.name || "N/A",
         id: userId?._id || "N/A",
       }));
@@ -54,19 +53,35 @@ const Predictions = () => {
 
   const columns = [
     {
-      name: "name",
-      label: "Name of User",
-    },
-    {
       name: "severityScore",
       label: "Predicted Score",
       options: {
         customBodyRender: (value) => {
           return value !== undefined && value !== null
             ? Math.round(value)
-            : "N/A"; // Rounds to the nearest integer
+            : "N/A";
         },
       },
+    },
+    {
+      name: "stressLevel",
+      label: "Stress Level",
+    },
+    {
+      name: "sleepHours",
+      label: "Sleep Hours",
+    },
+    {
+      name: "physicalActivity",
+      label: "Physical Activity (mins/week)",
+    },
+    {
+      name: "heartRate",
+      label: "Heart Rate (bpm)",
+    },
+    {
+      name: "occupation",
+      label: "Occupation",
     },
     {
       name: "createdAt",

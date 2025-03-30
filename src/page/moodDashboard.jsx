@@ -21,11 +21,84 @@ import MoodModal from "../components/user/modals/MoodModal";
 import Playlist from "../components/user/Playlist";
 import Affirmations from "../components/user/Affirmations";
 
+const moodData = [
+  {
+    id: 1,
+    name: "Neutral",
+    color: "bg-gray-400",
+    icon: "/moods/neutral.png",
+    suggestions: [
+      "Enjoy the present moment and take a deep breath.",
+      "Take some time to relax, maybe listen to calming music.",
+      "Engage in a simple, calming activity like stretching or journaling.",
+      "Reflect on things you're grateful for or things you've accomplished.",
+      "Embrace the peace, focus on being in the here and now.",
+      "Spend some time outdoors to recharge your energy.",
+    ],
+  },
+  {
+    id: 2,
+    name: "Happy",
+    color: "bg-yellow-400",
+    icon: "/moods/smiley.png",
+    suggestions: [
+      "Keep spreading positivity!",
+      "Celebrate small wins.",
+      "Share your happiness with others.",
+      "Take a moment to enjoy the good things in life.",
+      "Practice gratitude to amplify your joy.",
+      "Keep that smile going, it brightens up the world!",
+    ],
+  },
+  {
+    id: 3,
+    name: "Anxious",
+    color: "bg-teal-400",
+    icon: "/moods/anxious.png",
+    suggestions: [
+      "Channel your energy into something creative!",
+      "Celebrate your excitement with others!",
+      "Make a plan to accomplish something you've been wanting to do.",
+      "Use your excitement to motivate you to reach your goals.",
+      "Find ways to keep your enthusiasm going.",
+      "Share your excitement with friends or family!",
+    ],
+  },
+  {
+    id: 4,
+    name: "Sad",
+    color: "bg-blue-400",
+    icon: "/moods/sad.png",
+    suggestions: [
+      "Take some time for self-care.",
+      "Talk to someone you trust about your feelings.",
+      "Journaling can help process your emotions.",
+      "Do something that relaxes you, like reading or walking.",
+      "Consider watching something that makes you laugh.",
+      "Practice mindfulness or meditation to find peace.",
+    ],
+  },
+  {
+    id: 5,
+    name: "Angry",
+    color: "bg-red-400",
+    icon: "/moods/angry.png",
+    suggestions: [
+      "Try some deep breathing exercises.",
+      "Take a walk to cool off and reset.",
+      "Reflect on what triggered your anger and how to address it.",
+      "Practice mindfulness or meditation to calm your mind.",
+      "Write down your feelings as a form of release.",
+      "Engage in a physical activity to release tension.",
+    ],
+  },
+];
+
 const MoodDashboard = () => {
   const user = getUser();
   const userId = user._id;
   const [moods, setMoods] = useState([]);
-  const [visibleMoods, setVisibleMoods] = useState(5);
+  const [visibleMoods, setVisibleMoods] = useState(6);
   const [viewMode, setViewMode] = useState("card");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [moodToEdit, setMoodToEdit] = useState(null);
@@ -95,6 +168,10 @@ const MoodDashboard = () => {
     setIsModalOpen(false);
   };
 
+  const loadMoreMoods = () => {
+    setVisibleMoods((prev) => prev + 6);
+  };
+
   return (
     <div className="my-10 px-6 md:px-20 lg:px-32">
       <div className="text-center">
@@ -116,9 +193,8 @@ const MoodDashboard = () => {
         </Box>
       )}
       <div className="flex flex-col md:flex-row mt-8 gap-8">
-        <div className="w-full md:w-1/2">
-          <Calendar />
-        </div>
+        <Calendar />
+
         <Playlist />
       </div>
 
@@ -160,39 +236,55 @@ const MoodDashboard = () => {
           </ToggleButtonGroup>
         </div>
 
-        <div className="  p-6  ">
+        <div className="p-6">
           {moods.length > 0 ? (
             <>
               {viewMode === "card" ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {moods.slice(0, visibleMoods).map((mood) => (
-                    <div
-                      key={mood._id}
-                      className="p-4 border rounded-xl shadow-md bg-gray-50 hover:bg-gray-100 transition"
-                    >
-                      <h3 className="text-lg font-semibold">
-                        Mood: {mood.mood}
-                      </h3>
-                      <p className="text-sm text-gray-700 mt-1">{mood.note}</p>
-                      <p className="text-xs text-gray-500 mt-2">
-                        {formatDate(mood.createdAt)}
-                      </p>
-                      <div className="flex justify-end space-x-2 mt-4">
-                        <IconButton
-                          onClick={() => openModal(mood)}
-                          color="primary"
-                        >
-                          <Edit />
-                        </IconButton>
-                        <IconButton
-                          onClick={() => handleDelete(mood._id)}
-                          color="error"
-                        >
-                          <Delete />
-                        </IconButton>
+                  {moods.slice(0, visibleMoods).map((mood) => {
+                    const moodInfo = moodData.find((m) => m.name === mood.mood); // Find the mood info
+                    return (
+                      <div
+                        key={mood._id}
+                        className="p-4 border rounded-xl shadow-md bg-gray-50 hover:bg-gray-100 transition"
+                      >
+                        {/* Lazy-loaded Image */}
+                        {moodInfo && (
+                          <img
+                            src={moodInfo.icon}
+                            alt={moodInfo.name}
+                            className="w-16 h-16 mx-auto mb-2"
+                            loading="lazy"
+                          />
+                        )}
+
+                        <h3 className="text-lg font-semibold">
+                          Mood: {mood.mood}
+                        </h3>
+                        <p className="text-sm text-gray-700 mt-1">
+                          {mood.note}
+                        </p>
+                        <p className="text-xs text-gray-500 mt-2">
+                          {formatDate(mood.createdAt)}
+                        </p>
+
+                        <div className="flex justify-end space-x-2 mt-4">
+                          <IconButton
+                            onClick={() => openModal(mood)}
+                            color="primary"
+                          >
+                            <Edit />
+                          </IconButton>
+                          <IconButton
+                            onClick={() => handleDelete(mood._id)}
+                            color="error"
+                          >
+                            <Delete />
+                          </IconButton>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               ) : (
                 <table className="min-w-full border border-gray-200">
@@ -247,6 +339,17 @@ const MoodDashboard = () => {
             </div>
           )}
         </div>
+
+        {moods.length > visibleMoods && (
+          <div className="flex justify-center mt-4">
+            <button
+              onClick={loadMoreMoods}
+              className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow hover:bg-blue-600 transition"
+            >
+              View More
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

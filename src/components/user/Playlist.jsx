@@ -103,7 +103,7 @@ const Playlist = () => {
   };
 
   return (
-    <div className="w-full md:w-[400px] lg:w-[500px] xl:w-[600px] bg-gradient-to-r from-blue-500 to-purple-600 p-8 rounded-2xl text-white shadow-lg">
+    <div className="bg-gradient-to-b from-pink-200 via-purple-200 to-blue-200 text-gray-900 font-semibold py-4 px-6 rounded-xl shadow-lg h-full min-h-[660px] min-w-[600px] flex flex-col justify-between">
       <h2 className="text-xl md:text-2xl font-bold mb-3 flex items-center gap-2">
         <MusicNoteIcon className="text-white" /> Relaxing Music 🎵
       </h2>

@@ -37,7 +37,7 @@ const Contact = () => {
 
   return (
     <motion.div
-      className="min-h-screen flex items-center justify-center relative overflow-hidden my-8"
+      className="min-h-screen flex items-center justify-center relative overflow-hidden mb-10 "
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
@@ -49,7 +49,7 @@ const Contact = () => {
 
       {/* Form Container */}
       <motion.div
-        className="max-w-xl mt-16 w-full p-6 bg-white rounded-lg shadow-lg relative z-10"
+        className="max-w-xl  w-full p-6 bg-white rounded-lg shadow-lg relative z-10"
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 1 }}

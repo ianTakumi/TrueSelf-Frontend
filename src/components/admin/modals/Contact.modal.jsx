@@ -170,14 +170,15 @@ const Contact = ({ onContactCreated, onClose, contactToEdit }) => {
             </Button>
             <Button
               type="submit"
-              color="success"
+              color="secondary"
               variant="outlined"
               sx={{
-                borderColor: "green.500",
-                color: "green.600",
+                borderColor: "secondary.main",
+                color: "secondary.main",
                 "&:hover": {
-                  borderColor: "green.600",
-                  backgroundColor: "green.50",
+                  borderColor: "secondary.dark",
+                  backgroundColor: "secondary.light",
+                  color: "white",
                 },
               }}
             >

@@ -186,15 +186,20 @@ const Diary = () => {
     setSelectedJournalEntry(null);
   };
 
+  const loadMoreJournals = () => {
+    setVisibleJournalEntries((prev) => prev + 6);
+  };
+
   return (
-    <div className="my-10">
-      <div className="flex justify-center items-center flex-col my-6 text-center">
+    <div className="my-10 px-6 md:px-20 lg:px-32">
+      <div className="flex justify-center items-center flex-col">
         <h1 className="font-bold text-4xl text-lilac">Digital Journal</h1>
-        <p className="mt-2 text-lg text-gray-700 max-w-md">
+        <p className="mt-2 text-lg text-gray-700 max-w-md text-center">
           Your story matters. Express yourself freely and embrace your true self
           in a safe space.
         </p>
       </div>
+
       {isModalOpen && (
         <Box position="fixed" top="0" left="0" right="0" bottom="" zIndex="50">
           <JournalModal
@@ -217,7 +222,7 @@ const Diary = () => {
             sx={{
               position: "absolute",
               bottom: 40,
-              left: 180,
+              left: 170,
               backgroundColor: "white",
               boxShadow: 3,
             }}
@@ -246,6 +251,7 @@ const Diary = () => {
           <Clock className="mt-4  p-2 rounded-lg" value={time} />
         </div>
       </div>
+
       <div className="my-20">
         <JournalStreak />
       </div>
@@ -374,6 +380,19 @@ const Diary = () => {
           </div>
         )}
       </div>
+
+      {visibleJournalEntries < journalEntries.length && (
+        <div className="flex justify-center my-4">
+          <button
+            onClick={loadMoreJournals}
+            className="bg-[#63579F] text-white px-4 py-2 rounded-lg hover:bg-[#7C6DC4] transition"
+          >
+            Load More
+          </button>
+        </div>
+      )}
+
+      {/* Image Selection Modal */}
       <Modal open={open} onClose={() => setOpen(false)}>
         <Box
           sx={{
