@@ -29,9 +29,9 @@ const Navbar = () => {
   const dropdownRef = useRef(null);
 
   const colors = {
-    active: "#A3DCE4", // Light Blue (from your palette)
-    inactive: "#D6D5E0", // Light Purple (from your palette)
-    hover: "#FAD9C1", // Peach (from your palette)
+    active: "#A3DCE4",
+    inactive: "#D6D5E0",
+    hover: "#FAD9C1",
     pink: "#C8A2C8",
   };
 
@@ -184,8 +184,8 @@ const Navbar = () => {
                   borderRadius: "8px",
                   boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
                   zIndex: 10,
-                  maxHeight: "200px", // Limit height
-                  overflowY: "auto", // Enable scrolling if needed
+                  maxHeight: "200px",
+                  overflowY: "auto",
                 }}
               >
                 <List dense sx={{ padding: 0 }}>
@@ -207,7 +207,7 @@ const Navbar = () => {
                       button
                       component={NavLink}
                       to={item.path}
-                      sx={{ paddingY: 0.5 }} // Adjust vertical padding
+                      sx={{ paddingY: 0.5 }}
                     >
                       <ListItemText
                         primary={item.label}
@@ -318,7 +318,7 @@ const Navbar = () => {
           ))}
           <Box>
             <Button onClick={() => toggleDropdown("articles")} fullWidth>
-              Foods
+              Articles
               {dropdowns["articles"] ? (
                 <KeyboardArrowUpIcon />
               ) : (

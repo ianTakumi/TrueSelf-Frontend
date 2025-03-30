@@ -20,6 +20,7 @@ import Swal from "sweetalert2";
 import MoodModal from "../components/user/modals/MoodModal";
 import Playlist from "../components/user/Playlist";
 import Affirmations from "../components/user/Affirmations";
+import MoodStreak from "../components/user/MoodStreak";
 
 const moodData = [
   {
@@ -215,6 +216,9 @@ const MoodDashboard = () => {
 
       <div className="my-10">
         <Affirmations />
+      </div>
+      <div className="my-10">
+        <MoodStreak />
       </div>
       <div className="mt-10">
         <div className="flex justify-between items-center mb-4">

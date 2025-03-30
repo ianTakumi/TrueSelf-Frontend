@@ -1,8 +1,27 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import AxiosInstance from "../../../utils/AxiosInstance";
+import { getUser } from "../../../utils/helpers";
+import { CheckCircle, RadioButtonUnchecked } from "@mui/icons-material";
 
-const StreakTracker = () => {
-  const [streak, setStreak] = useState([0, 0, 0, 0, 0, 0, 0]);
+const JournalStreak = () => {
+  const [streak, setStreak] = useState(0);
   const today = new Date().getDay();
+  const user = getUser();
+
+  const fetchStreak = async () => {
+    try {
+      const res = await AxiosInstance.get(`/journalEntries/streak/${user._id}`);
+      if (res.status === 200) {
+        setStreak(res.data.streak);
+      }
+    } catch (error) {
+      console.error("Failed to fetch journal streak:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchStreak();
+  }, []);
 
   const supportiveTexts = [
     "What are you grateful for today?",
@@ -14,53 +33,42 @@ const StreakTracker = () => {
     "Reflect on your week—what are you proud of?",
   ];
 
-  useEffect(() => {
-    const storedStreak = JSON.parse(localStorage.getItem("journalStreak")) || [
-      0, 0, 0, 0, 0, 0, 0,
-    ];
-    if (storedStreak.length === 7) {
-      if (storedStreak[today] === 0) {
-        // storedStreak[today] = 1; // Mark today as completed
-        setStreak([...storedStreak]);
-        localStorage.setItem("journalStreak", JSON.stringify(storedStreak));
-      } else {
-        setStreak(storedStreak);
-      }
-    } else {
-      const newStreak = [0, 0, 0, 0, 0, 0, 0];
-      // newStreak[today] = 1;
-      setStreak(newStreak);
-      localStorage.setItem("journalStreak", JSON.stringify(newStreak));
-    }
-  }, [today]);
-
   return (
-    <div className="flex flex-col items-center p-6 bg-gradient-to-r from-red-600 via-purple-700 to-blue-600 rounded-3xl shadow-lg">
-      <h2 className="text-xl font-bold mb-4 text-white">
-        Journaling Streak Tracker
-      </h2>
-      <p className="text-gray-100 mb-4">
-        Write every day to build your journaling habit! Consistency is key.
+    <div className="flex flex-col items-center p-4 bg-violet-800 rounded-xl shadow-lg text-white">
+      <h2 className="text-2xl font-bold mb-4">Journaling Streak Tracker</h2>
+      <p className="text-gray-200 mb-4 text-center">
+        Keep journaling daily to build a strong habit! Every entry counts.
       </p>
+
       <div className="grid grid-cols-7 gap-2">
         {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day, index) => (
           <div
             key={index}
-            className={`w-12 h-12 flex items-center justify-center rounded-lg text-white font-semibold transition-all
-              ${streak[index] ? "bg-blue-500" : "bg-gray-300"}`}
+            className="w-16 h-16 flex flex-col items-center justify-center rounded-lg bg-white text-purple-600 font-semibold shadow-md transition-all"
           >
-            {day.charAt(0)}
+            {index < streak ? (
+              <CheckCircle fontSize="large" className="text-green-500" />
+            ) : (
+              <RadioButtonUnchecked
+                fontSize="large"
+                className="text-gray-400"
+              />
+            )}
+            <span className="text-xs mt-1">{day.charAt(0)}</span>
           </div>
         ))}
       </div>
-      <p className="text-gray-100 mt-4">
-        {streak[today] ? "Great job journaling today!" : supportiveTexts[today]}
+
+      <p className="text-gray-100 mt-4 text-lg font-semibold">
+        {streak[today]
+          ? `🔥 Streak: ${streak.filter(Boolean).length} days! Keep writing!`
+          : supportiveTexts[today]}
       </p>
-      <p className="text-gray-100 mt-2">
-        Your thoughts matter. Keep writing! ✍️
+      <p className="text-gray-300 mt-2 text-sm">
+        Your thoughts matter. Keep expressing yourself! ✍️
       </p>
     </div>
   );
 };
 
-export default StreakTracker;
+export default JournalStreak;

@@ -17,6 +17,8 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import MoodDistribution from "../../components/admin/charts/MoodDistribution";
 import MoodPerMonthLineChart from "../../components/admin/charts/MoodPerMonthLineChart";
+import JournalLineChart from "../../components/admin/charts/JournalLineChart";
+import JournalPieChart from "../../components/admin/charts/JournalPieChart";
 
 const index = () => {
   const [userCount, setUserCount] = useState(0);
@@ -701,6 +703,21 @@ const index = () => {
           </div>
           <div className="bg-white rounded-lg shadow-lg p-6">
             <MoodPerMonthLineChart />
+          </div>
+        </div>
+      </div>
+
+      {/* Journal section */}
+      <div className="mt-10 mb-24 space-y-6">
+        <h2 className="text-2xl font-semibold text-gray-800 text-center">
+          Journal Section
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <JournalLineChart />
+          </div>
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <JournalPieChart />
           </div>
         </div>
       </div>

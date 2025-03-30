@@ -39,7 +39,7 @@ const Affirmations = () => {
                 href={affirmation.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block text-center bg-blue-400 hover:bg-blue-500 text-white py-2 rounded-lg transition"
+                className="block text-center bg-[#63579F] hover:bg-[#7C6DC4] text-white py-2 rounded-lg transition"
               >
                 Listen
               </a>
@@ -56,7 +56,7 @@ const Affirmations = () => {
           className={`px-4 py-2 rounded-lg ${
             currentPage === 1
               ? "bg-gray-300 cursor-not-allowed"
-              : "bg-blue-400 hover:bg-blue-500 text-white"
+              : "bg-[#63579F] hover:bg-[#7C6DC4] text-white"
           }`}
         >
           Previous
@@ -72,7 +72,7 @@ const Affirmations = () => {
           className={`px-4 py-2 rounded-lg ${
             currentPage === totalPages
               ? "bg-gray-300 cursor-not-allowed"
-              : "bg-blue-400 hover:bg-blue-500 text-white"
+              : "bg-[#63579F] hover:bg-[#7C6DC4] text-white"
           }`}
         >
           Next

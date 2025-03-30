@@ -30,6 +30,8 @@ import { Edit, Delete, TableChart, ViewModule } from "@mui/icons-material";
 import JournalModal from "../components/user/modals/JournalModal";
 import JournalStreak from "../components/user/JournalStreak";
 import Affirmations from "../components/user/Affirmations";
+import JournalLineChart from "../components/user/charts/JournalLineChart";
+import JournalPieChart from "../components/user/charts/JournalPieChart";
 
 const images = [
   "/page/journal/1.jpg",
@@ -149,7 +151,6 @@ const Diary = () => {
   const getAllJournalEntry = async () => {
     const userId = user._id;
     await AxiosInstance.get(`/journalEntries/${userId}`).then((response) => {
-      console.log(response.data);
       if (response.status === 200) {
         setJournalEntries(response.data.data);
       } else {
@@ -260,6 +261,19 @@ const Diary = () => {
         <Affirmations />
       </div>
 
+      <div className="my-10 p-6">
+        <h2 className="font-serif font-semibold text-lg md:text-xl mb-4">
+          Analytics
+        </h2>
+        <div className="flex justify-between items-center mb-4 gap-5">
+          <div className="w-1/2">
+            <JournalLineChart />
+          </div>
+          <div className="w-1/2">
+            <JournalPieChart />
+          </div>
+        </div>
+      </div>
       {/* List of journals */}
       <div className="my-5 p-6">
         <div className="flex justify-between items-center mb-4">
