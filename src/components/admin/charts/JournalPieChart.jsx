@@ -34,7 +34,7 @@ const JournalPieChart = forwardRef((props, ref) => {
         if (res.status === 200) {
           const formattedData = res.data.data.map((entry) => ({
             ...entry,
-            percentage: parseFloat(entry.percentage), // Convert to number
+            percentage: parseFloat(entry.percentage),
           }));
           console.log("Formatted Data:", formattedData);
           setData(formattedData);
@@ -428,6 +428,7 @@ const JournalPieChart = forwardRef((props, ref) => {
       <h2 className="text-lg font-semibold mb-4">
         User Journal Entries Distribution
       </h2>
+
       <div ref={ref} className="p-6 w-full flex justify-center">
         <ResponsiveContainer width="100%" height={300}>
           <PieChart>

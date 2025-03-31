@@ -215,6 +215,173 @@ const MoodDistribution = forwardRef((props, ref) => {
     };
   };
 
+  const handlePrint = (previousMoodData = null) => {
+    if (data.length === 0) {
+      notifyError("No data available to print.");
+      return;
+    }
+
+    const headerImg = new Image();
+    headerImg.src = "/logo/result.png";
+
+    headerImg.onload = () => {
+      if (ref.current) {
+        html2canvas(ref.current, { scale: 2 }).then((canvas) => {
+          const imgData = canvas.toDataURL("image/png");
+          const pdf = new jsPDF("p", "mm", "a4");
+
+          // Add header image (centered)
+          const headerWidth = 140;
+          const headerX = (pdf.internal.pageSize.width - headerWidth) / 2;
+          pdf.addImage(headerImg, "PNG", headerX, 10, headerWidth, 40);
+
+          // Title
+          pdf.setFontSize(16);
+          pdf.setFont("helvetica", "bold");
+          pdf.text(
+            "Mood Tracking Analysis Report",
+            pdf.internal.pageSize.width / 2,
+            60,
+            { align: "center" }
+          );
+
+          // Add chart image
+          const chartWidth = 160;
+          const chartHeight = 90;
+          const chartX = (pdf.internal.pageSize.width - chartWidth) / 2;
+          pdf.addImage(imgData, "PNG", chartX, 70, chartWidth, chartHeight);
+
+          // Calculate Mood Statistics
+          const totalUsers = data.reduce((sum, mood) => sum + mood.count, 0);
+          const mostCommonMood = data.reduce((prev, current) =>
+            prev.count > current.count ? prev : current
+          );
+          const leastCommonMood = data.reduce((prev, current) =>
+            prev.count < current.count ? prev : current
+          );
+
+          const positiveMoods =
+            data.find((m) => m.mood === "Happy")?.count || 0;
+          const negativeMoods =
+            (data.find((m) => m.mood === "Sad")?.count || 0) +
+            (data.find((m) => m.mood === "Angry")?.count || 0) +
+            (data.find((m) => m.mood === "Anxious")?.count || 0);
+
+          const positivePercentage = (
+            (positiveMoods / totalUsers) *
+            100
+          ).toFixed(2);
+          const negativePercentage = (
+            (negativeMoods / totalUsers) *
+            100
+          ).toFixed(2);
+
+          let lineY = 170;
+
+          // Analysis Section
+          pdf.setFontSize(12);
+          pdf.setFont("helvetica", "bold");
+          pdf.text("Overall Analysis & Interpretation:", 10, lineY);
+          pdf.setFont("helvetica", "normal");
+
+          lineY += 10;
+          pdf.text(`• Total Users Analyzed: ${totalUsers}`, 10, lineY);
+          lineY += 10;
+          pdf.text(
+            `• Most Common Mood: ${mostCommonMood.mood} (${mostCommonMood.count} users)`,
+            10,
+            lineY
+          );
+          lineY += 10;
+          pdf.text(
+            `• Least Common Mood: ${leastCommonMood.mood} (${leastCommonMood.count} users)`,
+            10,
+            lineY
+          );
+          lineY += 10;
+          pdf.text(
+            `• Positive Mood Percentage: ${positivePercentage}%`,
+            10,
+            lineY
+          );
+          lineY += 10;
+          pdf.text(
+            `• Negative Mood Percentage: ${negativePercentage}%`,
+            10,
+            lineY
+          );
+
+          // Comparison with Previous Data (if available)
+          if (previousMoodData) {
+            lineY += 15;
+            pdf.setFont("helvetica", "bold");
+            pdf.text("Mood Trends Compared to Last Report:", 10, lineY);
+            pdf.setFont("helvetica", "normal");
+            lineY += 10;
+
+            previousMoodData.forEach((prevMood) => {
+              const currentMood = data.find((m) => m.mood === prevMood.mood);
+              if (currentMood) {
+                const diff = currentMood.count - prevMood.count;
+                const trend = diff > 0 ? "increased" : "decreased";
+                pdf.text(
+                  `• ${prevMood.mood} has ${trend} by ${Math.abs(diff)} users.`,
+                  10,
+                  lineY
+                );
+                lineY += 10;
+              }
+            });
+          }
+
+          // Correlation Insights
+          lineY += 10;
+          pdf.setFont("helvetica", "bold");
+          pdf.text("Mood Correlation & Insights:", 10, lineY);
+          pdf.setFont("helvetica", "normal");
+          lineY += 10;
+
+          if (data.find((m) => m.mood === "Anxious")?.count > 3) {
+            pdf.text(
+              "• High Anxiety levels detected. Consider stress management techniques.",
+              10,
+              lineY
+            );
+            lineY += 10;
+          }
+
+          if (data.find((m) => m.mood === "Sad")?.count > 5) {
+            pdf.text(
+              "• Increase in Sadness detected. Users might benefit from support groups.",
+              10,
+              lineY
+            );
+            lineY += 10;
+          }
+
+          if (positiveMoods > negativeMoods) {
+            pdf.text(
+              "• Majority of users are happy, keep promoting positive experiences!",
+              10,
+              lineY
+            );
+          } else {
+            pdf.text(
+              "• Negative moods are rising. Implement mood-boosting activities.",
+              10,
+              lineY
+            );
+          }
+
+          pdf.autoPrint(); // Triggers the print dialog
+          pdf.output("dataurlnewwindow"); // Opens in a new window for printing
+        });
+      }
+    };
+
+    headerImg.src = "/logo/result.png"; // Ensure the image is loaded
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center flex-col items-center p-10">

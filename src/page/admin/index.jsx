@@ -32,6 +32,7 @@ const index = () => {
   const contactEngagementRef = useRef(null);
   const contactPieRef = useRef(null);
   const moodDistributionChartRef = useRef(null);
+  const moodTrendsLineChartRef = useRef(null);
   const journalLineChartRef = useRef(null);
   const journalPieChartRef = useRef(null);
 
@@ -47,6 +48,7 @@ const index = () => {
     useState({});
   const [receivedMoodDistributionData, setReceivedMoodDistributionData] =
     useState([]);
+  const [receivedMoodTrendsData, setReceivedMoodTrendsData] = useState([]);
   const [receivedJournalLineChartData, setReceivedJournalLineChartData] =
     useState([]);
   const [receivedJournalPieChartData, setReceivedJournalPieChartData] =
@@ -82,6 +84,10 @@ const index = () => {
 
   const handleMoodDistributionDataUpdate = (newData) => {
     setReceivedMoodDistributionData(newData);
+  };
+
+  const handleMoodTrendsDataUpdate = (newData) => {
+    setReceivedMoodTrendsData(newData);
   };
 
   const handleJournalLineChartDataUpdate = (newData) => {
@@ -715,7 +721,10 @@ const index = () => {
             />
           </div>
           <div className="bg-white rounded-lg shadow-lg p-6">
-            <MoodPerMonthLineChart />
+            <MoodPerMonthLineChart
+              ref={moodTrendsLineChartRef}
+              onDataUpdate={handleMoodTrendsDataUpdate}
+            />
           </div>
         </div>
       </div>
@@ -729,7 +738,7 @@ const index = () => {
           <div className="bg-white rounded-lg shadow-lg p-6">
             <JournalLineChart
               ref={journalLineChartRef}
-              onDataUpdate={handleJournalPieChartDataUpdate}
+              onDataUpdate={handleJournalLineChartDataUpdate}
             />
           </div>
           <div className="bg-white rounded-lg shadow-lg p-6">
