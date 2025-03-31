@@ -3,6 +3,7 @@ import {
   notifyError,
   formatDate,
   formatDateTime,
+  notifySuccess,
 } from "../../../utils/helpers";
 import MUIDataTable from "mui-datatables";
 import AxiosInstance from "../../../utils/AxiosInstance";
@@ -77,6 +78,7 @@ const spaces = () => {
 
   const handleClick = (event, community, index) => {
     setMenuAnchor((prev) => ({ ...prev, [index]: event.currentTarget }));
+    console.log("Clicked menu:", index);
     setSelectedCommunity(community);
   };
 
@@ -90,7 +92,17 @@ const spaces = () => {
   }, []);
 
   const handleDelete = async (id) => {
-    console.log("Delete", id);
+    await AxiosInstance.delete(`/spaces/${id}`)
+      .then((res) => {
+        if (res.status === 200) {
+          notifySuccess("Community deleted successfully");
+          fetchSpaces();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        notifyError("Failed to delete community");
+      });
   };
 
   const exportToPDF = async () => {
@@ -272,14 +284,6 @@ const spaces = () => {
         ),
       },
     },
-
-    {
-      name: "createdBy",
-      label: "Created By",
-      options: {
-        customBodyRender: (value) => value?.name || "N/A",
-      },
-    },
     {
       name: "members",
       label: "# of Members",
@@ -363,7 +367,7 @@ const spaces = () => {
 
           return (
             <>
-              <IconButton onClick={(e) => handleClick(e, userObj, index)}>
+              <IconButton onClick={(e) => handleClick(e, community, index)}>
                 <MoreVertIcon />
               </IconButton>
 
@@ -372,6 +376,7 @@ const spaces = () => {
                 open={Boolean(menuAnchor[index])}
                 onClose={() => handleClose(index)}
               >
+                <MenuItem> Edit</MenuItem>
                 <MenuItem onClick={() => handleDelete(community._id)}>
                   Delete
                 </MenuItem>

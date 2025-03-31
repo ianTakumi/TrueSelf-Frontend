@@ -8,6 +8,7 @@ import {
   Groups2 as Groups2Icon,
   SmartToy as SmartToyIcon,
 } from "@mui/icons-material";
+import ReportIcon from "@mui/icons-material/Report";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../../utils/helpers";
 import Swal from "sweetalert2";
@@ -278,52 +279,7 @@ const Sidebar = ({ isMinimized }) => {
             </span>
           </li>
         </Link>
-        {/* Article */}
-        {/* <Link to="/admin/articles">
-          <li
-            className="mt-3 py-2 px-8 text-gray-400 cursor-pointer flex items-center w-full transition-colors duration-300 ease-in-out relative"
-            onMouseOver={() => setHovered("articles")}
-            onMouseOut={() => setHovered(null)}
-            onClick={() => handleItemClick("articles")}
-            style={{
-              backgroundColor:
-                hovered === "articles" || selected === "articles"
-                  ? "#161621"
-                  : "transparent",
-            }}
-          >
-            {selected === "articles" && (
-              <div className="absolute left-0 top-1/2 transform -translate-y-1/2 w-1 h-8 bg-green-500" />
-            )}
-            <div
-              className="mr-5 rounded-md transition-colors duration-300 ease-in-out"
-              style={{ backgroundColor: "#2B3138" }}
-            >
-              <ArticleIcon
-                style={{
-                  color: "#33C92D",
-                  fontSize: "1.7rem",
-                  lineHeight: "1",
-                }}
-                className="p-1"
-              />
-            </div>
-            <span
-              className={`transition-all ease-in-out duration-500 ${
-                isMinimized ? "hidden" : "block"
-              }`}
-              style={{
-                fontSize: "16px",
-                color:
-                  hovered === "articles" || selected === "articles"
-                    ? "white"
-                    : "#9ca3af",
-              }}
-            >
-              Article
-            </span>
-          </li>
-        </Link> */}
+
         <Link to="/admin/contacts">
           <li
             className="mt-3 py-2 px-8 text-gray-400 cursor-pointer flex items-center w-full transition-colors duration-300 ease-in-out relative"
@@ -369,76 +325,52 @@ const Sidebar = ({ isMinimized }) => {
             </span>
           </li>
         </Link>
-        {/* <h1
-          style={{ fontSize: "16px" }}
-          className={`text-gray-400 font-sans px-8 pt-1 ${
-            isMinimized ? "hidden" : "block"
-          } `}
-        >
-          Services
-        </h1>
-        <li
-          className="mt-3 py-2 px-8 text-gray-400 cursor-pointer flex items-center w-full transition-colors duration-300 ease-in-out relative"
-          onMouseOver={() => setHovered("foods")}
-          onMouseOut={() => setHovered(null)}
-          onClick={() => handleItemClick("foods")}
-        >
-          {selected === "foods" && (
-            <div className="absolute left-0 top-1/2 transform -translate-y-1/2 w-1 h-8 bg-green-500" />
-          )}
-          <div
-            className="mr-5 rounded-md transition-colors duration-300 ease-in-out"
-            style={{ backgroundColor: "#2B3138" }}
-          >
-            <FastfoodIcon
-              style={{ color: "#33C92D", fontSize: "1.7rem", lineHeight: "1" }}
-              className="p-1"
-            />
-          </div>
-          <span
-            className={`transition-all ease-in-out duration-500 ${
-              isMinimized ? "hidden" : "block"
-            }`}
+
+        <Link to="/admin/reports">
+          <li
+            className="mt-3 py-2 px-8 text-gray-400 cursor-pointer flex items-center w-full transition-colors duration-300 ease-in-out relative"
+            onMouseOver={() => setHovered("reports")}
+            onMouseOut={() => setHovered(null)}
+            onClick={() => handleItemClick("reports")}
             style={{
-              fontSize: "16px",
-              color:
-                hovered === "foods" || selected === "foods"
-                  ? "white"
-                  : "#9ca3af",
+              backgroundColor:
+                hovered === "reports" || selected === "reports"
+                  ? "#161621"
+                  : "transparent",
             }}
           >
-            Foods
-          </span>
-          <div
-            className={`ml-auto cursor-pointer ${
-              isMinimized ? "hidden" : "block"
-            }`}
-            onClick={() => toggleExpansion("foods")}
-          >
-            {expanded.foods ? (
-              <KeyboardArrowDownIcon style={{ color: "#33C92D" }} />
-            ) : (
-              <KeyboardArrowLeftIcon style={{ color: "#33C92D" }} />
+            {selected === "reports" && (
+              <div className="absolute left-0 top-1/2 transform -translate-y-1/2 w-1 h-8 bg-[#D1B1D3]" />
             )}
-          </div>
-        </li>
-        {expanded.foods && (
-          <ul className="mt-2 text-gray-400 text-xs">
-            <Link to="food/food-list">
-              <li className="py-2 px-8 cursor-pointer hover:bg-gray-700 transition-colors duration-300 ease-in-out">
-                <KeyboardArrowRightIcon className="mr-5 ml-2" />
-                Food List
-              </li>
-            </Link>
-
-            <Link to="food/category">
-              <li className="py-2 px-8 cursor-pointer hover:bg-gray-700 transition-colors duration-300 ease-in-out">
-                <KeyboardArrowRightIcon className="mr-5 ml-2" />
-                Category
-              </li>
-            </Link>
-          </ul>
-        )} */}
+            <div
+              className="mr-5 rounded-md transition-colors duration-300 ease-in-out"
+              style={{ backgroundColor: "#2B3138" }}
+            >
+              <ReportIcon
+                style={{
+                  color: "#D1B1D3",
+                  fontSize: "1.7rem",
+                  lineHeight: "1",
+                }}
+                className="p-1"
+              />
+            </div>
+            <span
+              className={`transition-all ease-in-out duration-500 ${
+                isMinimized ? "hidden" : "block"
+              }`}
+              style={{
+                fontSize: "16px",
+                color:
+                  hovered === "contacts" || selected === "contacts"
+                    ? "white"
+                    : "#9ca3af",
+              }}
+            >
+              Reports
+            </span>
+          </li>
+        </Link>
 
         <h1
           style={{ fontSize: "16px" }}

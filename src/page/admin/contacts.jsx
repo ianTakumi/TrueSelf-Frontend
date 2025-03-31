@@ -50,7 +50,7 @@ const Contacts = () => {
   };
 
   const exportToPDF = async () => {
-    const doc = new jsPDF();
+    const doc = new jsPDF({ orientation: "landscape" }); // Landscape mode for better spacing
 
     // Load the image
     const headerImage = "/logo/tupLogo.png";
@@ -63,24 +63,25 @@ const Contacts = () => {
     const imgData = URL.createObjectURL(blob);
 
     // Add logo
-    doc.addImage(imgData, "PNG", 20, 10, 170, 30);
+
+    doc.addImage(imgData, "PNG", 60, 10, 170, 30);
     URL.revokeObjectURL(imgData); // Free up memory
 
     // Add centered heading
     doc.setFontSize(16);
     doc.setFont("helvetica", "bold");
     const pageWidth = doc.internal.pageSize.getWidth();
-    const title = "List of Communities";
+    const title = "List of Contacts";
     const textWidth = doc.getTextWidth(title);
     const textX = (pageWidth - textWidth) / 2;
     doc.text(title, textX, 45);
 
     // Move table down after the image
     doc.autoTable({
-      startY: 50, // Start below the image
+      startY: 55, // Start below the image
       head: [
         [
-          "No.",
+          " ",
           "Name",
           "Email",
           "Phone",
@@ -88,7 +89,6 @@ const Contacts = () => {
           "Message",
           "Status",
           "Date Sent",
-          "Updated At",
         ],
       ],
       body: contacts.map((contact, index) => [
@@ -97,11 +97,35 @@ const Contacts = () => {
         contact.email,
         contact.phone,
         contact.subject,
-        contact.message,
+        doc.splitTextToSize(contact.message, 100), // Wrap long messages
         contact.status.charAt(0).toUpperCase() + contact.status.slice(1),
         formatDate(contact.createdAt),
-        formatDate(contact.updatedAt),
       ]),
+      styles: {
+        fontSize: 10,
+        cellPadding: 3,
+      },
+      columnStyles: {
+        0: { cellWidth: 10 }, // No.
+        1: { cellWidth: 25 }, // Name
+        2: { cellWidth: 40 }, // Email
+        3: { cellWidth: 30 }, // Phone
+        4: { cellWidth: 30 }, // Subject
+        5: { cellWidth: 80 }, // Message (wider for long text)
+        6: { cellWidth: 20 }, // Status
+        7: { cellWidth: 30 }, // Date Sent
+      },
+      theme: "grid", // Add grid styling for readability
+      didDrawCell: (data) => {
+        if (data.column.index === 5) {
+          doc.setFontSize(8); // Smaller font for long messages
+        }
+      },
+      headStyles: {
+        fillColor: [128, 0, 128], // Purple
+        textColor: [255, 255, 255], // White text for contrast
+        fontStyle: "bold",
+      },
     });
 
     doc.save(`contacts_list_${new Date().toISOString().slice(0, 10)}.pdf`);

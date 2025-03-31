@@ -43,31 +43,84 @@ const items = [
 
 const testimonials = [
   {
-    name: "Leo",
+    name: "Aiden",
     rating: 5,
-    feedback: "Napakalaking tulong sa akin ng journaling feature!",
+    feedback: "Napakalaking tulong ng journaling feature sa mental health ko!",
     description:
-      "Dati, hindi ko maipahayag nang maayos ang aking nararamdaman. Pero dahil sa journaling feature ng app na ito, mas naging aware ako sa aking emosyon. Nakatulong din ang AI sa pag-predict ng anxiety level ko, kaya mas naihahanda ko ang sarili ko.",
-    image:
-      "https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "Bilang isang non-binary person, minsan mahirap i-express ang nararamdaman ko sa mga taong hindi lubos na nakakaunawa. Pero dahil sa journaling feature ng app na ito, nagkaroon ako ng ligtas na paraan para ilabas ang emotions ko. Ang AI anxiety prediction din ay sobrang nakatulong sa akin para malaman kung kailan ko dapat bigyan ng pahinga ang sarili ko.",
+    image: "/testimonials/1.jpg",
   },
   {
-    name: "Jane",
+    name: "Riley",
     rating: 4,
-    feedback: "Napaka-supportive ng community forum!",
+    feedback: "Napaka-warm at welcoming ng community forum!",
     description:
-      "Ang hirap minsan maghanap ng safe space para sa LGBTQ+ mental health discussions, pero sa forum ng app na ito, ramdam ko ang suporta ng ibang users. Sobrang laking tulong na may makakaintindi sa pinagdadaanan ko.",
-    image:
-      "https://images.pexels.com/photos/1542085/pexels-photo-1542085.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "Bilang isang trans person, napakahirap humanap ng safe space kung saan puwede kong ibahagi ang struggles ko nang hindi hinuhusgahan. Pero sa community forum ng app na ito, nakahanap ako ng mga taong tunay na nakakaintindi at sumusuporta. Ang pakiramdam na hindi ako nag-iisa ay sobrang laki ng naitulong sa mental health ko.",
+    image: "/testimonials/2.jpg",
   },
   {
-    name: "John",
+    name: "Sky",
     rating: 5,
-    feedback: "Ang AI prediction feature ay game-changer!",
+    feedback: "Ang AI mood tracking ay sobrang life-changing!",
     description:
-      "Sobrang helpful ng AI anxiety prediction! Napansin kong mas na-manage ko ang anxiety ko dahil alam ko kung kailan ako dapat magpahinga at maglaan ng oras para sa sarili ko. Malaking tulong din ang mood tracker sa pag-monitor ng emotional patterns ko.",
-    image:
-      "https://images.pexels.com/photos/1040880/pexels-photo-1040880.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "Dahil sa app na ito, mas natutunan kong intindihin ang emotional patterns ko bilang isang queer person na dumaan sa maraming struggles. Ang AI mood tracking feature ay sobrang nakatulong sa akin para malaman kung kailan ako dapat mag-step back at alagaan ang sarili ko. Sobrang valuable ng tool na ito sa aking self-care journey!",
+    image: "/testimonials/3.jpg",
+  },
+  {
+    name: "Jace",
+    rating: 5,
+    feedback: "Hindi ko akalain na may ganitong supportive na platform!",
+    description:
+      "Bilang isang gay man na matagal nang lumalaban sa anxiety, ang AI-powered journaling at mood tracking feature ng app na ito ay naging malaking tulong sa akin. Mas naintindihan ko ang triggers ko at natutunan kong alagaan ang mental health ko sa tamang paraan.",
+    image: "/testimonials/4.jpg",
+  },
+  {
+    name: "Mika",
+    rating: 4,
+    feedback: "Mas madali kong naiintindihan ang emotions ko ngayon!",
+    description:
+      "Bilang isang bisexual na individual, madalas akong nagkakaroon ng identity struggles. Ang guided journaling feature ng app na ito ay nakatulong sa akin para magkaroon ng clarity sa aking thoughts at feelings. Isang malaking hakbang ito sa self-acceptance ko!",
+    image: "/testimonials/5.jpg",
+  },
+  {
+    name: "Luna",
+    rating: 5,
+    feedback: "Finally, may mental health app na inclusive para sa LGBTQ+!",
+    description:
+      "Napakahirap humanap ng mental health app na may tunay na inclusivity para sa LGBTQ+. Dito, hindi ko naramdamang nag-iisa ako. Ang AI mood tracking at community support ay naging lifeline ko sa panahon ng matinding anxiety at self-doubt.",
+    image: "/testimonials/6.jpg",
+  },
+  {
+    name: "Ezra",
+    rating: 4,
+    feedback: "Napaka-helpful ng meditation exercises!",
+    description:
+      "Bilang isang genderfluid person, madalas akong nakakaranas ng stress dahil sa pressure ng lipunan. Pero dahil sa guided meditation feature ng app na ito, natutunan kong i-ground ang sarili ko at magkaroon ng inner peace kahit sa gitna ng stress.",
+    image: "/testimonials/7.jpg",
+  },
+  {
+    name: "Kai",
+    rating: 5,
+    feedback: "LGBTQ+ representation sa mental health? Finally!",
+    description:
+      "Laking tuwa ko nang makita kong may isang app na hindi lang pangkaraniwan ang approach sa mental health, kundi may representation din para sa LGBTQ+. Ramdam ko ang suporta at malasakit, at talagang natulungan ako ng mood tracking at journaling features.",
+    image: "/testimonials/8.jpg",
+  },
+  {
+    name: "Theo",
+    rating: 5,
+    feedback: "Ang safe space na matagal ko nang hinahanap!",
+    description:
+      "Bilang isang pansexual, palaging may pangamba na baka hindi ako tanggap sa iba't ibang spaces. Pero dito, ramdam ko ang tunay na community. Ang supportive forum at mental health tools ay talagang nakatulong sa akin para magkaroon ng peace of mind.",
+    image: "/testimonials/9.jpg",
+  },
+  {
+    name: "Zion",
+    rating: 4,
+    feedback: "Sobrang nakatulong sa pag-manage ng anxiety ko!",
+    description:
+      "Bilang isang queer person na may social anxiety, napakahirap makahanap ng tool na talagang makakatulong sa akin. Pero ang app na ito, with its AI anxiety prediction at journaling, ay talagang nakatulong sa akin na mas maintindihan ang emotions ko.",
+    image: "/testimonials/10.jpg",
   },
 ];
 

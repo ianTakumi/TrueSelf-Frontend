@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AxiosInstance from "../../../utils/AxiosInstance";
-import {
-  notifyError,
-  formatDate,
-  getUser,
-  notifySuccess,
-} from "../../../utils/helpers";
+import { notifyError, formatDate, notifySuccess } from "../../../utils/helpers";
 import { Link } from "react-router-dom";
 import {
   CircularProgress,
