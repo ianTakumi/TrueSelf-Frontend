@@ -32,6 +32,8 @@ const index = () => {
   const contactEngagementRef = useRef(null);
   const contactPieRef = useRef(null);
   const moodDistributionChartRef = useRef(null);
+  const journalLineChartRef = useRef(null);
+  const journalPieChartRef = useRef(null);
 
   const [receivedAnxietyChartData, setReceivedAnxietyChartData] = useState([]);
   const [receivedOccupationPieChartData, setReceivedOccupationPieChartData] =
@@ -44,6 +46,10 @@ const index = () => {
   const [receivedAnalysisScatterData, setReceivedAnalysisScatterData] =
     useState({});
   const [receivedMoodDistributionData, setReceivedMoodDistributionData] =
+    useState([]);
+  const [receivedJournalLineChartData, setReceivedJournalLineChartData] =
+    useState([]);
+  const [receivedJournalPieChartData, setReceivedJournalPieChartData] =
     useState([]);
 
   const handleAnxietyChartDataUpdate = (newData) => {
@@ -76,6 +82,13 @@ const index = () => {
 
   const handleMoodDistributionDataUpdate = (newData) => {
     setReceivedMoodDistributionData(newData);
+  };
+
+  const handleJournalLineChartDataUpdate = (newData) => {
+    setReceivedJournalLineChartData(newData);
+  };
+  const handleJournalPieChartDataUpdate = (newData) => {
+    setReceivedJournalPieChartData(newData);
   };
 
   const downloadReports = async () => {
@@ -714,10 +727,16 @@ const index = () => {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-white rounded-lg shadow-lg p-6">
-            <JournalLineChart />
+            <JournalLineChart
+              ref={journalLineChartRef}
+              onDataUpdate={handleJournalPieChartDataUpdate}
+            />
           </div>
           <div className="bg-white rounded-lg shadow-lg p-6">
-            <JournalPieChart />
+            <JournalPieChart
+              ref={journalPieChartRef}
+              onDataUpdate={handleJournalPieChartDataUpdate}
+            />
           </div>
         </div>
       </div>

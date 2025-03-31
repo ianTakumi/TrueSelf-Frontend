@@ -229,7 +229,7 @@ const ContactPieChart = forwardRef((props, ref) => {
       </h2>
 
       {/* Chart container */}
-      <div ref={ref} className=" p-6  w-full flex justify-center">
+      <div ref={ref} className="p-6 w-full flex justify-center">
         <ResponsiveContainer width="100%" height={300}>
           <PieChart>
             <Pie
@@ -259,7 +259,7 @@ const ContactPieChart = forwardRef((props, ref) => {
       </div>
 
       {/* Export Buttons */}
-      <div className="relative mt-6">
+      <div div className="relative mt-6">
         {/* Main Export Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
