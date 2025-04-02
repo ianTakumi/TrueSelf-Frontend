@@ -25,6 +25,9 @@ import ArrowCircleDownOutlinedIcon from "@mui/icons-material/ArrowCircleDownOutl
 import CircularProgress from "@mui/material/CircularProgress";
 import Comments from "../components/user/Comments";
 import { useNavigate } from "react-router-dom";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import "./SingleCommunity.css";
 
 const SinglePost = () => {
   const user = getUser();
@@ -246,9 +249,14 @@ const SinglePost = () => {
               <Typography variant="h6" fontWeight="bold">
                 {post.title}
               </Typography>
-              <Typography
-                variant="body1"
-                dangerouslySetInnerHTML={{ __html: post.content }}
+              <ReactQuill
+                value={post.content}
+                readOnly={true}
+                theme="snow"
+                modules={{
+                  toolbar: false,
+                }}
+                className="no-border-quill"
               />
             </CardContent>
 

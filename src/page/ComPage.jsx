@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import AxiosInstance from "../../utils/AxiosInstance";
 import { motion } from "framer-motion";
-import { ThumbUp, ThumbDown, ChatBubbleOutline } from "@mui/icons-material";
 import { notifyError } from "../../utils/helpers";
 import Posts from "../components/user/Posts";
+
 const ComPage = () => {
   const [otherCommunities, setOtherCommunities] = useState([]);
 
@@ -171,26 +171,24 @@ const ComPage = () => {
         </div>
       </main>
 
-      <aside className="w-full lg:w-[320px] bg-white shadow-lg rounded-2xl p-6 lg:ml-5 lg:self-start">
+      <aside className="w-full lg:w-[400px] bg-white shadow-lg rounded-2xl p-6 lg:ml-5 lg:self-start">
         <h3 className="text-xl font-bold text-gray-900 mb-4">
           Other Communities
         </h3>
         <ul>
           {otherCommunities.map((community) => (
             <Link
+              key={community._id}
               to={`/community/${community._id}`}
-              className="text-gray-800 font-medium text-lg transition duration-200 hover:text-gray-900"
+              className="block"
             >
-              <li
-                key={community.id}
-                className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-100 transition duration-300 cursor-pointer"
-              >
+              <li className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-100 transition duration-300 cursor-pointer">
                 <img
                   src={community.profile.url}
                   alt={community.name}
                   className="w-12 h-12 rounded-full border border-gray-300 shadow-sm"
                 />
-                <p>{community.name}</p>
+                <p className="truncate w-full">{community.name}</p>
               </li>
             </Link>
           ))}

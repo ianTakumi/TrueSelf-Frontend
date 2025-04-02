@@ -1,0 +1,7 @@
+.no-border-quill .ql-container {
+  border: none !important; /* Remove the border */
+}
+
+.no-border-quill .ql-editor {
+  border: none !important; /* Remove the border from the editor area as well */
+}

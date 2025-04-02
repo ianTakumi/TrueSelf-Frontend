@@ -34,6 +34,9 @@ import GavelOutlined from "@mui/icons-material/GavelOutlined";
 import ArrowCircleUpOutlinedIcon from "@mui/icons-material/ArrowCircleUpOutlined";
 import ArrowCircleDownOutlinedIcon from "@mui/icons-material/ArrowCircleDownOutlined";
 import ReportModal from "../components/user/modals/ReportModal";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import "./SingleCommunity.css";
 
 const SingleCommunity = () => {
   const user = getUser();
@@ -389,9 +392,14 @@ const SingleCommunity = () => {
                   <Typography variant="h6" fontWeight="bold" gutterBottom>
                     {post.title}
                   </Typography>
-                  <Typography
-                    variant="body1"
-                    dangerouslySetInnerHTML={{ __html: post.content }}
+                  <ReactQuill
+                    value={post.content}
+                    readOnly={true}
+                    theme="snow"
+                    modules={{
+                      toolbar: false,
+                    }}
+                    className="no-border-quill"
                   />
                 </CardContent>
 
