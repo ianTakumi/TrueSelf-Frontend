@@ -4,7 +4,7 @@ import AxiosInstance from "../../utils/AxiosInstance";
 import { motion } from "framer-motion";
 import { ThumbUp, ThumbDown, ChatBubbleOutline } from "@mui/icons-material";
 import { notifyError } from "../../utils/helpers";
-
+import Posts from "../components/user/Posts";
 const ComPage = () => {
   const [otherCommunities, setOtherCommunities] = useState([]);
 
@@ -54,9 +54,10 @@ const ComPage = () => {
 
               {/* Text & CTA */}
               <div className="p-4">
-                <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                <h3 className="text-lg font-semibold text-gray-900 transition-colors duration-300 group-hover:text-[#4F438C]">
                   Who We Are
                 </h3>
+
                 <p className="text-sm text-gray-600 mt-1">
                   Join our community and connect!
                 </p>
@@ -65,7 +66,7 @@ const ComPage = () => {
                 <motion.button
                   whileHover={{ scale: 1.1 }}
                   transition={{ duration: 0.2 }}
-                  className="mt-3 px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-lg text-sm font-medium shadow-md"
+                  className="mt-3 px-4 py-2 text-[#63579F] border border-[#63579F] hover:bg-[#63579F] hover:text-white rounded-lg text-sm font-medium shadow-md"
                 >
                   Explore Now
                 </motion.button>
@@ -98,7 +99,7 @@ const ComPage = () => {
 
               {/* Text & CTA */}
               <div className="p-4">
-                <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                <h3 className="text-lg font-semibold text-gray-900 transition-colors duration-300 group-hover:text-[#4F438C]">
                   <p className="text-sm font-medium mt-2">Spectrum Voices</p>
                 </h3>
                 <p className="text-sm text-gray-600 mt-1">
@@ -109,7 +110,7 @@ const ComPage = () => {
                 <motion.button
                   whileHover={{ scale: 1.1 }}
                   transition={{ duration: 0.2 }}
-                  className="mt-3 px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-lg text-sm font-medium shadow-md"
+                  className="mt-3 px-4 py-2 text-[#63579F] border border-[#63579F] hover:bg-[#63579F] hover:text-white rounded-lg text-sm font-medium shadow-md"
                 >
                   Explore Now
                 </motion.button>
@@ -142,7 +143,7 @@ const ComPage = () => {
 
               {/* Text & CTA */}
               <div className="p-4">
-                <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                <h3 className="text-lg font-semibold text-gray-900 transition-colors duration-300 group-hover:text-[#4F438C]">
                   <p className="text-sm font-medium mt-2">Equality Alliance</p>
                 </h3>
                 <p className="text-sm text-gray-600 mt-1">
@@ -153,7 +154,7 @@ const ComPage = () => {
                 <motion.button
                   whileHover={{ scale: 1.1 }}
                   transition={{ duration: 0.2 }}
-                  className="mt-3 px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-lg text-sm font-medium shadow-md"
+                  className="mt-3 px-4 py-2 text-[#63579F] border border-[#63579F] hover:bg-[#63579F] hover:text-white rounded-lg text-sm font-medium shadow-md"
                 >
                   Explore Now
                 </motion.button>
@@ -162,34 +163,11 @@ const ComPage = () => {
           </Link>
         </div>
 
-        <div className="bg-white shadow-md rounded-lg p-4 mb-4">
-          {/* Upvote Section */}
-          <div className="flex items-center gap-3 mb-2">
-            <button className="text-gray-500 hover:text-blue-500">
-              <ThumbUp fontSize="small" />
-            </button>
-            <span className="text-gray-700 font-medium">120</span>
-            <button className="text-gray-500 hover:text-red-500">
-              <ThumbDown fontSize="small" />
-            </button>
-          </div>
-
-          {/* Post Content */}
-          <h3 className="text-lg font-semibold text-gray-900">
-            Exciting New Community Features!
-          </h3>
-          <p className="text-sm text-gray-600 mt-1">
-            We just launched a new feature set for our community. Let us know
-            your thoughts!
-          </p>
-
-          {/* Actions */}
-          <div className="flex items-center gap-3 mt-2">
-            <button className="text-gray-600 hover:text-blue-600 flex items-center">
-              <ChatBubbleOutline fontSize="small" className="mr-1" />
-              24 Comments
-            </button>
-          </div>
+        <div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            Latest Posts
+          </h2>
+          <Posts />
         </div>
       </main>
 

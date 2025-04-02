@@ -596,12 +596,12 @@ const index = () => {
             </div>
           </div>
 
-          {/* Spaces Card */}
+          {/* Communities Card */}
           <div className="flex-1 min-w-[200px] p-6 text-center bg-gradient-to-r from-[#5D69BE] to-[#C89FEB] rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out transform hover:scale-105">
             <div className="relative">
               <PeopleIcon className="text-5xl text-white mb-4" />
             </div>
-            <h6 className="text-xl font-semibold text-white">Spaces</h6>
+            <h6 className="text-xl font-semibold text-white">Communities</h6>
 
             {/* Flex container for space count and button */}
             <div className="flex items-center justify-center gap-2 mt-3">

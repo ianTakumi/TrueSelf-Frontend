@@ -4,25 +4,33 @@ import { getUser } from "../../../utils/helpers";
 import { CheckCircle, RadioButtonUnchecked } from "@mui/icons-material";
 
 const MoodStreak = () => {
-  const [streak, setStreak] = useState(0);
+  const [weekStatus, setWeekStatus] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
   const today = new Date().getDay();
   const user = getUser();
 
-  const fetchStreak = async () => {
+  const fetchMoodWeekStatus = async () => {
     try {
       const res = await AxiosInstance.get(
         `/moodEntries/moodStreak/${user._id}`
       );
-      if (res.status === 200 && res.data.streak !== undefined) {
-        setStreak(res.data.streak);
+      if (res.status === 200 && res.data.weekStatus) {
+        setWeekStatus(res.data.weekStatus);
       }
     } catch (error) {
-      console.error("Failed to fetch streak:", error);
+      console.error("Failed to fetch mood week status:", error);
     }
   };
 
   useEffect(() => {
-    fetchStreak();
+    fetchMoodWeekStatus();
   }, []);
 
   const supportiveTexts = [
@@ -39,8 +47,7 @@ const MoodStreak = () => {
     <div className="flex flex-col items-center p-4 bg-purple-600 rounded-xl shadow-lg text-white">
       <h2 className="text-2xl font-bold mb-4">Mood Streak Tracker</h2>
       <p className="text-gray-200 mb-4 text-center">
-        Keep logging your moods daily to maintain your streak! Missing a day
-        resets your progress.
+        Keep logging your moods daily to track your progress. Every day counts!
       </p>
 
       <div className="grid grid-cols-7 gap-2">
@@ -49,7 +56,7 @@ const MoodStreak = () => {
             key={index}
             className="w-16 h-16 flex flex-col items-center justify-center rounded-lg bg-white text-purple-600 font-semibold shadow-md transition-all"
           >
-            {index < streak ? (
+            {weekStatus[index] ? (
               <CheckCircle fontSize="large" className="text-green-500" />
             ) : (
               <RadioButtonUnchecked
@@ -63,8 +70,8 @@ const MoodStreak = () => {
       </div>
 
       <p className="text-gray-100 mt-4 text-lg font-semibold">
-        {streak > 0
-          ? `🔥 Streak: ${streak} days! Keep it up!`
+        {weekStatus.includes(true)
+          ? "✅ Great job! Keep logging your moods!"
           : supportiveTexts[today]}
       </p>
       <p className="text-gray-300 mt-2 text-sm">

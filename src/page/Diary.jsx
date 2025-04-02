@@ -5,17 +5,11 @@ import {
   IconButton,
   Modal,
   Box,
-  Slider,
-  MenuItem,
-  Select,
-  FormControl,
-  InputLabel,
+  Button,
   ToggleButton,
   ToggleButtonGroup,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
 import {
   getUser,
   notifyError,
@@ -32,6 +26,7 @@ import JournalStreak from "../components/user/JournalStreak";
 import Affirmations from "../components/user/Affirmations";
 import JournalLineChart from "../components/user/charts/JournalLineChart";
 import JournalPieChart from "../components/user/charts/JournalPieChart";
+import { ArrowUpward, ArrowDownward } from "@mui/icons-material";
 
 const images = [
   "/page/journal/1.jpg",
@@ -64,6 +59,7 @@ const Diary = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [selectedJournalEntry, setSelectedJournalEntry] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [sortOrder, setSortOrder] = useState("newest");
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -89,32 +85,6 @@ const Diary = () => {
     setSelectedImage(img);
     sessionStorage.setItem("selectedImage", img);
     setOpen(false);
-  };
-
-  const handleJournalChange = (content) => {
-    setValue("journalEntry", content, { shouldValidate: true });
-  };
-
-  const onSubmit = async (data) => {
-    const userId = user._id;
-    const cleanedData = {
-      userId,
-      title: data.title,
-      content: data.journalEntry,
-    };
-    console.log(cleanedData);
-    await AxiosInstance.post(`/journalEntries/${userId}`, cleanedData).then(
-      (response) => {
-        console.log(response.data);
-        if (response.status === 201) {
-          notifySuccess("Journal entry saved successfully");
-          getAllJournalEntry();
-        } else {
-          console.error("Error saving journal entry:", response.data.message);
-          notifyError("Error saving journal entry");
-        }
-      }
-    );
   };
 
   const handleDelete = async (id) => {
@@ -152,10 +122,15 @@ const Diary = () => {
     const userId = user._id;
     await AxiosInstance.get(`/journalEntries/${userId}`).then((response) => {
       if (response.status === 200) {
-        setJournalEntries(response.data.data);
+        let sortedEntries = response.data.data.sort((a, b) => {
+          return sortOrder === "newest"
+            ? new Date(b.createdAt) - new Date(a.createdAt) // Newest first
+            : new Date(a.createdAt) - new Date(b.createdAt); // Oldest first
+        });
+        setJournalEntries(sortedEntries);
       } else {
-        console.error("Error saving journal entry:", response.data.message);
-        notifyError("Error saving journal entry");
+        console.error("Error fetching journal entries:", response.data.message);
+        notifyError("Error fetching journal entries");
       }
     });
   };
@@ -163,6 +138,14 @@ const Diary = () => {
   useEffect(() => {
     getAllJournalEntry();
   }, []);
+
+  const toggleSortOrder = () => {
+    setSortOrder((prev) => (prev === "newest" ? "oldest" : "newest"));
+  };
+
+  useEffect(() => {
+    getAllJournalEntry();
+  }, [sortOrder]);
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("en-US", {
@@ -294,12 +277,42 @@ const Diary = () => {
             </ToggleButton>
           </ToggleButtonGroup>
         </div>
-        <button
-          onClick={() => handleOpenModal()}
-          className="border-2 my-5 border-[#C8A2C8] text-[#C8A2C8] px-4 py-2 rounded-lg hover:bg-[#C8A2C8] hover:text-white transition"
-        >
-          Add Entry
-        </button>
+        <div className="flex justify-between items-center mt-10  mb-5">
+          <Button
+            onClick={() => handleOpenModal()}
+            variant="outlined"
+            sx={{
+              borderColor: "#63579F",
+              color: "#63579F",
+              "&:hover": {
+                backgroundColor: "#63579F",
+                color: "white",
+                borderColor: "#63579F",
+              },
+            }}
+          >
+            Add Entry
+          </Button>
+
+          <Button
+            onClick={toggleSortOrder}
+            variant="outlined"
+            sx={{
+              borderColor: "#63579F",
+              color: "#63579F",
+              "&:hover": {
+                backgroundColor: "#63579F",
+                color: "white",
+                borderColor: "#63579F",
+              },
+            }}
+            startIcon={
+              sortOrder === "newest" ? <ArrowUpward /> : <ArrowDownward />
+            }
+          >
+            Sort by: {sortOrder === "newest" ? "Oldest First" : "Newest First"}
+          </Button>
+        </div>
 
         {journalEntries.length > 0 ? (
           <>

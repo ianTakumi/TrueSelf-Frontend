@@ -248,9 +248,10 @@ const Users = () => {
       options: {
         filter: false,
         sort: false,
+        print: false,
         customBodyRender: (_, tableMeta) => {
-          const userObj = users[tableMeta.rowIndex]; // Get the correct user
-          const index = tableMeta.rowIndex; // Track row index
+          const userObj = users[tableMeta.rowIndex];
+          const index = tableMeta.rowIndex;
 
           return (
             <>

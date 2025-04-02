@@ -1,11 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Calendar from "../components/user/Calendar";
-import {
-  getUser,
-  notifyError,
-  notifySuccess,
-  songs,
-} from "../../utils/helpers";
+import { getUser, notifyError, notifySuccess } from "../../utils/helpers";
 import PieChart from "../components/user/charts/PieChart";
 import MoodLineChart from "../components/user/charts/LineCharts";
 import AxiosInstance from "../../utils/AxiosInstance";
@@ -14,6 +9,7 @@ import {
   IconButton,
   ToggleButton,
   ToggleButtonGroup,
+  Button,
 } from "@mui/material";
 import { Edit, Delete, TableChart, ViewModule } from "@mui/icons-material";
 import Swal from "sweetalert2";
@@ -21,7 +17,8 @@ import MoodModal from "../components/user/modals/MoodModal";
 import Playlist from "../components/user/Playlist";
 import Affirmations from "../components/user/Affirmations";
 import MoodStreak from "../components/user/MoodStreak";
-
+import { ArrowUpward, ArrowDownward } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 const moodData = [
   {
     id: 1,
@@ -103,12 +100,19 @@ const MoodDashboard = () => {
   const [viewMode, setViewMode] = useState("card");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [moodToEdit, setMoodToEdit] = useState(null);
+  const [sortOrder, setSortOrder] = useState("newest");
+  const navigate = useNavigate();
 
   const fetchMoods = async () => {
     try {
       const res = await AxiosInstance.get(`/moodEntries/${userId}`);
       if (res.status === 200) {
-        setMoods(res.data.moodEntries);
+        let sortedEntries = res.data.moodEntries.sort((a, b) => {
+          return sortOrder === "newest"
+            ? new Date(b.createdAt) - new Date(a.createdAt) // Newest first
+            : new Date(a.createdAt) - new Date(b.createdAt); // Oldest first
+        });
+        setMoods(sortedEntries);
       }
     } catch (error) {
       console.error(error);
@@ -119,6 +123,14 @@ const MoodDashboard = () => {
   useEffect(() => {
     fetchMoods();
   }, []);
+
+  const toggleSortOrder = () => {
+    setSortOrder((prev) => (prev === "newest" ? "oldest" : "newest"));
+  };
+
+  useEffect(() => {
+    fetchMoods();
+  }, [sortOrder]);
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("en-US", {
@@ -240,6 +252,41 @@ const MoodDashboard = () => {
           </ToggleButtonGroup>
         </div>
 
+        <div className="flex justify-between items-center mt-10  mb-5">
+          <Button
+            onClick={() => navigate("/record-mood")}
+            variant="outlined"
+            sx={{
+              borderColor: "#63579F",
+              color: "#63579F",
+              "&:hover": {
+                backgroundColor: "#63579F",
+                color: "white",
+                borderColor: "#63579F",
+              },
+            }}
+          >
+            Add Entry
+          </Button>
+          <Button
+            onClick={toggleSortOrder}
+            variant="outlined"
+            sx={{
+              borderColor: "#63579F",
+              color: "#63579F",
+              "&:hover": {
+                backgroundColor: "#63579F",
+                color: "white",
+                borderColor: "#63579F",
+              },
+            }}
+            startIcon={
+              sortOrder === "newest" ? <ArrowUpward /> : <ArrowDownward />
+            }
+          >
+            Sort by: {sortOrder === "newest" ? "Oldest First" : "Newest First"}
+          </Button>
+        </div>
         <div className="p-6">
           {moods.length > 0 ? (
             <>
@@ -348,7 +395,7 @@ const MoodDashboard = () => {
           <div className="flex justify-center mt-4">
             <button
               onClick={loadMoreMoods}
-              className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow hover:bg-blue-600 transition"
+              className="px-4 py-2 bg-[#63579F] text-white font-semibold rounded-lg shadow hover:bg-blue-600 transition"
             >
               View More
             </button>

@@ -122,8 +122,8 @@ const Contacts = () => {
         }
       },
       headStyles: {
-        fillColor: [128, 0, 128], // Purple
-        textColor: [255, 255, 255], // White text for contrast
+        fillColor: [128, 0, 128],
+        textColor: [255, 255, 255],
         fontStyle: "bold",
       },
     });

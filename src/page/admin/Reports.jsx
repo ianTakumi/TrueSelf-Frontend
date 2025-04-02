@@ -15,13 +15,16 @@ import {
   IconButton,
 } from "@mui/material";
 import MUIDataTable from "mui-datatables";
-
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import ReportViewModal from "../../components/admin/modals/ReportViewModal";
+import ReportEditModal from "../../components/admin/modals/ReportEditModal";
 const Reports = () => {
   const [reports, setReports] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [reportToEdit, setReportToEdit] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isViewing, setIsViewing] = useState(false);
 
   const fetchReports = async () => {
     setIsLoading(true);
@@ -357,6 +360,50 @@ const Reports = () => {
         }),
       },
     },
+    {
+      name: "actions",
+      label: "Actions",
+      options: {
+        customBodyRender: (value, tableMeta) => {
+          const report = reports[tableMeta.rowIndex];
+          console.log(report);
+          return (
+            <div className="flex justify-center gap-2">
+              <Button
+                variant="outlined"
+                disabled={report.status === "Resolved"}
+                color="secondary"
+                onClick={() => {
+                  setReportToEdit(report);
+                  setIsViewing(true);
+                }}
+              >
+                View
+              </Button>
+
+              <Button
+                variant="outlined"
+                color="primary"
+                disabled={report.status === "Resolved"}
+                onClick={() => {
+                  setReportToEdit(report);
+                  setIsEditing(true);
+                  setIsModalOpen(true);
+                }}
+              >
+                Edit
+              </Button>
+            </div>
+          );
+        },
+        setCellProps: () => ({
+          style: { textAlign: "center" },
+        }),
+        setCellHeaderProps: () => ({
+          style: { textAlign: "center" },
+        }),
+      },
+    },
   ];
 
   const options = {
@@ -438,6 +485,27 @@ const Reports = () => {
       <div className="my-7">
         <MUIDataTable data={reports} columns={columns} options={options} />
       </div>
+      {isEditing && isModalOpen && (
+        <ReportEditModal
+          isOpen={isModalOpen}
+          onClose={() => {
+            setIsEditing(false);
+            setIsModalOpen(false);
+          }}
+          report={reportToEdit}
+          refresh={fetchReports}
+        />
+      )}
+
+      {isViewing && (
+        <ReportViewModal
+          isOpen={isViewing}
+          onClose={() => {
+            setIsViewing(false);
+          }}
+          report={reportToEdit}
+        />
+      )}
     </div>
   );
 };

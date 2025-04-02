@@ -4,15 +4,15 @@ import { getUser } from "../../../utils/helpers";
 import { CheckCircle, RadioButtonUnchecked } from "@mui/icons-material";
 
 const JournalStreak = () => {
-  const [streak, setStreak] = useState(0);
+  const [streakArray, setStreakArray] = useState(new Array(7).fill(false));
   const today = new Date().getDay();
   const user = getUser();
 
   const fetchStreak = async () => {
     try {
       const res = await AxiosInstance.get(`/journalEntries/streak/${user._id}`);
-      if (res.status === 200) {
-        setStreak(res.data.streak);
+      if (res.status === 200 && Array.isArray(res.data.streakArray)) {
+        setStreakArray(res.data.streakArray);
       }
     } catch (error) {
       console.error("Failed to fetch journal streak:", error);
@@ -46,7 +46,7 @@ const JournalStreak = () => {
             key={index}
             className="w-16 h-16 flex flex-col items-center justify-center rounded-lg bg-white text-purple-600 font-semibold shadow-md transition-all"
           >
-            {index < streak ? (
+            {streakArray[index] ? (
               <CheckCircle fontSize="large" className="text-green-500" />
             ) : (
               <RadioButtonUnchecked
@@ -60,8 +60,8 @@ const JournalStreak = () => {
       </div>
 
       <p className="text-gray-100 mt-4 text-lg font-semibold">
-        {streak[today]
-          ? `🔥 Streak: ${streak.filter(Boolean).length} days! Keep writing!`
+        {streakArray[today]
+          ? `🔥 Streak: ${streakArray.filter(Boolean).length} days! Keep writing!`
           : supportiveTexts[today]}
       </p>
       <p className="text-gray-300 mt-2 text-sm">
